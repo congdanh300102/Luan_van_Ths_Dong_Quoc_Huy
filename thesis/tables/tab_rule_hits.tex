@@ -1,0 +1,25 @@
+\begin{table}[!htbp]
+\centering
+\caption{Tần suất vi phạm các luật nghiệp vụ}
+\label{tab:rule-hits}
+\small
+\setlength{\tabcolsep}{5.0pt}
+\begin{tabular}{@{}L{2.8cm}L{6.0cm}L{2.6cm}R{2.6cm}@{}}
+\toprule
+\textbf{Mã luật} & \textbf{Tên luật} & \textbf{Hành động} & \textbf{Tỷ lệ vi phạm} \\
+\midrule
+R501 & Dòng tiền vào thực tế thấp hơn nhiều so với thu nhập khai báo & REVIEW & 23,08\% \\
+R202 & Thu nhập còn lại sau trả nợ không đủ chi phí sinh hoạt & HARD\_\allowbreak REJECT & 21,10\% \\
+R104 & Số ngày quá hạn tối đa 12 tháng vượt 30 ngày & REVIEW & 12,98\% \\
+R101 & Nhóm nợ xấu nhất 12 tháng vượt nhóm 2 & HARD\_\allowbreak REJECT & 11,74\% \\
+R107 & Tỷ lệ sử dụng hạn mức trên 95\% & WARNING & 11,10\% \\
+R103 & Có nợ đã xử lý rủi ro / xóa nợ & HARD\_\allowbreak REJECT & 10,18\% \\
+R401 & Không lấy được dữ liệu CIC & REVIEW & 9,74\% \\
+R402 & Khách hàng thiếu lịch sử tín dụng (thin-file) & WARNING & 9,74\% \\
+R002 & Thu nhập dưới mức tối thiểu 6 triệu VND & HARD\_\allowbreak REJECT & 9,28\% \\
+R102 & Đang có nợ nhóm 3 trở lên & HARD\_\allowbreak REJECT & 9,28\% \\
+R201 & Tỷ lệ nợ trên thu nhập (DTI) vượt 60\% & HARD\_\allowbreak REJECT & 7,46\% \\
+R502 & Tỷ trọng chi tiêu nhóm rủi ro cao bất thường & REVIEW & 6,04\% \\
+\bottomrule
+\end{tabular}
+\end{table}

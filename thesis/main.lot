@@ -1,0 +1,48 @@
+\babel@toc {vietnamese}{}\relax 
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {1.1}{\ignorespaces Các nhóm nguồn dữ liệu sử dụng trong đánh giá tín dụng cá nhân}}{20}{table.caption.13}%
+\contentsline {table}{\numberline {1.2}{\ignorespaces So sánh định tính các nhóm mô hình theo tiêu chí của bài toán tín dụng}}{28}{table.caption.14}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {2.1}{\ignorespaces Thang phân hạng rủi ro theo xác suất vỡ nợ}}{33}{table.caption.15}%
+\contentsline {table}{\numberline {2.2}{\ignorespaces Lược đồ các bảng dữ liệu sử dụng trong đề án}}{36}{table.caption.16}%
+\contentsline {table}{\numberline {2.3}{\ignorespaces Bộ ràng buộc kiểm tra tính hợp lệ của dữ liệu}}{38}{table.caption.17}%
+\contentsline {table}{\numberline {2.4}{\ignorespaces Bốn phương án biến đổi dữ liệu theo yêu cầu của từng họ mô hình}}{41}{table.caption.18}%
+\contentsline {table}{\numberline {2.5}{\ignorespaces Các biến tổ hợp và biến tương tác}}{45}{table.caption.19}%
+\contentsline {table}{\numberline {2.6}{\ignorespaces Danh mục mô hình được thiết kế và so sánh}}{49}{table.caption.21}%
+\contentsline {table}{\numberline {2.7}{\ignorespaces Cơ cấu bộ luật nghiệp vụ theo nhóm và mức hành động}}{51}{table.caption.23}%
+\contentsline {table}{\numberline {2.8}{\ignorespaces Hệ thống chỉ tiêu đánh giá và vai trò trong quy trình}}{52}{table.caption.24}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {3.1}{\ignorespaces Cấu hình phần cứng và môi trường phần mềm}}{57}{table.caption.25}%
+\contentsline {table}{\numberline {3.2}{\ignorespaces Quy mô các bảng dữ liệu sử dụng trong đề án}}{60}{table.caption.26}%
+\contentsline {table}{\numberline {3.3}{\ignorespaces Kiểm chứng cơ chế phát hiện dữ liệu không hợp lệ bằng phép tiêm lỗi}}{61}{table.caption.28}%
+\contentsline {table}{\numberline {3.4}{\ignorespaces Các đặc trưng có giá trị khuyết và chiến lược xử lý}}{62}{table.caption.29}%
+\contentsline {table}{\numberline {3.5}{\ignorespaces Các đặc trưng có tỷ lệ giá trị ngoại lệ cao nhất (quy tắc $3\times $IQR)}}{62}{table.caption.30}%
+\contentsline {table}{\numberline {3.6}{\ignorespaces Phân bố trạng thái rủi ro sau khi gán nhãn}}{63}{table.caption.31}%
+\contentsline {table}{\numberline {3.7}{\ignorespaces Tỷ lệ nợ xấu tích luỹ theo số tháng kể từ khi cấp tín dụng}}{63}{table.caption.32}%
+\contentsline {table}{\numberline {3.8}{\ignorespaces Phân chia dữ liệu theo thời gian}}{63}{table.caption.33}%
+\contentsline {table}{\numberline {3.9}{\ignorespaces Cơ cấu tập đặc trưng theo nhóm và nguồn dữ liệu}}{64}{table.caption.34}%
+\contentsline {table}{\numberline {3.10}{\ignorespaces Mười lăm đặc trưng có năng lực dự báo cao nhất theo Information Value}}{65}{table.caption.35}%
+\contentsline {table}{\numberline {3.11}{\ignorespaces Information Value tổng hợp theo nhóm nguồn dữ liệu}}{65}{table.caption.36}%
+\contentsline {table}{\numberline {3.12}{\ignorespaces Kết quả lựa chọn tập đặc trưng qua ba bộ lọc}}{66}{table.caption.38}%
+\contentsline {table}{\numberline {3.13}{\ignorespaces Cơ cấu tập đặc trưng trước và sau lựa chọn}}{67}{table.caption.39}%
+\contentsline {table}{\numberline {3.14}{\ignorespaces Kết quả tinh chỉnh siêu tham số bằng tìm kiếm ngẫu nhiên}}{68}{table.caption.40}%
+\contentsline {table}{\numberline {3.15}{\ignorespaces So sánh chất lượng dự báo của các mô hình trên tập kiểm thử}}{69}{table.caption.41}%
+\contentsline {table}{\numberline {3.16}{\ignorespaces Phân tích theo thập phân vị điểm rủi ro}}{72}{table.caption.45}%
+\contentsline {table}{\numberline {3.17}{\ignorespaces Chi phí huấn luyện và thời gian chấm điểm một hồ sơ}}{75}{table.caption.48}%
+\contentsline {table}{\numberline {3.18}{\ignorespaces Tác động nghiệp vụ của các mô hình tại ngưỡng tối ưu chi phí}}{77}{table.caption.50}%
+\contentsline {table}{\numberline {3.19}{\ignorespaces Mức độ quá khớp đo bằng chênh lệch AUC giữa hai tập dữ liệu}}{78}{table.caption.51}%
+\contentsline {table}{\numberline {3.20}{\ignorespaces Mười đặc trưng có mức trôi dạt phân phối lớn nhất}}{79}{table.caption.52}%
+\contentsline {table}{\numberline {3.21}{\ignorespaces Chất lượng dự báo của mô hình theo từng tháng của giai đoạn kiểm thử}}{79}{table.caption.53}%
+\contentsline {table}{\numberline {3.22}{\ignorespaces Tỷ trọng đóng góp vào quyết định của mô hình theo nhóm đặc trưng}}{80}{table.caption.55}%
+\contentsline {table}{\numberline {3.23}{\ignorespaces So sánh ba tiêu chí xác định điểm cắt phê duyệt}}{83}{table.caption.59}%
+\contentsline {table}{\numberline {3.24}{\ignorespaces Độ nhạy của kết quả kiểm duyệt theo điểm cắt}}{84}{table.caption.60}%
+\contentsline {table}{\numberline {3.25}{\ignorespaces Cơ cấu khuyến nghị của mô hình và tỷ lệ nợ xấu thực tế theo từng nhóm}}{85}{table.caption.62}%
+\contentsline {table}{\numberline {3.26}{\ignorespaces Tần suất vi phạm các luật nghiệp vụ}}{86}{table.caption.64}%
+\contentsline {table}{\numberline {3.27}{\ignorespaces Kết quả thử nghiệm tích hợp dịch vụ REST}}{87}{table.caption.66}%
+\contentsline {table}{\numberline {3.28}{\ignorespaces Thời gian xử lý một hồ sơ theo từng chặng}}{87}{table.caption.67}%
+\contentsline {table}{\numberline {3.29}{\ignorespaces So sánh mô hình đề xuất với quy trình thẩm định truyền thống}}{88}{table.caption.68}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {B.1}{\ignorespaces Danh mục đầy đủ luật nghiệp vụ được cài đặt trong mô hình}}{106}{table.B.1}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {C.1}{\ignorespaces Danh mục đặc trưng đầu vào của mô hình}}{109}{table.C.1}%

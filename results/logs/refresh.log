@@ -1,0 +1,263 @@
+=== 04_train_models (sinh lai hinh voi nhan da sua) ===
+13:43:11 | INFO    | Nạp 60,000 hồ sơ, 159 cột
+13:43:11 | INFO    | Chia dữ liệu theo thời gian (out-of-time):
+13:43:11 | INFO    |   train_fit   35,700 hồ sơ | 2024-07-01 -> 2025-09-09 | tỷ lệ vỡ nợ 14.06%
+13:43:11 | INFO    |   train_es     6,300 hồ sơ | 2025-09-09 -> 2025-11-24 | tỷ lệ vỡ nợ 16.00%
+13:43:11 | INFO    |   valid        9,000 hồ sơ | 2025-11-24 -> 2026-03-12 | tỷ lệ vỡ nợ 16.82%
+13:43:11 | INFO    |   test         9,000 hồ sơ | 2026-03-12 -> 2026-06-30 | tỷ lệ vỡ nợ 17.68%
+13:43:11 | INFO    | Dùng tập đặc trưng đã lựa chọn: 116/154 đặc trưng
+13:43:11 | INFO    | Số đặc trưng: 116 (số: 113, phân loại: 3)
+13:43:11 | INFO    | scale_pos_weight = 6.112
+13:43:11 | INFO    | Đã nạp siêu tham số tinh chỉnh cho: lightgbm, xgboost, random_forest
+13:43:13 | INFO    | ────────────────────────────────────────────────────────────────────────
+13:43:13 | INFO    | Huấn luyện: Hồi quy logistic
+13:43:17 | INFO    |   thời gian huấn luyện: 3.5 giây | số vòng lặp tối ưu: 84
+13:43:17 | INFO    |   hiệu chuẩn ECE (trên tập hiệu chuẩn): 0.1958 -> 0.0000
+13:43:17 | INFO    |   ngưỡng tối ưu theo chi phí: 0.0961
+13:43:17 | INFO    |   VALID  AUC=0.8589 KS=0.5594 | TEST  AUC=0.8579 KS=0.5644 Gini=0.7158 F1=0.4848
+13:43:21 | INFO    |   độ trễ suy luận 1 hồ sơ: p50=7.58 ms  p95=11.54 ms  p99=13.21 ms
+13:43:21 | INFO    | ────────────────────────────────────────────────────────────────────────
+13:43:21 | INFO    | Huấn luyện: Cây quyết định (CART)
+13:43:24 | INFO    |   thời gian huấn luyện: 3.0 giây
+13:43:24 | INFO    |   hiệu chuẩn ECE (trên tập hiệu chuẩn): 0.1878 -> 0.0000
+13:43:24 | INFO    |   ngưỡng tối ưu theo chi phí: 0.0707
+13:43:24 | INFO    |   VALID  AUC=0.8231 KS=0.4908 | TEST  AUC=0.8206 KS=0.4970 Gini=0.6412 F1=0.4052
+13:43:30 | INFO    |   độ trễ suy luận 1 hồ sơ: p50=9.32 ms  p95=32.72 ms  p99=52.76 ms
+13:43:30 | INFO    | ────────────────────────────────────────────────────────────────────────
+13:43:30 | INFO    | Huấn luyện: Rừng ngẫu nhiên
+13:43:52 | INFO    |   thời gian huấn luyện: 21.9 giây
+13:43:52 | INFO    |   hiệu chuẩn ECE (trên tập hiệu chuẩn): 0.1293 -> 0.0000
+13:43:52 | INFO    |   ngưỡng tối ưu theo chi phí: 0.0752
+13:43:52 | INFO    |   VALID  AUC=0.8561 KS=0.5465 | TEST  AUC=0.8531 KS=0.5558 Gini=0.7062 F1=0.4664
+13:44:25 | INFO    |   độ trễ suy luận 1 hồ sơ: p50=70.26 ms  p95=112.07 ms  p99=151.52 ms
+13:44:25 | INFO    | ────────────────────────────────────────────────────────────────────────
+13:44:25 | INFO    | Huấn luyện: Máy vectơ hỗ trợ (SVM-RBF)
+13:44:40 | INFO    |   thời gian huấn luyện: 15.1 giây
+13:44:40 | INFO    |   hiệu chuẩn ECE (trên tập hiệu chuẩn): 0.0227 -> 0.0000
+13:44:40 | INFO    |   ngưỡng tối ưu theo chi phí: 0.0702
+13:44:41 | INFO    |   VALID  AUC=0.8578 KS=0.5553 | TEST  AUC=0.8540 KS=0.5619 Gini=0.7080 F1=0.4517
+13:44:46 | INFO    |   độ trễ suy luận 1 hồ sơ: p50=10.71 ms  p95=16.19 ms  p99=21.80 ms
+13:44:46 | INFO    | ────────────────────────────────────────────────────────────────────────
+13:44:46 | INFO    | Huấn luyện: Gradient Boosting (histogram)
+13:45:13 | INFO    |   thời gian huấn luyện: 27.1 giây | số vòng lặp tối ưu: 185
+13:45:13 | INFO    |   hiệu chuẩn ECE (trên tập hiệu chuẩn): 0.1471 -> 0.0000
+13:45:13 | INFO    |   ngưỡng tối ưu theo chi phí: 0.0631
+13:45:13 | INFO    |   VALID  AUC=0.8608 KS=0.5574 | TEST  AUC=0.8590 KS=0.5605 Gini=0.7180 F1=0.4300
+13:45:20 | INFO    |   độ trễ suy luận 1 hồ sơ: p50=14.39 ms  p95=23.29 ms  p99=38.75 ms
+13:45:20 | INFO    | ────────────────────────────────────────────────────────────────────────
+13:45:20 | INFO    | Huấn luyện: Thẻ điểm WOE + Hồi quy logistic
+13:45:28 | INFO    |   thời gian huấn luyện: 8.0 giây | số vòng lặp tối ưu: 71
+13:45:29 | INFO    |   hiệu chuẩn ECE (trên tập hiệu chuẩn): 0.1923 -> 0.0000
+13:45:29 | INFO    |   ngưỡng tối ưu theo chi phí: 0.0769
+13:45:30 | INFO    |   VALID  AUC=0.8611 KS=0.5566 | TEST  AUC=0.8564 KS=0.5603 Gini=0.7129 F1=0.4379
+13:45:37 | INFO    |   độ trễ suy luận 1 hồ sơ: p50=12.08 ms  p95=21.86 ms  p99=43.34 ms
+13:45:37 | INFO    | ────────────────────────────────────────────────────────────────────────
+13:45:37 | INFO    | Huấn luyện: Cây cực ngẫu nhiên (Extra Trees)
+13:45:49 | INFO    |   thời gian huấn luyện: 12.1 giây
+13:45:49 | INFO    |   hiệu chuẩn ECE (trên tập hiệu chuẩn): 0.1953 -> 0.0000
+13:45:49 | INFO    |   ngưỡng tối ưu theo chi phí: 0.0766
+13:45:50 | INFO    |   VALID  AUC=0.8523 KS=0.5359 | TEST  AUC=0.8470 KS=0.5498 Gini=0.6940 F1=0.4516
+13:47:08 | INFO    |   độ trễ suy luận 1 hồ sơ: p50=176.65 ms  p95=335.74 ms  p99=431.80 ms
+13:47:08 | INFO    | ────────────────────────────────────────────────────────────────────────
+13:47:08 | INFO    | Huấn luyện: XGBoost
+13:47:16 | INFO    |   thời gian huấn luyện: 7.9 giây | số vòng lặp tối ưu: 383
+13:47:16 | INFO    |   hiệu chuẩn ECE (trên tập hiệu chuẩn): 0.1709 -> 0.0000
+13:47:16 | INFO    |   ngưỡng tối ưu theo chi phí: 0.0739
+13:47:16 | INFO    |   VALID  AUC=0.8633 KS=0.5629 | TEST  AUC=0.8625 KS=0.5775 Gini=0.7250 F1=0.4764
+13:47:20 | INFO    |   độ trễ suy luận 1 hồ sơ: p50=8.54 ms  p95=16.67 ms  p99=18.03 ms
+13:47:20 | INFO    | ────────────────────────────────────────────────────────────────────────
+13:47:20 | INFO    | Huấn luyện: LightGBM
+13:47:24 | INFO    |   thời gian huấn luyện: 3.8 giây | số vòng lặp tối ưu: 90
+13:47:24 | INFO    |   hiệu chuẩn ECE (trên tập hiệu chuẩn): 0.1543 -> 0.0000
+13:47:24 | INFO    |   ngưỡng tối ưu theo chi phí: 0.0708
+13:47:24 | INFO    |   VALID  AUC=0.8603 KS=0.5528 | TEST  AUC=0.8604 KS=0.5668 Gini=0.7207 F1=0.4383
+13:47:27 | INFO    |   độ trễ suy luận 1 hồ sơ: p50=4.95 ms  p95=8.37 ms  p99=9.09 ms
+13:47:27 | INFO    | ────────────────────────────────────────────────────────────────────────
+13:47:27 | INFO    | Huấn luyện: CatBoost
+13:49:22 | INFO    |   thời gian huấn luyện: 115.1 giây | số vòng lặp tối ưu: 377
+13:49:22 | INFO    |   hiệu chuẩn ECE (trên tập hiệu chuẩn): 0.1724 -> 0.0000
+13:49:22 | INFO    |   ngưỡng tối ưu theo chi phí: 0.0755
+13:49:22 | INFO    |   VALID  AUC=0.8643 KS=0.5639 | TEST  AUC=0.8601 KS=0.5627 Gini=0.7203 F1=0.4621
+13:49:24 | INFO    |   độ trễ suy luận 1 hồ sơ: p50=3.84 ms  p95=6.09 ms  p99=7.74 ms
+13:49:24 | INFO    | ────────────────────────────────────────────────────────────────────────
+13:49:24 | INFO    | Huấn luyện: Mạng nơ-ron truyền thẳng (MLP)
+13:49:39 | INFO    |   thời gian huấn luyện: 15.0 giây | số vòng lặp tối ưu: 35
+13:49:39 | INFO    |   hiệu chuẩn ECE (trên tập hiệu chuẩn): 0.0235 -> 0.0000
+13:49:39 | INFO    |   ngưỡng tối ưu theo chi phí: 0.0674
+13:49:39 | INFO    |   VALID  AUC=0.8552 KS=0.5546 | TEST  AUC=0.8558 KS=0.5565 Gini=0.7116 F1=0.4647
+13:49:43 | INFO    |   độ trễ suy luận 1 hồ sơ: p50=7.77 ms  p95=14.82 ms  p99=18.41 ms
+13:49:43 | INFO    | ────────────────────────────────────────────────────────────────────────
+13:49:43 | INFO    | Huấn luyện: Kết hợp xếp tầng (Stacking)
+13:53:45 | INFO    |   thời gian huấn luyện: 242.0 giây
+13:53:46 | INFO    |   hiệu chuẩn ECE (trên tập hiệu chuẩn): 0.1941 -> 0.0000
+13:53:46 | INFO    |   ngưỡng tối ưu theo chi phí: 0.0737
+13:53:48 | INFO    |   VALID  AUC=0.8635 KS=0.5622 | TEST  AUC=0.8617 KS=0.5708 Gini=0.7235 F1=0.4708
+13:55:09 | INFO    |   độ trễ suy luận 1 hồ sơ: p50=186.76 ms  p95=256.11 ms  p99=304.92 ms
+13:55:18 | INFO    | Đã lưu 12 mô hình vào D:\Tài liệu\Study\Code\Luan_van_Ths_Dong_Quoc_Huy\results\models
+13:55:18 | INFO    | ========================================================================
+13:55:18 | INFO    | MÔ HÌNH TỐT NHẤT: XGBoost (test AUC = 0.8625, KS = 0.5775)
+13:55:22 | INFO    | 
+                         Mô hình                  Nhóm  AUC (valid)    AUC   Gini     KS  PR-AUC  Accuracy  Precision  Recall     F1  Brier    ECE  Ngưỡng  Chi phí  Tỷ lệ duyệt  Nợ xấu sau duyệt  T.gian HL (s)  Độ trễ p50 (ms)  Độ trễ p95 (ms)  Độ trễ p99 (ms)  Số vòng lặp
+                         XGBoost   Học tập hợp tuần tự       0.8633 0.8625 0.7250 0.5775  0.6236    0.6502     0.3239  0.9001 0.4764 0.0978 0.0053  0.0739   0.5441       0.5088            0.0347            7.9            8.537           16.671           18.033        383.0
+     Kết hợp xếp tầng (Stacking)      Kết hợp xếp tầng       0.8635 0.8617 0.7235 0.5708  0.6113    0.6406     0.3182  0.9045 0.4708 0.0984 0.0080  0.0737   0.5452       0.4976            0.0339          242.0          186.759          256.109          304.916          NaN
+                        LightGBM   Học tập hợp tuần tự       0.8603 0.8604 0.7207 0.5668  0.6190    0.5802     0.2870  0.9265 0.4383 0.0978 0.0119  0.0708   0.5628       0.4294            0.0303            3.8            4.948            8.373            9.090         90.0
+                        CatBoost   Học tập hợp tuần tự       0.8643 0.8601 0.7203 0.5627  0.6117    0.6251     0.3095  0.9107 0.4621 0.0980 0.0067  0.0755   0.5484       0.4799            0.0329          115.1            3.841            6.085            7.741        377.0
+   Gradient Boosting (histogram)   Học tập hợp tuần tự       0.8608 0.8590 0.7180 0.5605  0.6097    0.5628     0.2794  0.9327 0.4300 0.0991 0.0097  0.0631   0.5680       0.4098            0.0290           27.1           14.395           23.292           38.748        185.0
+                Hồi quy logistic            Tuyến tính       0.8589 0.8579 0.7158 0.5644  0.5927    0.6658     0.3332  0.8894 0.4848 0.1007 0.0074  0.0961   0.5493       0.5281            0.0370            3.5            7.580           11.540           13.207         84.0
+ Thẻ điểm WOE + Hồi quy logistic            Tuyến tính       0.8611 0.8564 0.7129 0.5603  0.5995    0.5812     0.2871  0.9227 0.4379 0.1001 0.0109  0.0769   0.5691       0.4318            0.0317            8.0           12.079           21.859           43.338         71.0
+  Mạng nơ-ron truyền thẳng (MLP)           Mạng nơ-ron       0.8552 0.8558 0.7116 0.5565  0.6019    0.6317     0.3127  0.9045 0.4647 0.0998 0.0068  0.0674   0.5541       0.4887            0.0346           15.0            7.773           14.817           18.413         35.0
+      Máy vectơ hỗ trợ (SVM-RBF)      Máy vectơ hỗ trợ       0.8578 0.8540 0.7080 0.5619  0.5953    0.6074     0.2999  0.9145 0.4517 0.1005 0.0070  0.0702   0.5588       0.4609            0.0328           15.1           10.713           16.187           21.802          NaN
+                 Rừng ngẫu nhiên Học tập hợp song song       0.8561 0.8531 0.7062 0.5558  0.6002    0.6364     0.3149  0.8988 0.4664 0.1007 0.0070  0.0752   0.5603       0.4954            0.0361           21.9           70.263          112.070          151.525          NaN
+Cây cực ngẫu nhiên (Extra Trees) Học tập hợp song song       0.8523 0.8470 0.6940 0.5498  0.5784    0.6092     0.3003  0.9101 0.4516 0.1030 0.0057  0.0766   0.5656       0.4642            0.0342           12.1          176.647          335.745          431.800          NaN
+           Cây quyết định (CART)        Cây quyết định       0.8231 0.8206 0.6412 0.4970  0.5299    0.5267     0.2605  0.9120 0.4052 0.1092 0.0066  0.0707   0.6444       0.3810            0.0408            3.0            9.321           32.721           52.764          NaN
+13:55:22 | INFO    | ========================================================================
+13:55:22 | INFO    | Sinh đồ thị đánh giá mô hình...
+13:55:27 | INFO    |   hình: roc_curves
+13:55:28 | INFO    |   hình: pr_curves
+13:55:29 | INFO    |   hình: calibration
+13:55:30 | INFO    |   hình: model_metrics_bar
+C:\Users\danhdc2\AppData\Local\Programs\Python\Python312\Lib\site-packages\matplotlib\_fontconfig_pattern.py:85: PyparsingDeprecationWarning: 'parseString' deprecated - use 'parse_string'
+  parse = parser.parseString(pattern)
+C:\Users\danhdc2\AppData\Local\Programs\Python\Python312\Lib\site-packages\matplotlib\_fontconfig_pattern.py:89: PyparsingDeprecationWarning: 'resetCache' deprecated - use 'reset_cache'
+  parser.resetCache()
+C:\Users\danhdc2\AppData\Local\Programs\Python\Python312\Lib\site-packages\matplotlib\_mathtext.py:2010: PyparsingDeprecationWarning: 'oneOf' deprecated - use 'one_of'
+  p.space          = oneOf(self._space_widths)("space")
+C:\Users\danhdc2\AppData\Local\Programs\Python\Python312\Lib\site-packages\matplotlib\_mathtext.py:2012: PyparsingDeprecationWarning: 'oneOf' deprecated - use 'one_of'
+  p.style_literal  = oneOf(
+C:\Users\danhdc2\AppData\Local\Programs\Python\Python312\Lib\site-packages\matplotlib\_mathtext.py:2020: PyparsingDeprecationWarning: 'leaveWhitespace' deprecated - use 'leave_whitespace'
+  )("sym").leaveWhitespace()
+C:\Users\danhdc2\AppData\Local\Programs\Python\Python312\Lib\site-packages\matplotlib\_mathtext.py:2024: PyparsingDeprecationWarning: 'oneOf' deprecated - use 'one_of'
+  p.start_group    = Optional(r"\math" + oneOf(self._fontnames)("font")) + "{"
+C:\Users\danhdc2\AppData\Local\Programs\Python\Python312\Lib\site-packages\matplotlib\_mathtext.py:2027: PyparsingDeprecationWarning: 'oneOf' deprecated - use 'one_of'
+  p.delim          = oneOf(self._delims)
+C:\Users\danhdc2\AppData\Local\Programs\Python\Python312\Lib\site-packages\matplotlib\_mathtext.py:1984: PyparsingDeprecationWarning: 'setName' deprecated - use 'set_name'
+  val.setName(key)
+C:\Users\danhdc2\AppData\Local\Programs\Python\Python312\Lib\site-packages\matplotlib\_mathtext.py:1987: PyparsingDeprecationWarning: 'setParseAction' deprecated - use 'set_parse_action'
+  val.setParseAction(getattr(self, key))
+C:\Users\danhdc2\AppData\Local\Programs\Python\Python312\Lib\site-packages\matplotlib\_mathtext.py:1748: PyparsingDeprecationWarning: 'setParseAction' deprecated - use 'set_parse_action'
+  return Empty().setParseAction(raise_error)
+C:\Users\danhdc2\AppData\Local\Programs\Python\Python312\Lib\site-packages\matplotlib\_mathtext.py:2088: PyparsingDeprecationWarning: 'endQuoteChar' argument is deprecated, use 'end_quote_char'
+  p.text = cmd(r"\text", QuotedString('{', '\\', endQuoteChar="}"))
+C:\Users\danhdc2\AppData\Local\Programs\Python\Python312\Lib\site-packages\matplotlib\_mathtext.py:2097: PyparsingDeprecationWarning: 'oneOf' deprecated - use 'one_of'
+  + OneOrMore(oneOf(["_", "^"]) - p.placeable)("subsuper")
+C:\Users\danhdc2\AppData\Local\Programs\Python\Python312\Lib\site-packages\matplotlib\_mathtext.py:2146: PyparsingDeprecationWarning: 'unquoteResults' argument is deprecated, use 'unquote_results'
+  p.math_string   = QuotedString('$', '\\', unquoteResults=False)
+C:\Users\danhdc2\AppData\Local\Programs\Python\Python312\Lib\site-packages\matplotlib\_mathtext.py:2147: PyparsingDeprecationWarning: 'leaveWhitespace' deprecated - use 'leave_whitespace'
+  p.non_math      = Regex(r"(?:(?:\\[$])|[^$])*").leaveWhitespace()
+C:\Users\danhdc2\AppData\Local\Programs\Python\Python312\Lib\site-packages\matplotlib\_mathtext.py:2170: PyparsingDeprecationWarning: 'parseString' deprecated - use 'parse_string'
+  result = self._expression.parseString(s)
+C:\Users\danhdc2\AppData\Local\Programs\Python\Python312\Lib\site-packages\matplotlib\_mathtext.py:2197: PyparsingDeprecationWarning: 'parseString' deprecated - use 'parse_string'
+  return self._math_expression.parseString(toks[0][1:-1], parseAll=True)
+C:\Users\danhdc2\AppData\Local\Programs\Python\Python312\Lib\site-packages\pyparsing\util.py:466: PyparsingDeprecationWarning: 'parseAll' argument is deprecated, use 'parse_all'
+  return fn(self, *args, **kwargs)
+C:\Users\danhdc2\AppData\Local\Programs\Python\Python312\Lib\site-packages\matplotlib\_mathtext.py:2178: PyparsingDeprecationWarning: 'resetCache' deprecated - use 'reset_cache'
+  ParserElement.resetCache()
+C:\Users\danhdc2\AppData\Local\Programs\Python\Python312\Lib\site-packages\matplotlib\_mathtext.py:2170: PyparsingDeprecationWarning: 'parseString' deprecated - use 'parse_string'
+  result = self._expression.parseString(s)
+C:\Users\danhdc2\AppData\Local\Programs\Python\Python312\Lib\site-packages\matplotlib\_mathtext.py:2197: PyparsingDeprecationWarning: 'parseString' deprecated - use 'parse_string'
+  return self._math_expression.parseString(toks[0][1:-1], parseAll=True)
+C:\Users\danhdc2\AppData\Local\Programs\Python\Python312\Lib\site-packages\pyparsing\util.py:466: PyparsingDeprecationWarning: 'parseAll' argument is deprecated, use 'parse_all'
+  return fn(self, *args, **kwargs)
+C:\Users\danhdc2\AppData\Local\Programs\Python\Python312\Lib\site-packages\matplotlib\_mathtext.py:2178: PyparsingDeprecationWarning: 'resetCache' deprecated - use 'reset_cache'
+  ParserElement.resetCache()
+13:55:32 | INFO    |   hình: auc_vs_latency
+13:55:32 | INFO    |   hình: ks_curve
+13:55:33 | INFO    |   hình: confusion_matrix
+13:55:34 | INFO    |   hình: score_distribution
+13:55:35 | INFO    |   hình: gains_lift
+13:55:35 | INFO    | Đã xuất thẻ điểm gồm 151 dòng cho 20 biến
+13:55:35 | INFO    | Đã xuất thẻ điểm: 151 dòng
+13:55:35 | INFO    | ========================================================================
+13:55:35 | INFO    | Phân tích SHAP cho mô hình XGBoost...
+13:55:45 | INFO    |   hình: shap_summary
+13:55:46 | INFO    |   hình: shap_group_share
+13:55:46 | INFO    | Đóng góp theo nhóm đặc trưng:
+    group  n_features  shap_sum  shap_mean  shap_max  share_pct
+BEHAVIOUR          76  2.075989   0.027316  0.240351  40.348824
+      CIC          14  1.418800   0.101343  0.377540  27.575729
+  DERIVED          12  0.977894   0.081491  0.228549  19.006302
+   STATIC           8  0.357035   0.044629  0.103086   6.939322
+     LOAN           6  0.315386   0.052564  0.116725   6.129827
+13:55:47 | INFO    |   hình: shap_importance_bar
+13:55:47 | INFO    | Ví dụ lý do quyết định:
+              feature     value     shap   direction
+          dpd_max_12m      51.0 0.546750 Tăng rủi ro
+                  dti  0.854167 0.436543 Tăng rủi ro
+high_dti_short_tenure         1 0.394096 Tăng rủi ro
+     disposable_ratio -0.508929 0.336942 Tăng rủi ro
+     num_inquiries_3m         4 0.281745 Tăng rủi ro
+     risky_ratio_180d  0.066338 0.234614 Tăng rủi ro
+      worst_group_12m       3.0 0.205455 Tăng rủi ro
+    job_tenure_months         3 0.201103 Tăng rủi ro
+13:55:47 | INFO    | ========================================================================
+13:55:47 | INFO    | Permutation importance: 40 đặc trưng x 5 lần lặp (AUC gốc = 0.8646)
+13:55:51 | INFO    |   ... 25/40
+13:55:56 | INFO    |   hình: permutation_importance_bar
+13:55:56 | INFO    | ========================================================================
+13:55:56 | INFO    | Phân tích trôi dạt dữ liệu và chất lượng mô hình theo thời gian...
+13:56:00 | INFO    |   hình: drift_psi
+13:56:00 | INFO    | PSI: 0 đặc trưng cảnh báo, 0 báo động
+13:56:02 | INFO    |   hình: performance_over_time
+13:56:02 | INFO    | Chất lượng theo tháng:
+ period    n  actual_default_rate  predicted_pd_mean  calibration_gap      auc       ks     gini
+2026-03 1652             0.178571           0.174972        -0.003600 0.866290 0.591452 0.732581
+2026-04 2485             0.174648           0.171085        -0.003563 0.858226 0.576108 0.716452
+2026-05 2429             0.185261           0.177070        -0.008191 0.854971 0.571613 0.709942
+2026-06 2434             0.169269           0.173405         0.004137 0.872522 0.580138 0.745044
+13:56:02 | INFO    | ========================================================================
+13:56:07 | INFO    |   hình: data_overview
+13:56:07 | INFO    | ========================================================================
+13:56:07 | INFO    | HOÀN THÀNH sau 13.0 phút
+13:56:07 | INFO    | Số mô hình đã huấn luyện: 12
+13:56:07 | INFO    | Mô hình tốt nhất: XGBoost
+13:56:07 | INFO    |   AUC  = 0.8625 | Gini = 0.7250 | KS = 0.5775
+13:56:07 | INFO    |   Trần Bayes (PD thực) = 0.9109
+13:56:07 | INFO    |   Thời gian chấm điểm p95 = 16.671 ms
+13:56:07 | INFO    | ========================================================================
+=== 06_export_latex_tables ===
+INFO    | Xuất bảng LaTeX vào D:\Tài liệu\Study\Code\Luan_van_Ths_Dong_Quoc_Huy\thesis\tables
+INFO    |   tab_dataset.tex
+INFO    |   tab_validity.tex
+INFO    |   tab_missing.tex
+INFO    |   tab_outliers.tex
+INFO    |   tab_label.tex
+INFO    |   tab_vintage.tex
+INFO    |   tab_split.tex
+INFO    |   tab_feature_groups.tex
+INFO    |   tab_iv_top.tex
+INFO    |     co bảng: 16.01cm -> 15.30cm
+INFO    |   tab_iv_group.tex
+INFO    |   tab_selection.tex
+INFO    |   tab_selection_group.tex
+INFO    |   tab_tuning.tex
+INFO    |     co bảng: 15.53cm -> 15.30cm
+INFO    |   tab_model_quality.tex
+INFO    |     co bảng: 15.63cm -> 15.30cm
+INFO    |   tab_model_business.tex
+INFO    |   tab_overfit.tex
+INFO    |     co bảng: 16.05cm -> 15.30cm
+INFO    |   tab_model_cost.tex
+INFO    |     co bảng: 24.82cm -> 15.30cm
+INFO    |   tab_gains.tex
+INFO    |     co bảng: 17.45cm -> 15.30cm
+INFO    |   tab_shap_group.tex
+INFO    |   tab_drift.tex
+INFO    |     co bảng: 21.28cm -> 15.30cm
+INFO    |   tab_perf_time.tex
+INFO    |     co bảng: 16.45cm -> 15.30cm
+INFO    |   tab_cutoff.tex
+INFO    |   tab_cutoff_sens.tex
+INFO    |     co bảng: 15.65cm -> 15.30cm
+INFO    |   tab_decision_mix.tex
+INFO    |   tab_processing_time.tex
+INFO    |   tab_rule_hits.tex
+INFO    |     co bảng: 15.85cm -> 15.30cm
+INFO    |   tab_api.tex
+INFO    |     co bảng: 15.50cm -> 15.30cm
+INFO    |   tab_traditional.tex
+INFO    |   tab_rule_catalogue.tex
+INFO    |   tab_feature_catalogue.tex
+INFO    |   tab_risk_bands.tex
+INFO    |   macros_results.tex
+INFO    | Đã xuất 81 macro số liệu
+=== DONE ===

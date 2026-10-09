@@ -1,0 +1,53 @@
+# ===========================================================================
+# Triển khai mô hình học máy hỗ trợ kiểm duyệt tín dụng
+#
+# Hai dịch vụ dùng chung một ảnh Docker:
+#   review-api  - dịch vụ REST tiếp nhận hồ sơ và trả khuyến nghị
+#   dashboard   - giao diện trực quan hóa kết quả thực nghiệm
+#
+# Điều kiện tiên quyết: đã chạy `python scripts/run_all.py` để sinh mô hình
+# và kết quả trong thư mục results/.
+#
+# Khởi chạy:  docker compose -f deploy/docker-compose.yml up -d
+# ===========================================================================
+name: creditreview
+
+services:
+  review-api:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    container_name: cr-review-api
+    ports:
+      - "8000:8000"
+    volumes:
+      # Mô hình đã huấn luyện và dữ liệu đặc trưng được gắn từ máy chủ,
+      # không đóng gói vào ảnh để giữ ảnh gọn và cho phép cập nhật mô hình
+      # mà không phải dựng lại ảnh.
+      - ../results/models:/opt/creditreview/results/models:ro
+      - ../data/raw:/opt/creditreview/data/raw:ro
+    environment:
+      # Mọi khóa cấu hình đều ghi đè được qua biến môi trường CR_<A>__<B>
+      CR_DECISION__PD_APPROVE_MAX: "0.0564"
+      CR_DECISION__PD_REJECT_MIN: "0.1339"
+    restart: unless-stopped
+
+  dashboard:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    container_name: cr-dashboard
+    command:
+      - streamlit
+      - run
+      - src/creditreview/dashboard/app.py
+      - --server.port=8501
+      - --server.address=0.0.0.0
+    ports:
+      - "8501:8501"
+    volumes:
+      - ../results:/opt/creditreview/results:ro
+      - ../data:/opt/creditreview/data:ro
+    depends_on:
+      - review-api
+    restart: unless-stopped

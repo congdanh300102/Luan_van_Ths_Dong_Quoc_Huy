@@ -1,0 +1,1100 @@
+% ===========================================================================
+% CHƯƠNG 1: CƠ SỞ LÝ LUẬN
+% ===========================================================================
+\chapter{CƠ SỞ LÝ LUẬN}
+% Tiêu đề chạy rút gọn: tiêu đề chương đầy đủ dài hơn một dòng đầu trang,
+% khiến fancyhdr phải nới \headheight và làm lệch khung chữ của cả chương.
+\markboth{Chương 1. Cơ sở lý luận}{}
+\label{chap:co-so-ly-luan}
+
+\noindent\textit{Chương 1 hệ thống hóa cơ sở lý thuyết của đề án. Nội dung chương
+lần lượt trình bày tổng quan về tín dụng và hoạt động kiểm duyệt tín dụng; tổng
+quan về học máy và vai trò của học máy trong đánh giá tín dụng; đặc điểm dữ liệu
+và phương pháp xây dựng đặc trưng cho bài toán tín dụng; và cuối cùng là các mô
+hình học máy được nghiên cứu trong đề án cùng cơ sở so sánh, lựa chọn mô hình phù
+hợp. Đây là nền tảng để Chương 2 xây dựng mô hình và Chương 3 tiến hành thực
+nghiệm.}
+
+\section{Tổng quan về tín dụng và kiểm duyệt tín dụng}
+\label{sec:tong-quan-tin-dung}
+
+\subsection{Khái niệm tín dụng}
+\label{subsec:khai-niem-tin-dung}
+
+Tín dụng là quan hệ chuyển nhượng quyền sử dụng một lượng giá trị -- thường dưới
+hình thái tiền tệ -- từ bên cho vay sang bên đi vay trong một khoảng thời gian
+xác định, với cam kết hoàn trả cả gốc và lãi khi đến hạn. Ba đặc trưng cơ bản của
+quan hệ tín dụng gồm: \textit{tính hoàn trả} (khoản vốn phải được trả lại, khác
+với cấp phát hay tài trợ không hoàn lại), \textit{tính thời hạn} (quyền sử dụng
+vốn chỉ được chuyển giao trong một thời gian nhất định) và \textit{tính sinh lời}
+(bên cho vay nhận được khoản lãi như phần bù cho việc từ bỏ quyền sử dụng vốn và
+cho rủi ro phải gánh chịu).
+
+Đặc trưng thứ ba dẫn tới một hệ quả quan trọng về mặt kinh tế: lãi suất không chỉ
+phản ánh giá của vốn theo thời gian mà còn phải bao hàm \textit{phần bù rủi ro}.
+Một tổ chức tín dụng cho vay với cùng một mức lãi suất đối với mọi khách hàng sẽ
+gặp hiện tượng lựa chọn ngược: khách hàng có rủi ro thấp thấy mức lãi suất đó
+không hấp dẫn và tìm nguồn vốn khác, còn khách hàng có rủi ro cao sẵn sàng chấp
+nhận. Kết quả là danh mục tín dụng dần tập trung vào nhóm rủi ro cao trong khi
+lãi suất không được điều chỉnh tương xứng. Đây chính là lý do nền tảng khiến việc
+\textit{phân biệt được mức độ rủi ro của từng khách hàng} trở thành năng lực cốt
+lõi của hoạt động tín dụng, chứ không đơn thuần là một yêu cầu về tuân thủ.
+
+Trong phạm vi đề án, đối tượng nghiên cứu là tín dụng bán lẻ đối với khách hàng
+cá nhân: các khoản vay tiêu dùng, vay mua ô tô, vay thế chấp bất động sản và thấu
+chi. Nhóm sản phẩm này có hai đặc điểm khiến chúng đặc biệt phù hợp với phương
+pháp mô hình hóa thống kê. Thứ nhất, số lượng hồ sơ lớn nhưng giá trị mỗi khoản
+vay tương đối nhỏ, nên chi phí thẩm định thủ công cho từng hồ sơ khó có thể tương
+xứng với quy mô khoản vay. Thứ hai, các khoản vay trong cùng một sản phẩm có mức
+độ đồng nhất cao, cho phép rút ra quy luật thống kê từ dữ liệu lịch sử -- điều
+khó thực hiện với tín dụng doanh nghiệp lớn, nơi mỗi khoản vay gần như là một
+trường hợp riêng biệt.
+
+\subsection{Quy trình cấp và kiểm duyệt tín dụng}
+\label{subsec:quy-trinh-kiem-duyet}
+
+Quy trình cấp tín dụng tại các tổ chức tín dụng thường được tổ chức thành năm
+bước chính:
+
+\begin{enumerate}[label=(\arabic*)]
+  \item \textbf{Tiếp nhận hồ sơ.} Khách hàng nộp đề nghị vay vốn kèm các tài liệu
+  chứng minh nhân thân, thu nhập, mục đích sử dụng vốn và tài sản bảo đảm (nếu
+  có). Hồ sơ có thể được tiếp nhận tại quầy, qua kênh trực tuyến hoặc qua đối tác
+  phân phối.
+
+  \item \textbf{Thu thập và kiểm tra thông tin.} Cán bộ tín dụng đối chiếu thông
+  tin khách hàng khai báo với dữ liệu nội bộ của ngân hàng (lịch sử quan hệ, số
+  dư tài khoản, lịch sử giao dịch) và với dữ liệu bên ngoài, trong đó quan trọng
+  nhất là bản tin tín dụng từ Trung tâm Thông tin tín dụng Quốc gia Việt Nam
+  (CIC)~\cite{tt15}.
+
+  \item \textbf{Thẩm định và kiểm duyệt.} Đây là bước trọng tâm của quy trình:
+  đánh giá năng lực tài chính, khả năng trả nợ, mức độ rủi ro của khách hàng và
+  sự phù hợp của khoản vay với chính sách tín dụng hiện hành. Kết quả của bước
+  này là đề xuất phê duyệt, từ chối hoặc yêu cầu bổ sung thông tin.
+
+  \item \textbf{Phê duyệt.} Cấp có thẩm quyền -- tùy theo hạn mức được phân cấp
+  -- ra quyết định cuối cùng trên cơ sở hồ sơ và đề xuất thẩm định.
+
+  \item \textbf{Giải ngân và giám sát sau vay.} Sau khi hoàn tất thủ tục pháp lý,
+  khoản vay được giải ngân và chuyển sang giai đoạn theo dõi việc trả nợ, phân
+  loại nợ và trích lập dự phòng rủi ro theo quy định~\cite{tt11}.
+\end{enumerate}
+
+Phạm vi của đề án tập trung vào bước thứ ba -- \textbf{kiểm duyệt tín dụng}. Cần
+phân biệt rõ hai khái niệm dễ nhầm lẫn: \textit{kiểm duyệt} là quá trình đánh giá
+và sàng lọc hồ sơ để hình thành đề xuất có căn cứ, còn \textit{phê duyệt} là hành
+vi ra quyết định của cấp có thẩm quyền. Hệ thống được xây dựng trong đề án hỗ trợ
+bước kiểm duyệt: nó cung cấp đánh giá rủi ro định lượng kèm lý giải, làm đầu vào
+cho quyết định của con người, chứ không thay thế thẩm quyền phê duyệt.
+
+Sự phân biệt này không chỉ mang tính thuật ngữ mà có ý nghĩa thiết kế trực tiếp.
+Một mô hình \textit{thay thế} con người buộc phải đưa ra quyết định nhị phân cho
+mọi hồ sơ, kể cả những hồ sơ mà bản thân nó không đủ chắc chắn. Một mô hình
+\textit{hỗ trợ} có thể -- và nên -- thừa nhận vùng không chắc chắn của mình và
+chuyển những hồ sơ đó cho người có thẩm quyền xem xét. Toàn bộ thiết kế ba vùng
+quyết định được trình bày ở Chương~\ref{chap:xay-dung-he-thong} bắt nguồn từ nhận
+định này.
+
+\subsection{Các yếu tố ảnh hưởng đến quyết định tín dụng}
+\label{subsec:yeu-to-anh-huong}
+
+Thực tiễn thẩm định tín dụng từ lâu đã tổng kết các yếu tố cần xem xét thành
+khung phân tích \textbf{5C}~\cite{thomas2017}:
+
+\begin{itemize}
+  \item \textbf{Character} (Uy tín): thái độ và lịch sử thực hiện nghĩa vụ trả nợ
+  của khách hàng. Trong dữ liệu, yếu tố này được phản ánh qua lịch sử tín dụng
+  tại CIC: nhóm nợ, số ngày quá hạn, tiền sử nợ đã xử lý rủi ro.
+
+  \item \textbf{Capacity} (Năng lực trả nợ): khả năng tạo ra dòng tiền để trả nợ,
+  đo bằng thu nhập, tính ổn định của thu nhập và các chỉ tiêu như tỷ lệ nợ trên
+  thu nhập ($\DTI$) hay tỷ lệ khoản trả góp trên thu nhập.
+
+  \item \textbf{Capital} (Vốn tự có): phần vốn khách hàng tự bỏ ra trong phương
+  án vay, thể hiện mức độ ``cùng chịu rủi ro''. Với khoản vay có tài sản bảo đảm,
+  yếu tố này gắn với tỷ lệ vay trên giá trị tài sản ($\LTV$).
+
+  \item \textbf{Collateral} (Tài sản bảo đảm): nguồn thu hồi nợ thứ cấp khi nguồn
+  trả nợ chính không thực hiện được.
+
+  \item \textbf{Conditions} (Điều kiện): bối cảnh kinh tế vĩ mô, đặc điểm ngành
+  nghề và mục đích sử dụng vốn.
+\end{itemize}
+
+Khung 5C có giá trị định hướng nhưng bộc lộ một hạn chế khi chuyển thành quy tắc
+vận hành: nó liệt kê các yếu tố cần xem xét mà không quy định cách \textit{kết
+hợp} chúng thành một đánh giá tổng thể. Trong thực tế, mức độ quan trọng tương
+đối của từng yếu tố thay đổi theo phân khúc khách hàng và theo thời gian; hơn nữa
+các yếu tố tương tác với nhau theo cách phi tuyến. Một khách hàng có $\DTI$ ở mức
+0,45 có thể chấp nhận được nếu thu nhập ổn định và lịch sử tín dụng tốt, nhưng
+lại rủi ro cao nếu thâm niên công việc ngắn và đang có quan hệ tín dụng với nhiều
+tổ chức. Chính khoảng trống này -- xác định trọng số và dạng tương tác giữa các
+yếu tố từ dữ liệu thay vì từ phán đoán chủ quan -- là chỗ mà phương pháp học máy
+đóng góp giá trị.
+
+\subsection{Rủi ro tín dụng và đánh giá rủi ro tín dụng}
+\label{subsec:rui-ro-tin-dung}
+
+\textbf{Rủi ro tín dụng} là khả năng bên đi vay không thực hiện được nghĩa vụ trả
+nợ theo cam kết, dẫn tới tổn thất cho bên cho vay. Theo khung Basel
+II~\cite{bcbs2006}, tổn thất kỳ vọng của một khoản tín dụng được phân rã thành
+tích của ba thành phần:
+
+\begin{equation}
+\EL = \PD \times \LGD \times \EAD,
+\label{eq:expected-loss}
+\end{equation}
+
+trong đó $\PD$ (\eng{Probability of Default}) là xác suất vỡ nợ trong một khoảng
+thời gian xác định -- thường là 12 tháng; $\LGD$ (\eng{Loss Given Default}) là tỷ
+lệ tổn thất khi vỡ nợ xảy ra; và $\EAD$ (\eng{Exposure at Default}) là dư nợ tại
+thời điểm vỡ nợ.
+
+Phân rã này cho thấy vị trí của bài toán mà đề án giải quyết. Trong ba thành
+phần, $\PD$ là đại lượng gắn trực tiếp với \textit{đặc điểm của khách hàng} và
+được quyết định tại thời điểm cấp tín dụng; $\LGD$ và $\EAD$ phụ thuộc chủ yếu
+vào cấu trúc khoản vay, tài sản bảo đảm và quá trình thu hồi nợ sau này. Vì vậy
+$\PD$ là đại lượng mà hoạt động kiểm duyệt tín dụng có thể tác động và cũng là
+đại lượng mà mô hình học máy có thể ước lượng từ dữ liệu lịch sử. Đề án tập trung
+vào việc ước lượng $\PD$; việc mô hình hóa $\LGD$ và $\EAD$ không thuộc phạm vi
+nghiên cứu.
+
+\paragraph{Định nghĩa vỡ nợ.} Để ước lượng $\PD$, trước hết phải định nghĩa được
+thế nào là ``vỡ nợ''. Thông tư 11/2021/TT-NHNN~\cite{tt11} quy định việc phân
+loại nợ thành năm nhóm theo mức độ rủi ro, trong đó nợ thuộc nhóm 3 (Nợ dưới tiêu
+chuẩn), nhóm 4 (Nợ nghi ngờ) và nhóm 5 (Nợ có khả năng mất vốn) được xếp vào
+\textbf{nợ xấu}. Về mặt số ngày quá hạn, ranh giới của nợ nhóm 3 là 90 ngày. Định
+nghĩa này trùng với ngưỡng mà Basel sử dụng cho khái niệm \eng{default}, nhờ đó
+kết quả nghiên cứu có thể đối chiếu với các công trình quốc tế. Đề án sử dụng
+thống nhất định nghĩa: một hồ sơ được gán nhãn \textit{xấu} nếu phát sinh tình
+trạng quá hạn từ 90 ngày trở lên (tương đương nợ nhóm 3--5) trong cửa sổ quan sát
+kể từ thời điểm cấp tín dụng.
+
+\paragraph{Ba thế hệ phương pháp đánh giá.} Công tác đánh giá rủi ro tín dụng đã
+trải qua ba giai đoạn phát triển. Giai đoạn đầu dựa trên \textit{phán đoán chuyên
+gia}: cán bộ tín dụng vận dụng kinh nghiệm để đưa ra nhận định, linh hoạt với
+trường hợp đặc thù nhưng thiếu nhất quán và khó mở rộng theo quy mô. Từ thập niên
+1960, \textit{thẻ điểm thống kê} (\eng{scorecard}) dựa trên hồi quy logistic ra
+đời, quy đổi mỗi đặc điểm khách hàng thành một số điểm; phương pháp này bảo đảm
+tính nhất quán, cho phép kiểm định thống kê và dễ giải thích cho cơ quan quản lý.
+Từ thập niên 2000, \textit{mô hình học máy} được áp dụng ngày càng rộng rãi nhờ
+khả năng nắm bắt quan hệ phi tuyến và tương tác bậc cao mà không cần chỉ định
+trước dạng hàm, đổi lại khó giải thích hơn và đòi hỏi kiểm định chặt chẽ hơn.
+
+Ba thế hệ này không thay thế nhau hoàn toàn. Trong thực tiễn hiện nay, các tổ
+chức tín dụng thường vận hành đồng thời cả ba: mô hình học máy cung cấp điểm rủi
+ro, bộ luật nghiệp vụ bảo đảm tuân thủ chính sách và ngưỡng pháp lý, còn phán
+đoán chuyên gia xử lý các hồ sơ nằm ngoài vùng mà mô hình đủ tin cậy. Hệ thống
+được xây dựng trong đề án đi theo mô hình kết hợp này.
+
+\subsection{Những hạn chế của phương pháp kiểm duyệt tín dụng truyền thống}
+\label{subsec:han-che-truyen-thong}
+
+Phương pháp kiểm duyệt truyền thống -- dựa trên bộ quy tắc nghiệp vụ cố định kết
+hợp với phán đoán của cán bộ tín dụng -- bộc lộ bốn hạn chế chính.
+
+\paragraph{Thứ nhất, không biểu diễn được tương tác giữa các yếu tố.} Một bộ quy
+tắc có dạng ``nếu $\DTI > 0{,}6$ thì từ chối'' xét từng chỉ tiêu độc lập với các
+chỉ tiêu còn lại. Cách làm này ngầm giả định rằng ảnh hưởng của mỗi yếu tố tới
+rủi ro là cộng tính và không phụ thuộc giá trị của các yếu tố khác. Giả định đó
+thường bị vi phạm trong thực tế: tác động của tỷ lệ $\DTI$ cao lên xác suất vỡ nợ
+mạnh hơn nhiều ở nhóm khách hàng có thu nhập không ổn định so với nhóm có thu
+nhập ổn định. Về mặt hình thức, bộ quy tắc chỉ tạo ra được các mặt phân chia song
+song với trục tọa độ trong không gian đặc trưng, trong khi ranh giới rủi ro thực
+tế có dạng phức tạp hơn nhiều.
+
+\paragraph{Thứ hai, ngưỡng được đặt theo phán đoán chứ không theo dữ liệu.} Các
+ngưỡng như ``$\DTI$ tối đa 60\%'' hay ``thâm niên công việc tối thiểu 6 tháng''
+thường được kế thừa từ thông lệ hoặc từ kinh nghiệm của người xây dựng chính
+sách. Chúng hiếm khi được hiệu chỉnh lại theo dữ liệu thực tế của chính tổ chức,
+và càng hiếm khi được kiểm định xem mức ngưỡng đó có thực sự tối ưu về mặt đánh
+đổi giữa quy mô cấp tín dụng và chất lượng danh mục hay không.
+
+\paragraph{Thứ ba, kết quả đầu ra mang tính nhị phân, không có thang đo mức độ.}
+Một bộ quy tắc cho biết hồ sơ ``đạt'' hay ``không đạt'' nhưng không cho biết hồ
+sơ đạt ở mức nào. Điều này khiến tổ chức tín dụng không thể thực hiện hai nghiệp
+vụ quan trọng: định giá theo rủi ro (khách hàng rủi ro thấp được hưởng lãi suất
+ưu đãi hơn) và phân bổ nguồn lực thẩm định (tập trung nhân lực vào nhóm hồ sơ
+thực sự cần xem xét kỹ).
+
+\paragraph{Thứ tư, tính nhất quán và tốc độ xử lý bị giới hạn bởi yếu tố con
+người.} Cùng một hồ sơ có thể nhận được kết luận khác nhau từ hai cán bộ khác
+nhau, hoặc từ cùng một cán bộ ở hai thời điểm khác nhau. Khi khối lượng hồ sơ
+tăng, thời gian xử lý kéo dài và áp lực công việc làm gia tăng nguy cơ sai sót.
+
+Bốn hạn chế trên đều có chung một đặc điểm: chúng không phải là vấn đề về năng
+lực chuyên môn mà là giới hạn cấu trúc của phương pháp. Do đó, hướng khắc phục
+không phải là tăng cường đào tạo hay bổ sung thêm quy tắc, mà là bổ sung một
+thành phần có khả năng học quan hệ từ dữ liệu và cho ra kết quả trên thang đo
+liên tục. Đó chính là vai trò của mô hình học máy mà đề án xây
+dựng.
+
+\section{Tổng quan về học máy trong đánh giá tín dụng}
+\label{sec:tong-quan-hoc-may}
+
+\subsection{Khái niệm học máy}
+\label{subsec:khai-niem-hoc-may}
+
+Học máy (\eng{machine learning}) là lĩnh vực nghiên cứu các thuật toán cho phép
+hệ thống máy tính cải thiện hiệu quả thực hiện một nhiệm vụ thông qua kinh
+nghiệm, thay vì thông qua việc được lập trình tường minh từng bước. Định nghĩa
+được trích dẫn rộng rãi của Mitchell~\cite{mitchell1997} phát biểu: một chương trình máy tính được
+gọi là \textit{học} từ kinh nghiệm $E$ đối với lớp nhiệm vụ $T$ và độ đo hiệu quả
+$P$, nếu hiệu quả của nó trên nhiệm vụ $T$, đo bằng $P$, cải thiện theo kinh
+nghiệm $E$.
+
+Áp dụng vào bài toán của đề án, ba thành phần này được xác định cụ thể như sau:
+
+\begin{itemize}
+  \item \textbf{Nhiệm vụ $T$}: dự báo khả năng một hồ sơ vay sẽ phát sinh nợ xấu
+  trong 12 tháng kể từ thời điểm cấp tín dụng.
+  \item \textbf{Kinh nghiệm $E$}: tập hồ sơ vay trong quá khứ, mỗi hồ sơ gồm các
+  đặc trưng được quan sát tại thời điểm nộp và kết quả trả nợ đã biết.
+  \item \textbf{Độ đo hiệu quả $P$}: khả năng phân biệt giữa hồ sơ tốt và hồ sơ
+  xấu, đo bằng các chỉ tiêu như $\AUC$, hệ số Gini và thống kê $\KS$.
+\end{itemize}
+
+Điểm khác biệt căn bản giữa học máy và lập trình theo quy tắc nằm ở chiều của
+quá trình suy luận. Lập trình theo quy tắc đi từ quy luật do con người phát biểu
+tới kết quả; học máy đi ngược lại -- từ các cặp (dữ liệu đầu vào, kết quả đã
+biết) để suy ra quy luật. Trong bài toán tín dụng, chiều ngược này có ý nghĩa
+thực tiễn rõ rệt: thay vì yêu cầu chuyên gia phát biểu chính xác mối quan hệ giữa
+hàng trăm đặc trưng và xác suất vỡ nợ (điều vượt quá khả năng của phán đoán chủ
+quan), thuật toán rút ra quan hệ đó từ chính dữ liệu lịch sử của tổ chức.
+
+\subsection{Phân loại các phương pháp học máy}
+\label{subsec:phan-loai-hoc-may}
+
+Các phương pháp học máy thường được phân loại theo dạng thông tin giám sát có
+trong dữ liệu huấn luyện.
+
+\paragraph{Học có giám sát (\eng{supervised learning}).} Dữ liệu huấn luyện gồm
+các cặp $(\bm{x}_i, y_i)$, trong đó $\bm{x}_i$ là vectơ đặc trưng và $y_i$ là
+nhãn đã biết. Mục tiêu là học một ánh xạ $f: \mathcal{X} \to \mathcal{Y}$ sao cho
+$f(\bm{x})$ xấp xỉ tốt nhãn thật trên dữ liệu mới. Khi $\mathcal{Y}$ là tập hữu
+hạn các lớp, bài toán là \textit{phân loại}; khi $\mathcal{Y}$ liên tục, bài toán
+là \textit{hồi quy}.
+
+\paragraph{Học không giám sát (\eng{unsupervised learning}).} Dữ liệu chỉ gồm
+$\bm{x}_i$ mà không có nhãn. Thuật toán tìm cấu trúc tiềm ẩn trong dữ liệu: phân
+cụm khách hàng thành các nhóm tương đồng, giảm chiều dữ liệu, hoặc phát hiện bất
+thường. Trong lĩnh vực tín dụng, nhóm phương pháp này thường được dùng cho phân
+khúc khách hàng và phát hiện gian lận.
+
+\paragraph{Học bán giám sát (\eng{semi-supervised learning}).} Kết hợp một lượng
+nhỏ dữ liệu có nhãn với lượng lớn dữ liệu không nhãn. Trong bài toán tín dụng,
+tình huống này xuất hiện tự nhiên: các hồ sơ \textit{bị từ chối} không có kết quả
+trả nợ nên không có nhãn, trong khi chúng chiếm một phần đáng kể tổng số hồ sơ
+nộp vào. Vấn đề này được biết đến với tên gọi \eng{reject inference}.
+
+\paragraph{Học tăng cường (\eng{reinforcement learning}).} Tác tử học chính sách
+hành động thông qua tương tác với môi trường và tín hiệu thưởng/phạt. Phương pháp
+này ít được dùng cho chấm điểm tín dụng do khó thiết lập môi trường thử nghiệm an
+toàn, nhưng có ứng dụng trong tối ưu hạn mức và chiến lược thu hồi nợ.
+
+Bài toán của đề án -- dự báo nhãn nhị phân ``tốt/xấu'' từ dữ liệu lịch sử đã có
+kết quả -- thuộc nhóm \textbf{học có giám sát, bài toán phân loại nhị phân}. Tuy
+nhiên, cần lưu ý một đặc thù: kết quả cần có không phải là nhãn dự báo
+mà là \textit{xác suất} vỡ nợ được hiệu chuẩn đúng, vì xác suất này được dùng
+trực tiếp để phân vùng quyết định và tính tổn thất kỳ vọng theo
+công thức~\eqref{eq:expected-loss}.
+
+\subsection{Học máy có giám sát trong bài toán tín dụng}
+\label{subsec:hoc-co-giam-sat}
+
+Phát biểu hình thức bài toán như sau. Cho tập huấn luyện
+$\mathcal{D} = \{(\bm{x}_i, y_i)\}_{i=1}^{n}$ với $\bm{x}_i \in \mathbb{R}^d$ là
+vectơ đặc trưng của hồ sơ thứ $i$ và $y_i \in \{0, 1\}$ là nhãn ($y_i = 1$ nếu hồ
+sơ phát sinh nợ xấu). Cần tìm hàm $f$ ước lượng xác suất có điều kiện
+
+\begin{equation}
+\PD(\bm{x}) = \Pr(y = 1 \mid \bm{X} = \bm{x}).
+\label{eq:pd-definition}
+\end{equation}
+
+Hàm $f$ được chọn bằng cách tối thiểu hóa một hàm mất mát trên tập huấn luyện, có
+bổ sung thành phần điều chuẩn để kiểm soát độ phức tạp:
+
+\begin{equation}
+\hat{f} = \argmin_{f \in \mathcal{F}}
+\left[ \frac{1}{n} \sum_{i=1}^{n} \ell\big(y_i, f(\bm{x}_i)\big)
+       + \lambda \, \Omega(f) \right].
+\label{eq:erm}
+\end{equation}
+
+Hàm mất mát chuẩn cho bài toán phân loại nhị phân có đầu ra xác suất là hàm
+\textbf{entropy chéo nhị phân} (\eng{binary cross-entropy}, còn gọi là log-loss):
+
+\begin{equation}
+\ell(y, p) = -\big[\, y \log p + (1 - y) \log (1 - p) \,\big].
+\label{eq:logloss}
+\end{equation}
+
+Log-loss thuộc lớp \textit{quy tắc chấm điểm chính đáng} (\eng{strictly proper
+scoring rule}): kỳ vọng của nó đạt cực tiểu khi và chỉ khi $p$ bằng đúng xác suất
+thật. Tính chất này có ý nghĩa quyết định đối với bài toán tín dụng, nơi giá trị
+xác suất được sử dụng trực tiếp chứ không chỉ dùng để xếp hạng. Nếu thay bằng một
+hàm mất mát không chính đáng, chẳng hạn tối ưu trực tiếp độ chính xác phân loại,
+mô hình có thể xếp hạng tốt nhưng cho ra giá trị xác suất sai lệch hệ thống.
+
+\paragraph{Ba đặc thù của bài toán tín dụng.} So với bài toán phân loại nhị phân
+thông thường, bài toán chấm điểm tín dụng có ba đặc thù cần được xử lý riêng:
+
+\begin{enumerate}[label=(\arabic*)]
+  \item \textbf{Dữ liệu mất cân bằng.} Tỷ lệ hồ sơ xấu thường ở mức 3--20\%, tùy
+  sản phẩm và phân khúc. Mức mất cân bằng này khiến chỉ tiêu độ chính xác
+  (\eng{accuracy}) mất ý nghĩa: một mô hình dự báo ``mọi hồ sơ đều tốt'' vẫn đạt
+  độ chính xác 85\% mà không có giá trị sử dụng nào.
+
+  \item \textbf{Chi phí hai loại sai lầm rất khác nhau.} Bỏ sót một hồ sơ xấu
+  (\eng{false negative}) gây tổn thất bằng một phần đáng kể dư nợ, trong khi từ
+  chối sai một hồ sơ tốt (\eng{false positive}) chỉ làm mất phần lãi biên. Tỷ lệ
+  chi phí thường được ước lượng trong khoảng 10:1 đến 15:1. Hệ quả là ngưỡng
+  quyết định phải được chọn theo hàm chi phí~\cite{elkan2001} chứ không phải theo
+  giá trị mặc định 0,5.
+
+  \item \textbf{Trôi dạt theo thời gian.} Phân phối đặc trưng và quan hệ giữa đặc
+  trưng với nhãn thay đổi theo chu kỳ kinh tế, theo chính sách sản phẩm và theo
+  thành phần khách hàng~\cite{gama2014}. Do đó việc đánh giá mô hình phải được
+  thực hiện trên dữ liệu của giai đoạn \textit{sau} giai đoạn huấn luyện, chứ
+  không phải trên mẫu ngẫu nhiên trộn lẫn các giai đoạn.
+\end{enumerate}
+
+\subsection{Quy trình xây dựng mô hình học máy}
+\label{subsec:quy-trinh-xay-dung-mo-hinh}
+
+Quy trình xây dựng một mô hình học máy phục vụ nghiệp vụ tín dụng gồm bảy bước,
+tổ chức thành ba khối như minh họa ở Hình~\ref{fig:ml-pipeline}: khối
+\textit{chuẩn bị dữ liệu} (bước 1--3), khối \textit{xây dựng mô hình} (bước 4--6)
+và khối \textit{vận hành} (bước 7).
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+  font=\small,
+  module/.style={draw=blue!45!black, fill=blue!9, rounded corners=3pt,
+                 line width=0.6pt, blur shadow={shadow blur steps=5}},
+  panel/.style={draw=black!55, rounded corners=3pt, line width=0.5pt},
+  inner/.style={draw=black!60, fill=white, rounded corners=2pt,
+                align=center, font=\footnotesize, inner sep=2pt,
+                minimum height=0.95cm, text width=2.35cm},
+  flow/.style={-{Stealth[length=2.2mm]}, line width=0.8pt, draw=black!70},
+  up/.style={-{Triangle[length=2.2mm, width=4.2mm]}, line width=2.6pt,
+             draw=orange!75!yellow},
+]
+% ---------------- khối trung tâm: xây dựng mô hình -----------------------
+\draw[module] (0,0) rectangle (8.6,7.2);
+\node[font=\small\bfseries] at (4.3,6.88) {Khối xây dựng mô hình học máy};
+
+% tầng trên: bước (4)
+\draw[panel, fill=yellow!28] (0.3,4.55) rectangle (8.3,6.55);
+\node[font=\small] at (4.3,6.25) {(4) Trích xuất và lựa chọn đặc trưng};
+\node[inner] at (1.60,5.22) {Đặc trưng\\theo cửa sổ};
+\node[inner] at (4.30,5.22) {Tỷ số và\\tương tác};
+\node[inner] at (7.00,5.22) {Lọc IV, PSI,\\tương quan};
+
+% tầng giữa: bước (5)
+\node[draw=black!55, fill=orange!18, rounded corners=3pt, align=center,
+      minimum width=7.0cm, minimum height=1.0cm] (train) at (4.3,3.55)
+      {(5) Huấn luyện và tối ưu mô hình\\[-1pt]
+       {\footnotesize trọng số lớp · dừng sớm · tìm kiếm ngẫu nhiên}};
+
+% tầng dưới: bước (6)
+\draw[panel, fill=green!22] (0.3,0.3) rectangle (8.3,2.55);
+\node[font=\small] at (4.3,2.25) {(6) Đánh giá và hiệu chuẩn};
+\node[inner] at (1.60,1.15) {AUC, Gini,\\KS, ECE};
+\node[inner] at (4.30,1.15) {Hiệu chuẩn\\xác suất};
+\node[inner] at (7.00,1.15) {Chọn ngưỡng\\theo chi phí};
+
+% mũi tên giữa các tầng
+\draw[up] (4.3,4.55) -- (4.3,4.09);
+\draw[up] (4.3,3.03) -- (4.3,2.58);
+
+% ---------------- khối trái: chuẩn bị dữ liệu -----------------------------
+\draw[module] (-2.3,0) rectangle (-0.55,7.2);
+\node[rotate=90, align=center] at (-1.425,3.6)
+  {\textbf{Khối chuẩn bị dữ liệu}\\[2pt]
+   {\footnotesize (1) Xác định bài toán và biến mục tiêu}\\[1pt]
+   {\footnotesize (2) Thu thập \,·\, (3) Tiền xử lý, làm sạch}};
+
+% ---------------- khối phải: vận hành -------------------------------------
+\draw[module] (9.15,0) rectangle (10.9,7.2);
+\node[rotate=90, align=center] at (10.025,3.6)
+  {\textbf{Khối vận hành}\\[2pt]
+   {\footnotesize (7) Triển khai và giám sát}\\[1pt]
+   {\footnotesize dịch vụ REST \,·\, giám sát PSI}};
+
+% ---------------- đầu vào / đầu ra ---------------------------------------
+\node[rotate=90, font=\footnotesize] at (-3.0,3.6) {Dữ liệu hồ sơ tín dụng};
+\node[rotate=90, font=\footnotesize] at (11.6,3.6) {PD, khuyến nghị và lý do};
+\draw[flow] (-2.77,3.6) -- (-2.3,3.6);
+\draw[flow] (-0.55,3.6) -- (0,3.6);
+\draw[flow] (8.6,3.6) -- (9.15,3.6);
+\draw[flow] (10.9,3.6) -- (11.37,3.6);
+
+% ---------------- vòng phản hồi -------------------------------------------
+\draw[flow, dashed, draw=black!55] (10.025,0) -- (10.025,-0.55)
+  -- (-1.425,-0.55) -- (-1.425,0);
+\node[font=\footnotesize\itshape, fill=white, inner sep=2pt] at (4.3,-0.55)
+  {cập nhật dữ liệu và huấn luyện lại khi phát hiện suy giảm};
+\end{tikzpicture}
+\caption{Quy trình xây dựng và vận hành mô hình học máy cho bài toán tín dụng}
+\label{fig:ml-pipeline}
+\end{figure}
+
+Bước (1) định nghĩa thế nào là hồ sơ ``xấu'', xác định cửa sổ quan sát và phạm vi
+khách hàng áp dụng; đây là bước có ảnh hưởng lớn nhất tới toàn bộ kết quả, vì một
+định nghĩa nhãn không phù hợp sẽ làm sai lệch mọi bước tiếp theo. Các bước (2)
+đến (6) lần lượt tổng hợp dữ liệu về cùng một đơn vị phân tích, làm sạch, tạo đặc
+trưng, huấn luyện và đánh giá mô hình. Bước (7) theo dõi mô hình trong vận hành để
+xác định thời điểm huấn luyện lại. Nội dung chi tiết của từng bước, gắn với bài
+toán cụ thể của đề án, được trình bày ở Chương~\ref{chap:xay-dung-he-thong}.
+
+Quy trình này có \textit{tính lặp}: kết quả ở bước sau thường buộc phải quay lại
+điều chỉnh các bước trước. Chẳng hạn, một đặc trưng có chỉ số Information Value
+cao bất thường ở bước (4) có thể là dấu hiệu biến đó chứa thông tin của tương
+lai, buộc phải xem lại cách tổng hợp dữ liệu ở bước (2).
+
+\subsection{Vai trò của học máy trong hỗ trợ kiểm duyệt tín dụng}
+\label{subsec:vai-tro-hoc-may}
+
+Trong quy trình kiểm duyệt mà đề án xây dựng, mô hình học máy đảm nhiệm bốn vai
+trò. Thứ
+nhất, \textit{lượng hóa rủi ro trên thang đo liên tục}: thay vì kết luận nhị phân
+``đạt/không đạt'', mô hình cho ra giá trị $\PD \in (0, 1)$, nhờ đó có thể phân
+hạng rủi ro, định giá theo rủi ro và phân bổ nguồn lực thẩm định theo mức độ cần
+thiết. Thứ hai, \textit{phát hiện quan hệ mà bộ quy tắc bỏ sót}, kể cả những
+tương tác mà người xây dựng chính sách không dự liệu trước. Thứ ba, \textit{bảo
+đảm tính nhất quán}: cùng một hồ sơ luôn nhận được cùng một kết quả đánh giá,
+không phụ thuộc người xử lý hay thời điểm xử lý. Thứ tư, \textit{giảm khối lượng
+công việc thủ công} bằng cách tự động xử lý các hồ sơ nằm ở hai vùng biên, để cán
+bộ tín dụng tập trung vào nhóm hồ sơ thực sự cần cân nhắc.
+
+Đi kèm là bốn giới hạn. Mô hình chỉ học được quy luật có trong dữ liệu lịch sử,
+nên những tình huống chưa từng xuất hiện nằm ngoài khả năng dự báo. Chất lượng mô
+hình phụ thuộc trực tiếp vào chất lượng dữ liệu. Các mô hình phức tạp khó giải
+thích hơn thẻ điểm truyền thống, đòi hỏi bổ sung công cụ giải thích. Cuối cùng,
+mô hình suy giảm theo thời gian và cần được giám sát, hiệu chỉnh định
+kỳ~\cite{sculley2015}. Bốn giới hạn này là cơ sở để đề án xác định vai trò của mô
+hình là \textit{hỗ trợ} chứ không phải \textit{thay thế} quá trình kiểm duyệt của
+con người.
+
+\section{Dữ liệu và đặc trưng trong bài toán tín dụng}
+\label{sec:du-lieu-dac-trung}
+
+\subsection{Đặc điểm dữ liệu tín dụng}
+\label{subsec:dac-diem-du-lieu}
+
+Dữ liệu phục vụ bài toán chấm điểm tín dụng có năm đặc điểm gây khó khăn riêng so
+với dữ liệu của nhiều lĩnh vực khác.
+
+\paragraph{Tính đúng đắn theo thời điểm.} Mọi đặc trưng của một hồ sơ chỉ được
+phép tính từ dữ liệu đã tồn tại \textit{trước hoặc tại} thời điểm nộp hồ sơ. Vi
+phạm nguyên tắc này dẫn tới hiện tượng rò rỉ nhãn (\eng{label leakage}): mô hình
+sử dụng thông tin của tương lai, cho kết quả đánh giá cao giả tạo trong môi
+trường thử nghiệm nhưng suy giảm nghiêm trọng khi triển khai. Đây là lỗi khó phát
+hiện, vì nó không sinh ra thông báo lỗi mà chỉ làm các chỉ tiêu chất lượng cao
+lên bất thường.
+
+\paragraph{Độ trễ của nhãn.} Kết quả trả nợ chỉ được biết sau cửa sổ quan sát,
+thường là 12 tháng. Do đó tại mọi thời điểm luôn tồn tại một khối hồ sơ gần đây
+chưa có nhãn. Điều này giới hạn lượng dữ liệu huấn luyện khả dụng và buộc phải
+cân nhắc đánh đổi: cửa sổ quan sát dài hơn cho nhãn đáng tin cậy hơn nhưng làm dữ
+liệu huấn luyện cũ hơn.
+
+\paragraph{Mất cân bằng lớp.} Tỷ lệ hồ sơ xấu thường thấp, khiến số quan sát của
+lớp thiểu số -- vốn là lớp cần quan tâm -- bị hạn chế.
+
+\paragraph{Giá trị khuyết mang thông tin.} Trong dữ liệu tín dụng, việc một
+trường bị trống thường không phải lỗi thu thập mà tự nó là một tín hiệu. Khách
+hàng không có bất kỳ thông tin nào tại CIC (\eng{thin-file}) nghĩa là chưa từng
+có quan hệ tín dụng -- đây là một trạng thái có ý nghĩa rủi ro riêng, khác hẳn
+với việc không truy vấn được dữ liệu. Cách xử lý đúng là phân biệt hai
+trường hợp và bổ sung biến chỉ báo khuyết thay vì đơn thuần điền giá trị thống
+kê.
+
+\paragraph{Trôi dạt theo thời gian.} Cả phân phối biên của đặc trưng lẫn quan hệ
+giữa đặc trưng và nhãn đều thay đổi theo thời gian, do biến động kinh tế vĩ mô,
+thay đổi chính sách sản phẩm hoặc dịch chuyển cơ cấu khách hàng.
+
+\subsection{Các nhóm dữ liệu sử dụng trong đánh giá tín dụng}
+\label{subsec:nhom-du-lieu}
+
+Dữ liệu phục vụ đánh giá tín dụng khách hàng cá nhân được phân thành bốn nhóm
+nguồn, tổng hợp tại Bảng~\ref{tab:nhom-du-lieu}.
+
+\begin{table}[htbp]
+\centering
+\caption{Các nhóm nguồn dữ liệu sử dụng trong đánh giá tín dụng cá nhân}
+\label{tab:nhom-du-lieu}
+\small
+\begin{tabular}{@{}L{3.0cm}L{4.6cm}L{4.6cm}@{}}
+\toprule
+\textbf{Nhóm} & \textbf{Nội dung chính} & \textbf{Đặc điểm} \\
+\midrule
+Thông tin cá nhân và tài chính &
+Tuổi, giới tính, tình trạng hôn nhân, số người phụ thuộc, trình độ, nghề nghiệp,
+thâm niên, thu nhập, nơi cư trú &
+Khách hàng tự khai báo; cần đối chiếu với chứng từ. Thay đổi chậm theo thời gian
+\\[2pt]
+Tham số khoản vay &
+Sản phẩm, số tiền, kỳ hạn, lãi suất, mục đích vay, kênh tiếp nhận, tài sản bảo
+đảm &
+Xác định tại thời điểm nộp hồ sơ; phản ánh cả nhu cầu lẫn mức độ chấp nhận rủi ro
+của khách hàng \\[2pt]
+Lịch sử tín dụng và quan hệ CIC &
+Điểm CIC, nhóm nợ, số ngày quá hạn, số tổ chức có quan hệ, dư nợ, tỷ lệ sử dụng
+hạn mức, số lần truy vấn &
+Nguồn thông tin khách quan, có năng lực dự báo cao nhất; phụ thuộc dịch vụ bên
+ngoài và không có với khách hàng thin-file \\[2pt]
+Hành vi giao dịch tài khoản &
+Số lượng và giá trị giao dịch, dòng tiền vào/ra, tính đều đặn của thu nhập, cơ
+cấu chi tiêu theo nhóm &
+Chỉ có với khách hàng đã có quan hệ tài khoản; cập nhật liên tục và phản ánh tình
+trạng tài chính hiện tại \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Trong bốn nhóm trên, nhóm dữ liệu hành vi giao dịch có ba đặc điểm riêng: tổ chức
+tín dụng \textit{tự sở hữu} nên không phụ thuộc bên thứ ba, phản ánh tình trạng
+tài chính \textit{hiện tại} thay vì lịch sử, và luôn có sẵn kể cả với khách hàng
+thiếu lịch sử tín dụng. Onay và Öztürk~\cite{onay2018} nhấn mạnh vai trò ngày
+càng lớn của nhóm dữ liệu này trong bối cảnh dữ liệu lớn, đặc biệt với phân khúc
+khách hàng mà các nguồn dữ liệu truyền thống gần như không cung cấp thông tin.
+Một trong những nội dung thực nghiệm của đề án là định lượng mức đóng góp của
+nhóm dữ liệu này vào chất lượng dự báo.
+
+\subsection{Xây dựng và lựa chọn đặc trưng}
+\label{subsec:xay-dung-dac-trung}
+
+\paragraph{Xây dựng đặc trưng.} Dữ liệu thô hiếm khi ở dạng phù hợp trực tiếp cho
+mô hình. Quá trình xây dựng đặc trưng (\eng{feature engineering}) biến đổi dữ
+liệu thô thành các biến mang ý nghĩa dự báo, thông qua bốn kỹ thuật chính:
+
+\begin{itemize}
+  \item \textbf{Tổng hợp theo cửa sổ thời gian}: từ danh sách giao dịch, tính
+  tổng dòng tiền vào, số lần giao dịch, giá trị trung bình trong các cửa sổ 7,
+  30, 90 và 180 ngày trước thời điểm nộp hồ sơ.
+
+  \item \textbf{Tạo tỷ số}: các chỉ tiêu nghiệp vụ như $\DTI$, $\LTV$, tỷ lệ thu
+  nhập còn lại sau trả nợ. Tỷ số có ưu điểm là chuẩn hóa được sự khác biệt về quy
+  mô giữa các khách hàng.
+
+  \item \textbf{Tạo biến xu thế}: so sánh giá trị ở cửa sổ ngắn với cửa sổ dài để
+  nắm bắt chiều hướng thay đổi, chẳng hạn dòng tiền vào 30 ngày gần nhất so với
+  mức trung bình 90 ngày.
+
+  \item \textbf{Tạo biến tương tác}: kết hợp hai hoặc nhiều biến để biểu diễn
+  quan hệ phi cộng tính, chẳng hạn tích của số ngày quá hạn với số tổ chức tín
+  dụng có quan hệ.
+\end{itemize}
+
+\paragraph{Weight of Evidence và Information Value.} Trong ngành tín dụng, hai
+công cụ được sử dụng phổ biến để đánh giá và biến đổi đặc trưng là Weight of
+Evidence ($\WOE$) và Information Value ($\IV$)~\cite{siddiqi2017}. Với một biến
+được rời rạc hóa thành $K$ khoảng, $\WOE$ của khoảng thứ $k$ được định nghĩa:
+
+\begin{equation}
+\WOE_k = \ln \frac{\text{tỷ lệ hồ sơ tốt trong khoảng } k}
+                  {\text{tỷ lệ hồ sơ xấu trong khoảng } k}
+       = \ln \frac{g_k / G}{b_k / B},
+\label{eq:woe}
+\end{equation}
+
+trong đó $g_k, b_k$ lần lượt là số hồ sơ tốt và xấu trong khoảng $k$; $G, B$ là
+tổng số hồ sơ tốt và xấu. Information Value tổng hợp năng lực phân biệt của toàn
+bộ biến:
+
+\begin{equation}
+\IV = \sum_{k=1}^{K} \left( \frac{g_k}{G} - \frac{b_k}{B} \right) \WOE_k.
+\label{eq:iv}
+\end{equation}
+
+Thực hành ngành sử dụng thang diễn giải: $\IV < 0{,}02$ -- biến không có khả năng
+phân biệt; $0{,}02 \le \IV < 0{,}1$ -- yếu; $0{,}1 \le \IV < 0{,}3$ -- trung
+bình; $0{,}3 \le \IV < 0{,}5$ -- mạnh; $\IV \ge 0{,}5$ -- rất mạnh, cần kiểm tra
+khả năng rò rỉ nhãn.
+
+Phép biến đổi $\WOE$ có ba ưu điểm đối với bài toán tín dụng: nó đưa mọi biến về
+cùng một thang đo theo log-odds, xử lý được giá trị khuyết như một khoảng riêng,
+và cho phép áp đặt ràng buộc đơn điệu để bảo đảm mô hình phù hợp với trực giác
+nghiệp vụ (điểm tín dụng càng cao thì rủi ro càng thấp).
+
+\paragraph{Lựa chọn đặc trưng.} Khi tập đặc trưng ban đầu lớn, việc giữ lại toàn
+bộ gây ba vấn đề: hệ số của mô hình tuyến tính mất ổn định do đa cộng tuyến, chi
+phí tính toán tăng, và khả năng diễn giải giảm. Các phương pháp lựa chọn đặc
+trưng được chia thành ba nhóm:
+
+\begin{itemize}
+  \item \textbf{Phương pháp lọc} (\eng{filter}): đánh giá từng đặc trưng độc lập
+  với mô hình, dựa trên $\IV$, hệ số tương quan hoặc kiểm định thống kê. Chi phí
+  tính toán thấp, phù hợp để sàng lọc sơ bộ.
+
+  \item \textbf{Phương pháp bao} (\eng{wrapper}): thử các tập con đặc trưng và
+  đánh giá bằng chính mô hình đích. Cho kết quả tốt hơn nhưng chi phí tính toán
+  cao.
+
+  \item \textbf{Phương pháp nhúng} (\eng{embedded}): việc lựa chọn diễn ra trong
+  quá trình huấn luyện, chẳng hạn điều chuẩn $L_1$ hoặc tầm quan trọng đặc trưng
+  của mô hình cây.
+\end{itemize}
+
+Đề án sử dụng quy trình lọc ba bước nối tiếp -- theo năng lực dự báo ($\IV$),
+theo mức tương quan, và theo độ ổn định theo thời gian ($\PSI$) -- được trình bày
+chi tiết ở mục~\ref{sec:trich-xuat-dac-trung}.
+
+\section{Các mô hình học máy áp dụng trong đánh giá tín dụng}
+\label{sec:cac-mo-hinh}
+
+Mục này trình bày nguyên lý của năm nhóm thuật toán được đề án nghiên cứu và thực
+nghiệm, theo đúng thứ tự từ đơn giản đến phức tạp.
+
+\subsection{Hồi quy Logistic}
+\label{subsec:hoi-quy-logistic}
+
+Hồi quy logistic là mô hình tuyến tính tổng quát dùng cho biến phụ thuộc nhị
+phân. Mô hình giả định log-odds của xác suất vỡ nợ là hàm tuyến tính của các đặc
+trưng:
+
+\begin{equation}
+\ln \frac{\PD(\bm{x})}{1 - \PD(\bm{x})} = \beta_0 + \sum_{j=1}^{d} \beta_j x_j,
+\qquad\text{tương đương}\qquad
+\PD(\bm{x}) = \frac{1}{1 + e^{-(\beta_0 + \bm{\beta}^{\!\top}\bm{x})}}.
+\label{eq:logistic}
+\end{equation}
+\vspace{-0.6\baselineskip}
+
+Tham số $\bm{\beta}$ được ước lượng bằng phương pháp hợp lý cực đại, tương đương
+với việc tối thiểu hóa hàm log-loss~\eqref{eq:logloss}. Để kiểm soát quá khớp,
+thường bổ sung thành phần điều chuẩn $L_2$:
+
+\begin{equation}
+\hat{\bm{\beta}} = \argmin_{\bm{\beta}}
+\left[ -\sum_{i=1}^{n} \Big( y_i \log p_i + (1-y_i)\log(1-p_i) \Big)
+       + \frac{1}{2C} \lVert \bm{\beta} \rVert_2^2 \right].
+\label{eq:logistic-l2}
+\end{equation}
+
+\paragraph{Ưu điểm.} Hồi quy logistic có ba ưu thế khiến nó vẫn là mô hình chuẩn
+mực trong ngành tín dụng sau hơn nửa thế kỷ. Thứ nhất, \textit{khả năng giải
+thích}: mỗi hệ số $\beta_j$ cho biết trực tiếp mức thay đổi của log-odds khi đặc
+trưng $x_j$ tăng một đơn vị, và dấu của hệ số có thể được đối chiếu với kỳ vọng
+nghiệp vụ. Thứ hai, \textit{xác suất đầu ra được hiệu chuẩn tốt} do hàm mất mát
+chính là log-loss. Thứ ba, \textit{tính ổn định}: mô hình có ít tham số nên ít
+nhạy cảm với nhiễu trong dữ liệu huấn luyện.
+
+\paragraph{Hạn chế.} Giả định tuyến tính trên thang log-odds là hạn chế cơ bản:
+mô hình không tự nắm bắt được quan hệ phi tuyến hay tương tác giữa các biến, trừ
+khi những quan hệ này được đưa vào tường minh dưới dạng biến phái sinh.
+
+\paragraph{Thẻ điểm dựa trên biến đổi WOE.} Trong thực tiễn ngân hàng, hồi quy
+logistic thường được áp dụng trên các đặc trưng đã qua biến đổi
+$\WOE$~\eqref{eq:woe} thay vì trên giá trị gốc. Cách làm này khắc phục một phần
+hạn chế tuyến tính -- vì việc rời rạc hóa cho phép biểu diễn quan hệ phi tuyến
+theo từng khoảng -- đồng thời cho phép quy đổi kết quả thành thang điểm nguyên
+dễ vận hành:
+
+\begin{equation}
+\text{Điểm} = \text{Offset} + \text{Factor} \times \ln(\text{odds}),
+\qquad
+\text{Factor} = \frac{\text{PDO}}{\ln 2},
+\label{eq:scorecard}
+\end{equation}
+
+trong đó PDO (\eng{Points to Double the Odds}) là số điểm tương ứng với việc tỷ
+số odds tăng gấp đôi. Thẻ điểm xây dựng theo cách này có thể in ra thành bảng
+tra, giúp cán bộ tín dụng hiểu chính xác vì sao một hồ sơ đạt mức điểm cụ thể.
+
+\subsection{Decision Tree}
+\label{subsec:decision-tree}
+
+Cây quyết định~\cite{breiman1984} phân chia đệ quy không gian đặc trưng thành các
+vùng con, tại mỗi
+bước chọn cặp (đặc trưng, ngưỡng) làm giảm nhiều nhất độ không thuần khiết của
+nút. Với bài toán phân loại, độ không thuần khiết thường được đo bằng chỉ số
+Gini:
+
+\begin{equation}
+G(t) = 1 - \sum_{c \in \{0,1\}} p_c(t)^2,
+\label{eq:gini-impurity}
+\end{equation}
+
+trong đó $p_c(t)$ là tỷ lệ quan sát thuộc lớp $c$ tại nút $t$. Phép chia tốt nhất
+là phép chia làm cực đại mức giảm độ không thuần khiết có trọng số:
+
+\begin{equation}
+\Delta G = G(t) - \frac{n_L}{n_t} G(t_L) - \frac{n_R}{n_t} G(t_R).
+\label{eq:gini-gain}
+\end{equation}
+
+\paragraph{Ưu điểm.} Cây quyết định tự động nắm bắt quan hệ phi tuyến và tương
+tác giữa các biến, không yêu cầu chuẩn hóa thang đo, xử lý được cả biến định
+lượng lẫn định tính, và -- với cây nông -- có thể diễn giải trực tiếp thành chuỗi
+điều kiện gần với ngôn ngữ nghiệp vụ.
+
+\paragraph{Hạn chế.} Cây đơn có phương sai cao: một thay đổi nhỏ trong dữ liệu
+huấn luyện có thể dẫn tới cấu trúc cây hoàn toàn khác. Cây sâu dễ quá khớp, trong
+khi cây nông lại quá đơn giản để nắm bắt quan hệ phức tạp. Để kiểm soát, đề án sử
+dụng kỹ thuật tỉa nhánh theo độ phức tạp chi phí (\eng{cost-complexity pruning})
+với tiêu chí:
+
+\begin{equation}
+R_\alpha(T) = R(T) + \alpha \, |\tilde{T}|,
+\label{eq:ccp}
+\end{equation}
+
+trong đó $R(T)$ là sai số của cây $T$, $|\tilde{T}|$ là số nút lá và $\alpha$ là
+tham số phạt độ phức tạp.
+
+Chính hạn chế về phương sai cao của cây đơn là động lực dẫn tới hai nhóm phương
+pháp học tập hợp trình bày ở hai mục tiếp theo.
+
+\subsection{Random Forest}
+\label{subsec:random-forest}
+
+Rừng ngẫu nhiên~\cite{breiman2001} xây dựng nhiều cây quyết định độc lập và tổng
+hợp kết quả bằng cách lấy trung bình xác suất dự báo:
+
+\begin{equation}
+\PD_{\text{RF}}(\bm{x}) = \frac{1}{M} \sum_{m=1}^{M} \PD_m(\bm{x}).
+\label{eq:rf}
+\end{equation}
+
+Tính đa dạng giữa các cây -- yếu tố quyết định hiệu quả của phương pháp -- được
+tạo ra bằng hai cơ chế ngẫu nhiên hóa. Thứ nhất, mỗi cây được huấn luyện trên một
+mẫu bootstrap lấy có hoàn lại từ tập huấn luyện. Thứ hai, tại mỗi nút, chỉ một
+tập con ngẫu nhiên gồm $\sqrt{d}$ đặc trưng được xem xét để tìm phép chia.
+
+Cơ sở lý thuyết của phương pháp~\cite{hastie2009} nằm ở công thức phương sai của trung bình $M$
+biến ngẫu nhiên có cùng phương sai $\sigma^2$ và tương quan cặp $\rho$:
+
+\begin{equation}
+\operatorname{Var}\!\left( \frac{1}{M}\sum_{m=1}^{M} Z_m \right)
+= \rho \sigma^2 + \frac{1 - \rho}{M}\sigma^2.
+\label{eq:rf-variance}
+\end{equation}
+
+Số hạng thứ hai giảm về 0 khi $M$ tăng, nhưng số hạng thứ nhất chỉ giảm được bằng
+cách làm giảm tương quan $\rho$ giữa các cây. Đây chính là lý do của cơ chế lấy
+mẫu ngẫu nhiên đặc trưng tại mỗi nút: nếu mọi cây đều được phép dùng đặc trưng
+mạnh nhất, chúng sẽ giống nhau và việc lấy trung bình mất tác dụng.
+
+\paragraph{Ưu điểm.} Rừng ngẫu nhiên giữ được khả năng biểu diễn phi tuyến của
+cây nhưng có phương sai thấp hơn nhiều, ít nhạy cảm với siêu tham số, và cung cấp
+sẵn thước đo tầm quan trọng của đặc trưng.
+
+\paragraph{Hạn chế.} Mô hình mất khả năng diễn giải trực tiếp; chi phí bộ nhớ và
+thời gian suy luận tăng theo số cây; và xác suất đầu ra thường bị lệch về phía
+trung tâm, cần hiệu chuẩn lại trước khi dùng làm $\PD$.
+
+\subsection{Support Vector Machine}
+\label{subsec:svm}
+
+Máy vectơ hỗ trợ (SVM)~\cite{cortes1995,vapnik1998} tiếp cận bài toán phân loại
+từ góc nhìn hình học: tìm siêu
+phẳng phân tách hai lớp sao cho \textit{lề} -- khoảng cách từ siêu phẳng tới các
+điểm gần nhất của mỗi lớp -- là lớn nhất. Với dữ liệu không phân tách tuyến tính
+hoàn hảo, bài toán được phát biểu ở dạng lề mềm:
+
+\begin{equation}
+\begin{aligned}
+&\min_{\bm{w}, b, \bm{\xi}} \quad
+  \frac{1}{2}\lVert \bm{w} \rVert^2 + C \sum_{i=1}^{n} \xi_i \\[2pt]
+&\text{với ràng buộc} \quad
+  y_i(\bm{w}^{\!\top}\bm{x}_i + b) \ge 1 - \xi_i, \quad \xi_i \ge 0,
+\end{aligned}
+\label{eq:svm-primal}
+\end{equation}
+
+trong đó $\xi_i$ là biến bù cho phép một số điểm nằm sai phía, còn $C$ điều tiết
+đánh đổi giữa độ rộng lề và mức chấp nhận vi phạm.
+
+\paragraph{Thủ thuật hạt nhân.} Điểm mạnh đặc trưng của SVM nằm ở chỗ bài toán
+đối ngẫu chỉ phụ thuộc vào tích vô hướng giữa các cặp quan sát. Nhờ đó có thể
+thay tích vô hướng bằng một hàm hạt nhân $K(\bm{x}_i, \bm{x}_j)$ tương ứng với
+tích vô hướng trong một không gian đặc trưng có số chiều cao hơn, mà không cần
+tính toán tường minh phép ánh xạ. Hạt nhân được dùng phổ biến nhất là hạt nhân
+Gauss (RBF):
+
+\begin{equation}
+K(\bm{x}_i, \bm{x}_j) = \exp\!\big( -\gamma \lVert \bm{x}_i - \bm{x}_j \rVert^2 \big).
+\label{eq:rbf}
+\end{equation}
+
+\paragraph{Ưu điểm.} SVM có nền tảng lý thuyết chặt chẽ dựa trên nguyên lý cực
+tiểu hóa rủi ro cấu trúc, hoạt động tốt trong không gian nhiều chiều, và nhờ thủ
+thuật hạt nhân có thể biểu diễn ranh giới quyết định rất linh hoạt.
+
+\paragraph{Hạn chế trong bài toán tín dụng.} SVM gặp ba trở ngại thực tế đáng kể
+khi áp dụng cho chấm điểm tín dụng ở quy mô lớn:
+
+\begin{enumerate}[label=(\arabic*)]
+  \item \textbf{Chi phí tính toán.} Việc giải bài toán đối ngẫu có độ phức tạp từ
+  $O(n^2)$ đến $O(n^3)$ theo số quan sát, khiến SVM hạt nhân đầy đủ không khả thi
+  với tập dữ liệu hàng chục nghìn hồ sơ trở lên.
+
+  \item \textbf{Đầu ra không phải xác suất.} SVM cho ra giá trị hàm quyết định --
+  khoảng cách có dấu tới siêu phẳng -- chứ không phải xác suất. Để dùng được
+  trong hệ thống tín dụng, giá trị này phải được quy đổi bằng phương pháp
+  Platt~\cite{platt1999}: khớp một hồi quy logistic một biến trên giá trị hàm
+  quyết định.
+
+  \item \textbf{Khó giải thích.} Ranh giới quyết định trong không gian hạt nhân
+  không có biểu diễn tường minh theo các đặc trưng gốc.
+\end{enumerate}
+
+Để khắc phục trở ngại thứ nhất, đề án sử dụng phép xấp xỉ
+Nystroem~\cite{williams2001}: thay vì tính
+ma trận hạt nhân đầy đủ kích thước $n \times n$, phương pháp chọn $m \ll n$ điểm
+mốc và xây dựng một ánh xạ tường minh $\phi: \mathbb{R}^d \to \mathbb{R}^m$ sao
+cho $\phi(\bm{x}_i)^{\!\top}\phi(\bm{x}_j) \approx K(\bm{x}_i, \bm{x}_j)$. Sau
+phép ánh xạ này, một SVM tuyến tính -- có chi phí tuyến tính theo $n$ -- cho
+nghiệm xấp xỉ nghiệm của SVM hạt nhân đầy đủ.
+
+\subsection{Gradient Boosting}
+\label{subsec:gradient-boosting}
+
+Khác với rừng ngẫu nhiên xây dựng các cây \textit{song song và độc lập}, gradient
+boosting~\cite{friedman2001} xây dựng các cây \textit{tuần tự}, trong đó mỗi cây
+mới học phần sai số còn lại của tổ hợp các cây trước đó. Mô hình được xây dựng
+theo sơ đồ cộng tính:
+
+\begin{equation}
+F_m(\bm{x}) = F_{m-1}(\bm{x}) + \eta \, h_m(\bm{x}),
+\label{eq:boosting}
+\end{equation}
+
+trong đó $h_m$ là cây thứ $m$ được khớp với gradient âm của hàm mất mát tại dự
+báo hiện tại, còn $\eta \in (0, 1]$ là tốc độ học đóng vai trò điều chuẩn: giá
+trị $\eta$ nhỏ buộc mô hình cải thiện từ từ, giảm nguy cơ quá khớp nhưng đòi hỏi
+nhiều cây hơn.
+
+\paragraph{Các biến thể hiện đại.} Ba thư viện được sử dụng rộng rãi hiện nay cải
+tiến ý tưởng gốc theo những hướng khác nhau:
+
+\begin{itemize}
+  \item \textbf{XGBoost}~\cite{chen2016} bổ sung thành phần điều chuẩn tường minh
+  vào hàm mục tiêu và sử dụng khai triển Taylor bậc hai để xác định phép chia tối
+  ưu, thay vì chỉ dùng gradient bậc nhất.
+
+  \item \textbf{LightGBM}~\cite{ke2017} sinh cây theo chiều lá
+  (\eng{leaf-wise}) -- mở rộng lá có mức giảm mất mát lớn nhất -- thay vì theo
+  chiều sâu, kết hợp với kỹ thuật rời rạc hóa đặc trưng thành histogram để tăng
+  tốc độ huấn luyện.
+
+  \item \textbf{CatBoost}~\cite{prokhorenkova2018} xử lý đặc trưng định tính bằng
+  thống kê mục tiêu có thứ tự (\eng{ordered target statistics}), khắc phục hiện
+  tượng rò rỉ mục tiêu vốn xảy ra khi mã hóa biến định tính theo giá trị trung
+  bình của nhãn.
+\end{itemize}
+
+\paragraph{Ưu điểm.} Gradient boosting thường cho chất lượng dự báo cao nhất
+trong các bài toán dữ liệu dạng bảng, nhờ khả năng nắm bắt tương tác bậc cao và
+cơ chế tập trung vào các quan sát khó phân loại.
+
+\paragraph{Hạn chế.} Mô hình nhạy cảm với siêu tham số hơn rừng ngẫu nhiên, dễ
+quá khớp nếu không dừng sớm, khó diễn giải trực tiếp, và xác suất đầu ra cần được
+hiệu chuẩn -- đặc biệt khi sử dụng trọng số lớp để bù mất cân bằng dữ liệu.
+
+\subsection{So sánh và lựa chọn mô hình phù hợp}
+\label{subsec:so-sanh-mo-hinh}
+
+\subsubsection{Hệ thống chỉ tiêu đánh giá}
+
+Việc so sánh các mô hình đòi hỏi một bộ chỉ tiêu phản ánh đầy đủ các khía
+cạnh mà bài toán quan tâm. Đề án sử dụng bốn nhóm chỉ tiêu.
+
+\paragraph{Nhóm 1 -- Chỉ tiêu phân loại phổ quát.} Xuất phát từ ma trận nhầm lẫn
+với bốn ô TP, FP, TN, FN:
+
+\begin{equation}
+\text{Precision} = \frac{TP}{TP + FP}, \qquad
+\text{Recall} = \frac{TP}{TP + FN},
+\label{eq:prf}
+\end{equation}
+\begin{equation}
+F_1 = \frac{2 \cdot \text{Precision} \cdot \text{Recall}}
+           {\text{Precision} + \text{Recall}}.
+\label{eq:f1}
+\end{equation}
+
+Độ chính xác (\eng{accuracy}) được báo cáo nhưng không dùng làm tiêu chí chính,
+vì lý do đã nêu ở mục~\ref{subsec:hoc-co-giam-sat}.
+
+\paragraph{Nhóm 2 -- Chỉ tiêu đặc thù ngành tín dụng.} Ba chỉ tiêu dưới đây được
+sử dụng phổ biến trong kiểm định mô hình tín dụng~\cite{baesens2016}:
+
+\begin{itemize}
+  \item \textbf{$\AUC$} -- diện tích dưới đường cong ROC, bằng xác suất một hồ sơ
+  xấu chọn ngẫu nhiên nhận điểm rủi ro cao hơn một hồ sơ tốt chọn ngẫu nhiên. Chỉ
+  tiêu này không phụ thuộc ngưỡng quyết định, nên phù hợp để so sánh mô hình.
+
+  \item \textbf{Hệ số Gini} $= 2 \cdot \AUC - 1$, là cách biểu diễn quen thuộc
+  hơn trong ngành ngân hàng, với thang giá trị từ 0 (không phân biệt) đến 1 (phân
+  biệt hoàn hảo).
+
+  \item \textbf{Thống kê $\KS$} -- khoảng cách lớn nhất giữa hàm phân phối tích
+  lũy của điểm số ở nhóm tốt và nhóm xấu:
+  \begin{equation}
+  \KS = \max_{s} \big| F_{\text{tốt}}(s) - F_{\text{xấu}}(s) \big|.
+  \label{eq:ks}
+  \end{equation}
+  Ý nghĩa vận hành của $\KS$ là nó chỉ ra điểm cắt tại đó mô hình phân tách hai
+  nhóm mạnh nhất.
+\end{itemize}
+
+\paragraph{Nhóm 3 -- Chất lượng hiệu chuẩn xác suất.} Một mô hình có thể xếp hạng
+rất tốt nhưng cho giá trị xác suất sai lệch. Vì đề án sử dụng $\PD$ trực tiếp
+để phân vùng quyết định, chất lượng hiệu chuẩn phải được đo tường minh bằng điểm
+Brier và sai số hiệu chuẩn kỳ vọng:
+
+\begin{equation}
+\text{Brier} = \frac{1}{n}\sum_{i=1}^{n} (p_i - y_i)^2,
+\qquad
+\text{ECE} = \sum_{b=1}^{B} \frac{n_b}{n}
+             \big| \bar{y}_b - \bar{p}_b \big|.
+\label{eq:brier-ece}
+\end{equation}
+
+Hai kỹ thuật hiệu chuẩn phổ biến là hồi quy đẳng hướng (\eng{isotonic
+regression})~\cite{zadrozny2002} và phương pháp Platt. Nghiên cứu của
+Niculescu-Mizil và Caruana~\cite{niculescu2005} cho thấy các mô hình học tập hợp
+thường cho xác suất bị nén về phía trung tâm và cần hiệu chuẩn lại.
+
+\paragraph{Nhóm 4 -- Chỉ tiêu vận hành.} Bao gồm thời gian huấn luyện, thời gian
+chấm điểm một hồ sơ và mức độ giải thích được. Đây là những chỉ tiêu quyết định
+khả năng triển khai thực tế nhưng thường bị bỏ qua trong các so sánh học thuật.
+
+\subsubsection{Cơ sở lựa chọn mô hình}
+
+Bảng~\ref{tab:so-sanh-mo-hinh} tổng hợp đặc điểm của năm nhóm mô hình theo các
+tiêu chí quan trọng đối với bài toán kiểm duyệt tín dụng.
+
+\begin{table}[htbp]
+\centering
+\caption{So sánh định tính các nhóm mô hình theo tiêu chí của bài toán tín dụng}
+\label{tab:so-sanh-mo-hinh}
+\small
+\begin{tabular}{@{}L{2.6cm}ccccc@{}}
+\toprule
+\textbf{Mô hình} & \textbf{Năng lực} & \textbf{Giải} & \textbf{Hiệu} &
+\textbf{Chi phí} & \textbf{Độ ổn} \\
+ & \textbf{dự báo} & \textbf{thích} & \textbf{chuẩn} & \textbf{huấn luyện} &
+ \textbf{định} \\
+\midrule
+Hồi quy logistic      & Trung bình & Rất cao    & Rất tốt    & Rất thấp  & Cao \\
+Thẻ điểm WOE          & Trung bình & Rất cao    & Rất tốt    & Thấp      & Cao \\
+Cây quyết định        & Thấp       & Cao        & Trung bình & Rất thấp  & Thấp \\
+Rừng ngẫu nhiên       & Cao        & Trung bình & Cần hiệu chuẩn & Trung bình & Cao \\
+Máy vectơ hỗ trợ      & Cao        & Thấp       & Cần hiệu chuẩn & Cao       & Trung bình \\
+Gradient boosting     & Rất cao    & Thấp       & Cần hiệu chuẩn & Trung bình & Trung bình \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Bảng trên cho thấy không tồn tại một mô hình tối ưu trên mọi tiêu chí: các mô
+hình có năng lực dự báo cao nhất lại là những mô hình khó giải thích nhất và cần
+hiệu chuẩn xác suất. Do vậy việc lựa chọn phải dựa trên đánh đổi phù hợp với bối
+cảnh sử dụng cụ thể.
+
+Kết quả đối sánh quy mô lớn của Lessmann và cộng sự~\cite{lessmann2015} cung cấp
+căn cứ định lượng cho đánh đổi này: trên nhiều bộ dữ liệu tín dụng, khoảng cách
+$\AUC$ giữa mô hình học tập hợp tốt nhất và hồi quy logistic thường chỉ ở mức
+0,01--0,03. Mức chênh lệch khiêm tốn này đặt ra câu hỏi liệu việc chấp nhận mất
+khả năng giải thích và tăng chi phí vận hành có tương xứng với mức cải thiện đó
+hay không. Câu trả lời phụ thuộc quy mô danh mục: với danh mục lớn, mức cải thiện
+0,01 $\AUC$ có thể tương ứng khoản tiết kiệm đáng kể về tổn thất tín dụng; với
+danh mục nhỏ, yêu cầu về tính minh bạch và chi phí vận hành thường được ưu tiên
+hơn.
+
+Trên cơ sở phân tích đó, đề án xác định nguyên tắc lựa chọn gồm bốn tiêu chí,
+theo thứ tự ưu tiên: (i) năng lực phân biệt đo bằng $\AUC$ và $\KS$ trên tập kiểm
+thử ngoài thời gian; (ii) chất lượng hiệu chuẩn xác suất sau khi đã hiệu chuẩn;
+(iii) thời gian chấm điểm một hồ sơ trong điều kiện xử lý trực tuyến; và (iv)
+khả năng giải thích kết quả cho từng hồ sơ. Việc so sánh thực nghiệm theo bốn
+tiêu chí này được trình bày ở Chương~\ref{chap:thuc-nghiem}.
+
+\subsubsection{Xử lý mất cân bằng dữ liệu}
+
+Ba nhóm kỹ thuật thường được dùng để xử lý mất cân bằng lớp: \textit{lấy mẫu lại}
+-- tăng mẫu lớp thiểu số (chẳng hạn SMOTE~\cite{chawla2002}) hoặc giảm mẫu lớp đa
+số; \textit{trọng số lớp} -- gán trọng số lớn hơn cho quan sát thuộc lớp thiểu số
+trong hàm mất mát; và \textit{học nhạy cảm chi phí} -- đưa ma trận chi phí vào
+quá trình huấn luyện hoặc vào việc chọn ngưỡng~\cite{elkan2001}.
+
+Đề án sử dụng \textbf{trọng số lớp} kết hợp \textbf{lựa chọn ngưỡng theo hàm chi
+phí}, không sử dụng kỹ thuật lấy mẫu lại. Ở mức mất cân bằng vừa phải (khoảng
+15\%), việc lấy mẫu lại làm thay đổi phân phối tiên nghiệm của dữ liệu, khiến xác
+suất đầu ra bị lệch hệ thống và phải điều chỉnh lại, trong khi lợi ích về năng
+lực phân biệt không rõ ràng. Trọng số lớp giữ nguyên phân phối gốc, còn phần lệch
+xác suất do trọng số gây ra được xử lý ở bước hiệu chuẩn.
+
+\subsubsection{Giải thích mô hình}
+
+Với mô hình sử dụng trong hoạt động cấp tín dụng, khả năng giải thích là điều
+kiện bắt buộc: cán bộ tín dụng cần hiểu căn cứ của khuyến nghị để quyết định chấp
+nhận hay bác bỏ, còn khách hàng có quyền được biết lý do hồ sơ bị từ chối.
+
+Phương pháp SHAP (\eng{SHapley Additive
+exPlanations})~\cite{lundberg2017,lundberg2020} dựa trên giá trị Shapley trong lý
+thuyết trò chơi hợp tác. Với mỗi hồ sơ, SHAP phân rã chênh lệch giữa dự báo của
+mô hình và giá trị dự báo trung bình thành tổng đóng góp của từng đặc trưng:
+
+\begin{equation}
+f(\bm{x}) = \phi_0 + \sum_{j=1}^{d} \phi_j,
+\label{eq:shap}
+\end{equation}
+
+trong đó $\phi_0$ là giá trị kỳ vọng của dự báo và $\phi_j$ là đóng góp của đặc
+trưng thứ $j$. Tính cộng tính này cho phép chuyển kết quả SHAP thành danh sách lý
+do (\eng{reason codes}) trình bày được cho người sử dụng.
+
+\subsubsection{Giám sát trôi dạt}
+
+Sau khi triển khai, mô hình cần được giám sát liên tục. Chỉ số được dùng phổ biến
+nhất là Population Stability Index, đo mức chênh lệch phân phối của một biến giữa
+giai đoạn tham chiếu và giai đoạn hiện tại:
+
+\begin{equation}
+\PSI = \sum_{k=1}^{K}
+\big( p_k^{\text{hiện tại}} - p_k^{\text{tham chiếu}} \big)
+\ln \frac{p_k^{\text{hiện tại}}}{p_k^{\text{tham chiếu}}}.
+\label{eq:psi}
+\end{equation}
+
+Thực hành ngành sử dụng ngưỡng: $\PSI < 0{,}10$ -- phân phối ổn định;
+$0{,}10 \le \PSI < 0{,}25$ -- cần theo dõi; $\PSI \ge 0{,}25$ -- thay đổi đáng
+kể, cần xem xét huấn luyện lại mô hình.
+
+\section*{Kết luận chương 1}
+\addcontentsline{toc}{section}{Kết luận chương 1}
+
+Chương 1 đã hệ thống hóa cơ sở lý luận làm nền tảng cho đề án, với bốn kết quả
+chính.
+
+Thứ nhất, chương phân biệt rành mạch giữa kiểm duyệt (quá trình đánh giá, sàng
+lọc hồ sơ) với phê duyệt (hành vi ra quyết định của cấp có thẩm quyền). Sự phân
+biệt này xác định vai trò \textit{hỗ trợ} của mô hình và là cơ sở cho thiết kế
+ba vùng quyết định ở chương sau. Chương cũng chỉ ra bốn hạn chế mang tính cấu
+trúc của phương pháp kiểm duyệt truyền thống: không biểu diễn được tương tác giữa
+các yếu tố, ngưỡng đặt theo phán đoán, kết quả nhị phân thiếu thang đo mức độ, và
+giới hạn về tính nhất quán cùng tốc độ xử lý.
+
+Thứ hai, trong phân rã $\EL = \PD \times \LGD \times \EAD$, đề án xác định phạm
+vi là ước lượng thành phần $\PD$, với định nghĩa vỡ nợ thống nhất theo quy định
+phân loại nợ hiện hành: quá hạn từ 90 ngày trở lên, tương ứng nợ nhóm 3--5.
+
+Thứ ba, chương phân tích ba đặc thù của bài toán tín dụng (dữ liệu mất cân bằng,
+chi phí hai loại sai lầm chênh lệch lớn, trôi dạt theo thời gian) và năm đặc điểm
+của dữ liệu tín dụng, trong đó quan trọng nhất là yêu cầu về tính đúng đắn theo
+thời điểm. Những đặc thù này quy định ba lựa chọn phương pháp ở các chương sau:
+dùng trọng số lớp thay vì lấy mẫu lại, chọn ngưỡng theo hàm chi phí thay vì giá
+trị mặc định, và chia dữ liệu theo thời gian thay vì chia ngẫu nhiên.
+
+Thứ tư, chương trình bày nguyên lý, ưu điểm và hạn chế của năm nhóm thuật toán
+được nghiên cứu cùng bốn nhóm chỉ tiêu đánh giá. Phân tích cho thấy
+không tồn tại mô hình tối ưu trên mọi tiêu chí, nên việc lựa chọn phải dựa trên
+đánh đổi giữa năng lực dự báo, khả năng giải thích, chất lượng hiệu chuẩn và chi
+phí vận hành.

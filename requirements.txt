@@ -1,0 +1,37 @@
+# ============================================================================
+# Hệ thống hỗ trợ kiểm duyệt tín dụng dựa trên mô hình học máy
+# Đồng Quốc Huy - B25CHHT028 - Học viện Công nghệ Bưu chính Viễn thông
+# ============================================================================
+
+# --- Xử lý dữ liệu & tính toán ---
+numpy>=1.26
+pandas>=2.1
+pyarrow>=14.0
+scipy>=1.11
+
+# --- Học máy ---
+scikit-learn>=1.4
+xgboost>=2.0
+lightgbm>=4.1
+catboost>=1.2
+imbalanced-learn>=0.12
+shap>=0.44
+joblib>=1.3
+
+# --- Trực quan hóa & báo cáo ---
+matplotlib>=3.8
+tabulate>=0.9
+
+# --- Sinh dữ liệu mô phỏng ---
+Faker>=22.0
+
+# --- Dịch vụ REST & giao diện ---
+fastapi>=0.109
+uvicorn[standard]>=0.27
+pydantic>=2.5
+httpx>=0.26
+streamlit>=1.30
+altair>=5.2
+
+# --- Cấu hình ---
+PyYAML>=6.0

@@ -1,0 +1,20 @@
+\begin{table}[!htbp]
+\centering
+\caption{Phân chia dữ liệu theo thời gian}
+\label{tab:split}
+\small
+\setlength{\tabcolsep}{5.0pt}
+\begin{tabular}{@{}L{3.6cm}R{2.0cm}R{1.6cm}L{5.6cm}@{}}
+\toprule
+\textbf{Tập} & \textbf{Số hồ sơ} & \textbf{Tỷ lệ} & \textbf{Vai trò} \\
+\midrule
+Huấn luyện (train\_\allowbreak fit) & 35.700 & 59,5\% & Ước lượng tham số mô hình \\
+Dừng sớm (train\_es) & 6.300 & 10,5\% & Xác định số vòng lặp tối ưu \\
+Kiểm định (valid) & 9.000 & 15,0\% & Hiệu chuẩn xác suất, chọn ngưỡng \\
+Kiểm thử (test) & 9.000 & 15,0\% & Đánh giá cuối cùng, dùng một lần \\
+\bottomrule
+\end{tabular}
+
+\vspace{2pt}
+{\footnotesize\itshape Giai đoạn huấn luyện: 2024-07-01 đến 2025-11-24; giai đoạn kiểm thử: 2026-03-12 đến 2026-06-30.}
+\end{table}

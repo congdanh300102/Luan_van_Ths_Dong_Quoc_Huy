@@ -1,0 +1,165 @@
+% ===========================================================================
+% KẾT LUẬN
+% ===========================================================================
+\chapter*{KẾT LUẬN}
+\addcontentsline{toc}{chapter}{KẾT LUẬN}
+\markboth{KẾT LUẬN}{KẾT LUẬN}
+
+\section*{1. Kết quả nghiên cứu}
+\addcontentsline{toc}{section}{1. Kết quả nghiên cứu}
+
+Đề án đã hoàn thành mục tiêu nghiên cứu, thiết kế và xây dựng thử nghiệm mô hình
+học máy hỗ trợ kiểm duyệt tín dụng. Các kết quả chính đạt được
+gồm năm nhóm.
+
+\subsection*{1.1. Về cơ sở lý luận}
+
+Đề án đã hệ thống hóa cơ sở lý thuyết về tín dụng, kiểm duyệt tín dụng và đánh
+giá rủi ro tín dụng, trong đó làm rõ hai nội dung có ý nghĩa định hướng cho toàn
+bộ thiết kế. Thứ nhất là sự phân biệt giữa \textit{kiểm duyệt} -- quá trình đánh
+giá, sàng lọc hồ sơ -- với \textit{phê duyệt} -- hành vi ra quyết định của cấp có
+thẩm quyền; sự phân biệt này xác định vai trò hỗ trợ chứ không thay thế của hệ
+thống. Thứ hai là việc xác định vị trí của bài toán trong khung lý thuyết rủi ro
+tín dụng: trong phân rã $\EL = \PD \times \LGD \times \EAD$, đề án tập trung ước
+lượng thành phần $\PD$.
+
+Đề án cũng đã phân tích bốn hạn chế mang tính cấu trúc của phương pháp kiểm duyệt
+truyền thống, ba đặc thù của bài toán tín dụng so với bài toán phân loại thông
+thường, và trình bày nguyên lý cùng ưu nhược điểm của năm nhóm thuật toán học máy
+được nghiên cứu.
+
+\subsection*{1.2. Về quy trình xử lý dữ liệu}
+
+Đề án đã xây dựng quy trình hoàn chỉnh từ thu thập dữ liệu tới tập đặc trưng sẵn
+sàng cho mô hình, với ba đóng góp cụ thể:
+
+\begin{itemize}
+  \item \textbf{Bộ ràng buộc kiểm tra chất lượng dữ liệu} gồm \NConstraints{}
+  ràng buộc nghiệp vụ, kèm cơ chế kiểm chứng bằng phép tiêm lỗi nhằm xác nhận
+  bản thân cơ chế kiểm tra hoạt động đúng.
+
+  \item \textbf{Thuật toán tính đặc trưng bảo đảm tính đúng đắn theo thời điểm}
+  bằng kỹ thuật luỹ kế kết hợp ghép gần nhất theo thời gian, đưa chi phí tính
+  toán từ $O(N \times |W| \times \bar{m})$ xuống tuyến tính. Quan trọng hơn chi
+  phí, phương pháp này bảo đảm tính đúng đắn bằng chính cấu trúc thuật toán chứ
+  không phụ thuộc vào kiểm tra bổ sung.
+
+  \item \textbf{Quy trình lựa chọn đặc trưng ba bước} theo năng lực dự báo, mức
+  tương quan và độ ổn định, rút gọn tập đặc trưng từ \NFeaturesInitial{} xuống
+  \NFeaturesSelected{} biến.
+\end{itemize}
+
+\subsection*{1.3. Về mô hình học máy}
+
+Đề án đã huấn luyện, hiệu chuẩn và so sánh \NModels{} mô hình trên cùng một điều
+kiện thực nghiệm. Mô hình được chọn triển khai là \BestModel{}, đạt
+$\AUC = \BestAUC{}$, $\text{Gini} = \BestGini{}$, $\KS = \BestKS{}$ và sai số
+hiệu chuẩn kỳ vọng \BestECE{}.
+
+Ngoài các con số cụ thể, thực nghiệm cho ba kết quả có giá trị nhận thức. Thứ
+nhất, \textbf{khoảng cách giữa các thuật toán là nhỏ}: chênh lệch $\AUC$ giữa mô
+hình được chọn và hồi quy logistic chỉ \GapBestLR{}, trong khi hồi quy logistic
+có ưu thế rõ rệt về khả năng giải thích, chi phí huấn luyện và chất lượng hiệu
+chuẩn tự nhiên. Thứ hai, \textbf{bảng xếp hạng $\AUC$ có giới hạn độ phân giải}:
+phép đo dao động khoảng $3 \times 10^{-4}$ giữa các lần chạy, tức cùng bậc với
+khoảng cách giữa các mô hình dẫn đầu, nên thứ hạng ở chữ số thập phân thứ tư
+không phải bằng chứng về sự vượt trội. Đề án vì vậy chọn mô hình triển khai theo
+tiêu chí biên Pareto -- nhanh nhất trong nhóm tương đương về chất lượng -- thay
+vì lấy thẳng mô hình đứng đầu bảng. Thứ ba, \textbf{khoảng cách tới trần Bayes
+cho biết giới hạn của việc cải tiến thuật toán}: mô hình được chọn còn cách trần
+Bayes \BayesAUC{} khoảng
+\GapBayes{} điểm $\AUC$, và phần chênh lệch này bắt nguồn từ việc dữ liệu quan sát được
+chỉ là phép đo có nhiễu của mức tín nhiệm thật, chứ không phải do thuật toán yếu.
+Hệ quả thực tiễn là cải thiện đáng kể chỉ đến từ việc bổ sung nguồn dữ liệu mới,
+không phải từ thuật toán phức tạp hơn.
+
+\subsection*{1.4. Về giá trị của các nguồn dữ liệu}
+
+Phân tích SHAP cho thấy nhóm đặc trưng hành vi giao dịch đóng góp
+\ShapBehaviourPct{}\% vào quyết định của mô hình, cao hơn nhóm lịch sử tín dụng
+CIC (\ShapCICPct{}\%) vốn được coi là nguồn thông tin truyền thống quan trọng
+nhất. Đây là căn cứ định lượng cho khuyến nghị khai thác dữ liệu giao dịch trong
+công tác kiểm duyệt tín dụng: nguồn dữ liệu này do tổ chức tín dụng tự sở hữu,
+không phát sinh chi phí truy vấn bên ngoài, phản ánh tình trạng tài chính hiện
+tại và luôn có sẵn kể cả với nhóm khách hàng thiếu lịch sử tín dụng.
+
+\subsection*{1.5. Về quy trình hỗ trợ kiểm duyệt}
+
+Đề án đã hiện thực quy trình hoàn chỉnh kết hợp \NRules{} luật nghiệp vụ với mô
+hình học máy theo logic ưu tiên tám mức, đóng gói thành dịch vụ REST với năm điểm
+cuối hoạt động đúng. Mô phỏng trên tập kiểm thử cho tỷ lệ nợ xấu thực tế tăng đơn
+điệu qua ba nhóm khuyến nghị (\BadApprove{} -- \BadReview{} -- \BadReject{}), tỷ
+lệ xử lý tự động \AutomationRate{} và thời gian xử lý một hồ sơ ở phân vị 95\% là
+\SysPNinetyFive{} ms.
+
+So với quy trình thẩm định truyền thống chỉ dựa trên luật nghiệp vụ, mô hình
+giảm tỷ lệ nợ xấu trong nhóm hồ sơ được duyệt từ \TradBadRate{} xuống
+\PropBadRate{}, tức giảm tương đối \BadRateReductionPct{}. Đổi lại, tỷ lệ duyệt
+giảm \ApproveRateDrop{} điểm phần trăm và khối lượng thẩm định thủ công tăng
+\ReviewRateRise{} điểm phần trăm. Đánh đổi này điều chỉnh được thông qua hai
+ngưỡng phân vùng, trong khi bộ quy tắc cố định không có cơ chế tương đương.
+
+\section*{2. Hạn chế của nghiên cứu}
+\addcontentsline{toc}{section}{2. Hạn chế của nghiên cứu}
+
+Các hạn chế của kết quả thực nghiệm đã được phân tích chi tiết tại
+mục~\ref{subsec:han-che-dinh-huong}. Ở tầm tổng thể, đề án có ba hạn chế cơ bản.
+
+\textit{Thứ nhất là hạn chế về dữ liệu.} Do đặc thù bảo mật của dữ liệu tín dụng
+cá nhân, đề án sử dụng dữ liệu mô phỏng sinh theo một mô hình xác suất do chính
+đề án thiết kế, nên cấu trúc phụ thuộc giữa các biến phản ánh giả định của người
+thiết kế chứ không phải quy luật thực tế. Giá trị tuyệt đối của các chỉ tiêu chất
+lượng vì vậy không có ý nghĩa dự báo về hiệu quả trên dữ liệu thực; giá trị của
+thực nghiệm nằm ở việc so sánh \textit{tương đối} giữa các mô hình trong cùng
+điều kiện và ở việc kiểm chứng tính đúng đắn của toàn bộ quy trình.
+
+\textit{Thứ hai là hạn chế về phương pháp.} Đề án chưa xử lý bài toán suy luận
+nhãn cho hồ sơ bị từ chối (\eng{reject inference}) nên có thể chịu sai lệch chọn
+mẫu; chưa thực hiện kiểm định công bằng thuật toán; và việc đánh giá độ ổn định
+chỉ dựa trên bốn tháng dữ liệu kiểm thử, quá ngắn so với chu kỳ suy giảm điển
+hình của mô hình tín dụng.
+
+\textit{Thứ ba là hạn chế về phạm vi.} Đề án chỉ mô hình hóa thành phần $\PD$
+trong phân rã tổn thất kỳ vọng; $\LGD$ và $\EAD$ không thuộc phạm vi nghiên cứu.
+Mô hình được xây dựng ở mức nguyên mẫu trong môi trường nghiên cứu, chưa triển
+khai trên hệ thống nghiệp vụ thực tế của một tổ chức tín dụng, và các số đo thời
+gian chỉ có giá trị so sánh tương đối giữa các mô hình.
+
+\section*{3. Hướng phát triển}
+\addcontentsline{toc}{section}{3. Hướng phát triển}
+
+Trên cơ sở các hạn chế đã nhận diện, đề án đề xuất năm hướng phát triển tiếp
+theo, sắp xếp theo mức độ ưu tiên:
+
+\begin{enumerate}[label=(\arabic*)]
+  \item \textbf{Kiểm chứng trên dữ liệu thực} của một tổ chức tín dụng. Đây là
+  hướng có giá trị cao nhất vì trực tiếp giải quyết hạn chế cơ bản nhất của đề
+  án; mã nguồn đã được thiết kế để chuyển sang dữ liệu thực chỉ bằng cách thay
+  thành phần tiếp nhận dữ liệu.
+
+  \item \textbf{Bổ sung xử lý suy luận nhãn cho hồ sơ bị từ chối}, mở rộng phạm
+  vi áp dụng của mô hình tới toàn bộ hồ sơ nộp vào.
+
+  \item \textbf{Mở rộng sang mô hình $\LGD$ và $\EAD$} để hoàn thiện khung tính
+  tổn thất kỳ vọng, cho phép định giá theo rủi ro đầy đủ.
+
+  \item \textbf{Bổ sung kiểm định công bằng thuật toán và cơ chế cảnh báo tự
+  động} khi phát hiện suy giảm chất lượng hoặc chênh lệch giữa các nhóm khách
+  hàng.
+
+  \item \textbf{Nghiên cứu cơ chế cập nhật mô hình có kiểm soát}, gồm tiêu chí
+  kích hoạt huấn luyện lại, quy trình kiểm định mô hình mới và cơ chế quay lui
+  khi phát hiện vấn đề trong vận hành.
+\end{enumerate}
+
+\vspace{0.8cm}
+
+Tóm lại, đề án đã xây dựng được một mô hình học máy hỗ trợ kiểm duyệt tín dụng
+hoàn chỉnh từ khâu tiếp nhận dữ liệu tới khâu đưa ra khuyến nghị kèm lý giải,
+đồng thời đánh giá định lượng giá trị mà mô hình mang lại so với quy trình thẩm
+định
+truyền thống. Kết quả nghiên cứu cho thấy việc kết hợp mô hình học máy với bộ
+luật nghiệp vụ, trong đó mô hình đóng vai trò cung cấp thông tin định lượng còn
+quyết định cuối cùng vẫn thuộc về người có thẩm quyền, là hướng tiếp cận vừa khả
+thi về kỹ thuật vừa phù hợp với yêu cầu quản trị rủi ro và tuân thủ của hoạt động
+cấp tín dụng.

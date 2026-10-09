@@ -1,0 +1,259 @@
+\babel@toc {vietnamese}{}\relax 
+\contentsline {chapter}{LỜI CAM ĐOAN}{i}{chapter*.1}%
+\contentsline {chapter}{LỜI CẢM ƠN}{ii}{chapter*.2}%
+\contentsline {chapter}{MỤC LỤC}{iii}{section*.3}%
+\contentsline {chapter}{DANH MỤC THUẬT NGỮ VÀ CHỮ VIẾT TẮT}{viii}{section*.5}%
+\contentsline {chapter}{DANH MỤC BẢNG}{xi}{section*.7}%
+\contentsline {chapter}{DANH MỤC HÌNH VẼ}{xiii}{section*.9}%
+\contentsline {chapter}{MỞ ĐẦU}{1}{chapter*.11}%
+\contentsline {section}{1. Lý do chọn đề tài}{1}{chapter*.11}%
+\contentsline {section}{2. Tổng quan về vấn đề nghiên cứu}{2}{chapter*.11}%
+\contentsline {section}{3. Mục tiêu nghiên cứu}{3}{chapter*.11}%
+\contentsline {section}{4. Đối tượng và phạm vi nghiên cứu}{5}{Item.8}%
+\contentsline {section}{5. Phương pháp nghiên cứu}{6}{Item.8}%
+\contentsline {section}{6. Kết cấu của đề án}{7}{Item.8}%
+\contentsline {chapter}{\numberline {1}CƠ SỞ LÝ LUẬN}{9}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Tổng quan về tín dụng và kiểm duyệt tín dụng}{9}{section.1.1}%
+\contentsline {subsection}{\numberline {1.1.1}Khái niệm tín dụng}{9}{subsection.1.1.1}%
+\contentsline {subsection}{\numberline {1.1.2}Quy trình cấp và kiểm duyệt tín dụng}{10}{subsection.1.1.2}%
+\contentsline {subsection}{\numberline {1.1.3}Các yếu tố ảnh hưởng đến quyết định tín dụng}{11}{subsection.1.1.3}%
+\contentsline {subsection}{\numberline {1.1.4}Rủi ro tín dụng và đánh giá rủi ro tín dụng}{12}{subsection.1.1.4}%
+\contentsline {paragraph}{Định nghĩa vỡ nợ.}{12}{equation.1.1}%
+\contentsline {paragraph}{Ba thế hệ phương pháp đánh giá.}{12}{equation.1.1}%
+\contentsline {subsection}{\numberline {1.1.5}Những hạn chế của phương pháp kiểm duyệt tín dụng truyền thống}{13}{subsection.1.1.5}%
+\contentsline {paragraph}{Thứ nhất, không biểu diễn được tương tác giữa các yếu tố.}{13}{subsection.1.1.5}%
+\contentsline {paragraph}{Thứ hai, ngưỡng được đặt theo phán đoán chứ không theo dữ liệu.}{13}{subsection.1.1.5}%
+\contentsline {paragraph}{Thứ ba, kết quả đầu ra mang tính nhị phân, không có thang đo mức độ.}{13}{subsection.1.1.5}%
+\contentsline {paragraph}{Thứ tư, tính nhất quán và tốc độ xử lý bị giới hạn bởi yếu tố con người.}{14}{subsection.1.1.5}%
+\contentsline {section}{\numberline {1.2}Tổng quan về học máy trong đánh giá tín dụng}{14}{section.1.2}%
+\contentsline {subsection}{\numberline {1.2.1}Khái niệm học máy}{14}{subsection.1.2.1}%
+\contentsline {subsection}{\numberline {1.2.2}Phân loại các phương pháp học máy}{15}{subsection.1.2.2}%
+\contentsline {paragraph}{Học có giám sát (\textit {supervised learning}).}{15}{subsection.1.2.2}%
+\contentsline {paragraph}{Học không giám sát (\textit {unsupervised learning}).}{15}{subsection.1.2.2}%
+\contentsline {paragraph}{Học bán giám sát (\textit {semi-supervised learning}).}{15}{subsection.1.2.2}%
+\contentsline {paragraph}{Học tăng cường (\textit {reinforcement learning}).}{15}{subsection.1.2.2}%
+\contentsline {subsection}{\numberline {1.2.3}Học máy có giám sát trong bài toán tín dụng}{16}{subsection.1.2.3}%
+\contentsline {paragraph}{Ba đặc thù của bài toán tín dụng.}{16}{equation.1.4}%
+\contentsline {subsection}{\numberline {1.2.4}Quy trình xây dựng mô hình học máy}{17}{subsection.1.2.4}%
+\contentsline {subsection}{\numberline {1.2.5}Vai trò của học máy trong hỗ trợ kiểm duyệt tín dụng}{18}{subsection.1.2.5}%
+\contentsline {section}{\numberline {1.3}Dữ liệu và đặc trưng trong bài toán tín dụng}{18}{section.1.3}%
+\contentsline {subsection}{\numberline {1.3.1}Đặc điểm dữ liệu tín dụng}{18}{subsection.1.3.1}%
+\contentsline {paragraph}{Tính đúng đắn theo thời điểm.}{18}{subsection.1.3.1}%
+\contentsline {paragraph}{Độ trễ của nhãn.}{19}{subsection.1.3.1}%
+\contentsline {paragraph}{Mất cân bằng lớp.}{19}{subsection.1.3.1}%
+\contentsline {paragraph}{Giá trị khuyết mang thông tin.}{19}{subsection.1.3.1}%
+\contentsline {paragraph}{Trôi dạt theo thời gian.}{19}{subsection.1.3.1}%
+\contentsline {subsection}{\numberline {1.3.2}Các nhóm dữ liệu sử dụng trong đánh giá tín dụng}{19}{subsection.1.3.2}%
+\contentsline {subsection}{\numberline {1.3.3}Xây dựng và lựa chọn đặc trưng}{20}{subsection.1.3.3}%
+\contentsline {paragraph}{Xây dựng đặc trưng.}{20}{subsection.1.3.3}%
+\contentsline {paragraph}{Weight of Evidence và Information Value.}{21}{subsection.1.3.3}%
+\contentsline {paragraph}{Lựa chọn đặc trưng.}{21}{equation.1.6}%
+\contentsline {section}{\numberline {1.4}Các mô hình học máy áp dụng trong đánh giá tín dụng}{22}{section.1.4}%
+\contentsline {subsection}{\numberline {1.4.1}Hồi quy Logistic}{22}{subsection.1.4.1}%
+\contentsline {paragraph}{Ưu điểm.}{22}{equation.1.8}%
+\contentsline {paragraph}{Hạn chế.}{22}{equation.1.8}%
+\contentsline {paragraph}{Thẻ điểm dựa trên biến đổi WOE.}{22}{equation.1.8}%
+\contentsline {subsection}{\numberline {1.4.2}Decision Tree}{23}{subsection.1.4.2}%
+\contentsline {paragraph}{Ưu điểm.}{23}{equation.1.11}%
+\contentsline {paragraph}{Hạn chế.}{23}{equation.1.11}%
+\contentsline {subsection}{\numberline {1.4.3}Random Forest}{24}{subsection.1.4.3}%
+\contentsline {paragraph}{Ưu điểm.}{24}{equation.1.14}%
+\contentsline {paragraph}{Hạn chế.}{24}{equation.1.14}%
+\contentsline {subsection}{\numberline {1.4.4}Support Vector Machine}{25}{subsection.1.4.4}%
+\contentsline {paragraph}{Thủ thuật hạt nhân.}{25}{equation.1.15}%
+\contentsline {paragraph}{Ưu điểm.}{25}{equation.1.16}%
+\contentsline {paragraph}{Hạn chế trong bài toán tín dụng.}{25}{equation.1.16}%
+\contentsline {subsection}{\numberline {1.4.5}Gradient Boosting}{26}{subsection.1.4.5}%
+\contentsline {paragraph}{Các biến thể hiện đại.}{26}{equation.1.17}%
+\contentsline {paragraph}{Ưu điểm.}{26}{equation.1.17}%
+\contentsline {paragraph}{Hạn chế.}{27}{equation.1.17}%
+\contentsline {subsection}{\numberline {1.4.6}So sánh và lựa chọn mô hình phù hợp}{27}{subsection.1.4.6}%
+\contentsline {subsubsection}{\numberline {1.4.6.1}Hệ thống chỉ tiêu đánh giá}{27}{subsubsection.1.4.6.1}%
+\contentsline {paragraph}{Nhóm 1 -- Chỉ tiêu phân loại phổ quát.}{27}{subsubsection.1.4.6.1}%
+\contentsline {paragraph}{Nhóm 2 -- Chỉ tiêu đặc thù ngành tín dụng.}{27}{equation.1.19}%
+\contentsline {paragraph}{Nhóm 3 -- Chất lượng hiệu chuẩn xác suất.}{28}{equation.1.20}%
+\contentsline {paragraph}{Nhóm 4 -- Chỉ tiêu vận hành.}{28}{equation.1.21}%
+\contentsline {subsubsection}{\numberline {1.4.6.2}Cơ sở lựa chọn mô hình}{28}{subsubsection.1.4.6.2}%
+\contentsline {subsubsection}{\numberline {1.4.6.3}Xử lý mất cân bằng dữ liệu}{29}{subsubsection.1.4.6.3}%
+\contentsline {subsubsection}{\numberline {1.4.6.4}Giải thích mô hình}{29}{subsubsection.1.4.6.4}%
+\contentsline {subsubsection}{\numberline {1.4.6.5}Giám sát trôi dạt}{30}{subsubsection.1.4.6.5}%
+\contentsline {section}{Kết luận chương 1}{30}{equation.1.23}%
+\contentsline {chapter}{\numberline {2}XÂY DỰNG MÔ HÌNH HỌC MÁY TRONG HỖ TRỢ KIỂM DUYỆT TÍN DỤNG}{32}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Phân tích bài toán kiểm duyệt tín dụng}{32}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}Xác định các mức độ rủi ro và trạng thái khoản vay cần dự báo}{32}{subsection.2.1.1}%
+\contentsline {paragraph}{Biến mục tiêu.}{32}{subsection.2.1.1}%
+\contentsline {paragraph}{Ba trạng thái thay vì hai.}{32}{equation.2.1}%
+\contentsline {paragraph}{Thang phân hạng rủi ro.}{33}{equation.2.1}%
+\contentsline {subsection}{\numberline {2.1.2}Đặc trưng đầu vào và đầu ra của mô hình kiểm duyệt tín dụng}{33}{subsection.2.1.2}%
+\contentsline {paragraph}{Đầu vào.}{33}{subsection.2.1.2}%
+\contentsline {paragraph}{Đầu ra.}{33}{subsection.2.1.2}%
+\contentsline {subsection}{\numberline {2.1.3}Yêu cầu kỹ thuật và pháp lý đối với mô hình kiểm duyệt tín dụng}{34}{subsection.2.1.3}%
+\contentsline {subsubsection}{\numberline {2.1.3.1}Yêu cầu chức năng}{34}{subsubsection.2.1.3.1}%
+\contentsline {subsubsection}{\numberline {2.1.3.2}Yêu cầu phi chức năng}{34}{subsubsection.2.1.3.2}%
+\contentsline {subsubsection}{\numberline {2.1.3.3}Yêu cầu pháp lý và tuân thủ}{35}{subsubsection.2.1.3.3}%
+\contentsline {section}{\numberline {2.2}Thu thập và tổng hợp dữ liệu}{35}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Nguồn dữ liệu tín dụng truyền thống và dữ liệu bổ sung}{35}{subsection.2.2.1}%
+\contentsline {paragraph}{Dữ liệu tín dụng truyền thống.}{35}{subsection.2.2.1}%
+\contentsline {paragraph}{Dữ liệu bổ sung.}{35}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}Thu thập và trích xuất dữ liệu khách hàng vay vốn}{36}{subsection.2.2.2}%
+\contentsline {paragraph}{Đơn vị phân tích.}{36}{subsection.2.2.2}%
+\contentsline {paragraph}{Quy tắc ghép nối theo thời điểm.}{36}{subsection.2.2.2}%
+\contentsline {subsection}{\numberline {2.2.3}Phân tích thống kê mô tả tập dữ liệu tín dụng}{37}{subsection.2.2.3}%
+\contentsline {subsection}{\numberline {2.2.4}Phát hiện và xử lý dữ liệu ngoại lệ, dữ liệu không hợp lệ}{37}{subsection.2.2.4}%
+\contentsline {paragraph}{Dữ liệu không hợp lệ}{37}{subsection.2.2.4}%
+\contentsline {paragraph}{Giá trị ngoại lệ}{37}{subsection.2.2.4}%
+\contentsline {paragraph}{Kiểm chứng cơ chế phát hiện.}{38}{table.caption.17}%
+\contentsline {paragraph}{Xử lý giá trị ngoại lệ.}{38}{table.caption.17}%
+\contentsline {subsection}{\numberline {2.2.5}Phân chia dữ liệu theo khoảng thời gian và nhóm khách hàng}{39}{subsection.2.2.5}%
+\contentsline {paragraph}{Phân chia theo thời gian (chính).}{39}{subsection.2.2.5}%
+\contentsline {paragraph}{Phân chia theo nhóm khách hàng (phương án bổ sung).}{39}{subsection.2.2.5}%
+\contentsline {paragraph}{Tách riêng vai trò trong tập huấn luyện.}{39}{subsection.2.2.5}%
+\contentsline {section}{\numberline {2.3}Tiền xử lý và làm sạch dữ liệu}{40}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}Xử lý giá trị khuyết thiếu}{40}{subsection.2.3.1}%
+\contentsline {paragraph}{Khuyết mang thông tin.}{40}{subsection.2.3.1}%
+\contentsline {paragraph}{Khuyết ngẫu nhiên.}{40}{subsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.2}Phát hiện và xử lý dữ liệu ngoại lệ}{40}{subsection.2.3.2}%
+\contentsline {subsection}{\numberline {2.3.3}Chuẩn hóa và mã hóa biến định tính/định lượng}{41}{subsection.2.3.3}%
+\contentsline {paragraph}{Xử lý hạng mục chưa từng xuất hiện.}{41}{table.caption.18}%
+\contentsline {subsection}{\numberline {2.3.4}Phân chia tập dữ liệu huấn luyện, kiểm thử}{42}{subsection.2.3.4}%
+\contentsline {section}{\numberline {2.4}Trích xuất và lựa chọn đặc trưng}{42}{section.2.4}%
+\contentsline {subsection}{\numberline {2.4.1}Trích xuất nhóm đặc trưng thông tin cá nhân và tài chính}{42}{subsection.2.4.1}%
+\contentsline {subsection}{\numberline {2.4.2}Trích xuất nhóm đặc trưng lịch sử tín dụng và quan hệ CIC}{42}{subsection.2.4.2}%
+\contentsline {subsection}{\numberline {2.4.3}Trích xuất nhóm đặc trưng hành vi và biến tương tác}{43}{subsection.2.4.3}%
+\contentsline {subsubsection}{\numberline {2.4.3.1}Đặc trưng hành vi theo cửa sổ thời gian}{43}{subsubsection.2.4.3.1}%
+\contentsline {subsubsection}{\numberline {2.4.3.2}Thuật toán bảo đảm tính đúng đắn theo thời điểm}{43}{subsubsection.2.4.3.2}%
+\contentsline {subsubsection}{\numberline {2.4.3.3}Biến tổ hợp và biến tương tác}{44}{subsubsection.2.4.3.3}%
+\contentsline {subsection}{\numberline {2.4.4}Đánh giá mức độ quan trọng của các đặc trưng}{44}{subsection.2.4.4}%
+\contentsline {paragraph}{Information Value -- năng lực dự báo đơn biến.}{44}{subsection.2.4.4}%
+\contentsline {paragraph}{SHAP -- đóng góp trong mô hình đã huấn luyện.}{45}{subsection.2.4.4}%
+\contentsline {paragraph}{Phép hoán vị -- kiểm chứng chéo.}{45}{subsection.2.4.4}%
+\contentsline {subsection}{\numberline {2.4.5}Lựa chọn tập đặc trưng tối ưu cho mô hình}{45}{subsection.2.4.5}%
+\contentsline {paragraph}{Bước 1 -- lọc theo năng lực dự báo.}{45}{figure.caption.20}%
+\contentsline {paragraph}{Bước 2 -- lọc theo tương quan.}{46}{figure.caption.20}%
+\contentsline {paragraph}{Bước 3 -- lọc theo độ ổn định.}{46}{figure.caption.20}%
+\contentsline {section}{\numberline {2.5}Xây dựng nhãn và xác định quy tắc phê duyệt}{46}{section.2.5}%
+\contentsline {subsection}{\numberline {2.5.1}Định nghĩa trạng thái rủi ro và tiêu chuẩn nợ xấu}{46}{subsection.2.5.1}%
+\contentsline {paragraph}{Tiêu chuẩn nợ xấu.}{46}{subsection.2.5.1}%
+\contentsline {paragraph}{Cửa sổ quan sát.}{46}{subsection.2.5.1}%
+\contentsline {subsection}{\numberline {2.5.2}Phương pháp gán nhãn dữ liệu hồ sơ vay}{47}{subsection.2.5.2}%
+\contentsline {subsection}{\numberline {2.5.3}Xác định điểm cắt phê duyệt}{47}{subsection.2.5.3}%
+\contentsline {subsubsection}{\numberline {2.5.3.1}Vì sao ngưỡng 0,5 không phù hợp}{47}{subsubsection.2.5.3.1}%
+\contentsline {subsubsection}{\numberline {2.5.3.2}Ba tiêu chí xác định điểm cắt}{47}{subsubsection.2.5.3.2}%
+\contentsline {paragraph}{Tiêu chí 1 -- tối thiểu chi phí kỳ vọng.}{47}{subsubsection.2.5.3.2}%
+\contentsline {paragraph}{Tiêu chí 2 -- đạt tỷ lệ duyệt mục tiêu.}{48}{equation.2.3}%
+\contentsline {paragraph}{Tiêu chí 3 -- bảo đảm trần nợ xấu.}{48}{equation.2.3}%
+\contentsline {subsubsection}{\numberline {2.5.3.3}Hai ngưỡng cho ba vùng quyết định}{48}{subsubsection.2.5.3.3}%
+\contentsline {section}{\numberline {2.6}Thiết kế mô hình học máy kiểm duyệt tín dụng}{48}{section.2.6}%
+\contentsline {subsection}{\numberline {2.6.1}Lựa chọn các thuật toán học máy dự kiến}{48}{subsection.2.6.1}%
+\contentsline {paragraph}{Ghi chú về hiện thực SVM.}{49}{table.caption.21}%
+\contentsline {subsection}{\numberline {2.6.2}Thiết kế kiến trúc tổng thể của mô hình học máy hỗ trợ ra quyết định}{49}{subsection.2.6.2}%
+\contentsline {subsubsection}{\numberline {2.6.2.1}Kiến trúc phân tầng}{49}{subsubsection.2.6.2.1}%
+\contentsline {subsubsection}{\numberline {2.6.2.2}Logic tổng hợp khuyến nghị}{50}{subsubsection.2.6.2.2}%
+\contentsline {subsubsection}{\numberline {2.6.2.3}Bộ luật nghiệp vụ}{51}{subsubsection.2.6.2.3}%
+\contentsline {subsection}{\numberline {2.6.3}Xác định các hàm mất mát}{51}{subsection.2.6.3}%
+\contentsline {paragraph}{Hàm mất mát huấn luyện.}{51}{subsection.2.6.3}%
+\contentsline {paragraph}{Bù mất cân bằng lớp.}{51}{subsection.2.6.3}%
+\contentsline {paragraph}{Hàm chi phí nghiệp vụ.}{52}{equation.2.5}%
+\contentsline {subsection}{\numberline {2.6.4}Lựa chọn chỉ số đánh giá hiệu năng}{52}{subsection.2.6.4}%
+\contentsline {subsection}{\numberline {2.6.5}Tích hợp cơ chế giải thích mô hình}{53}{subsection.2.6.5}%
+\contentsline {paragraph}{Cấp độ toàn cục.}{53}{subsection.2.6.5}%
+\contentsline {paragraph}{Cấp độ từng hồ sơ.}{53}{subsection.2.6.5}%
+\contentsline {section}{\numberline {2.7}Quy trình huấn luyện và tối ưu mô hình}{53}{section.2.7}%
+\contentsline {subsection}{\numberline {2.7.1}Thiết lập môi trường và công cụ huấn luyện}{53}{subsection.2.7.1}%
+\contentsline {subsection}{\numberline {2.7.2}Quy trình thử nghiệm và kiểm tra chéo}{54}{subsection.2.7.2}%
+\contentsline {paragraph}{Kiểm định ngoài thời gian cho đánh giá cuối cùng.}{54}{subsection.2.7.2}%
+\contentsline {paragraph}{Kiểm định chéo theo chuỗi thời gian cho tinh chỉnh tham số.}{54}{subsection.2.7.2}%
+\contentsline {subsection}{\numberline {2.7.3}Phương pháp tối ưu hóa siêu tham số}{54}{subsection.2.7.3}%
+\contentsline {subsection}{\numberline {2.7.4}Mức độ kiểm soát hiện tượng quá khớp}{55}{subsection.2.7.4}%
+\contentsline {paragraph}{Điều chuẩn trong hàm mục tiêu.}{55}{subsection.2.7.4}%
+\contentsline {paragraph}{Ràng buộc cấu trúc mô hình.}{55}{subsection.2.7.4}%
+\contentsline {paragraph}{Dừng sớm.}{55}{subsection.2.7.4}%
+\contentsline {paragraph}{Lấy mẫu ngẫu nhiên.}{55}{subsection.2.7.4}%
+\contentsline {subsection}{\numberline {2.7.5}Phương pháp đánh giá độ ổn định mô hình theo thời gian}{55}{subsection.2.7.5}%
+\contentsline {paragraph}{Ổn định của dữ liệu đầu vào.}{55}{subsection.2.7.5}%
+\contentsline {paragraph}{Ổn định của chất lượng dự báo.}{56}{subsection.2.7.5}%
+\contentsline {section}{Kết luận chương 2}{56}{subsection.2.7.5}%
+\contentsline {chapter}{\numberline {3}TRIỂN KHAI THỰC NGHIỆM VÀ ĐÁNH GIÁ KẾT QUẢ}{57}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Thiết lập kịch bản và môi trường thực nghiệm}{57}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}Hạ tầng phần cứng, phần mềm và thư viện sử dụng}{57}{subsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.1.2}Kịch bản thực nghiệm các mô hình học máy}{58}{subsection.3.1.2}%
+\contentsline {subsection}{\numberline {3.1.3}Thiết kế và kiểm chứng tập dữ liệu thực nghiệm}{58}{subsection.3.1.3}%
+\contentsline {subsubsection}{\numberline {3.1.3.1}Cơ sở lựa chọn dữ liệu mô phỏng}{58}{subsubsection.3.1.3.1}%
+\contentsline {subsubsection}{\numberline {3.1.3.2}Mô hình sinh dữ liệu biến tiềm ẩn}{59}{subsubsection.3.1.3.2}%
+\contentsline {subsubsection}{\numberline {3.1.3.3}Quy mô và đặc điểm tập dữ liệu}{60}{subsubsection.3.1.3.3}%
+\contentsline {subsubsection}{\numberline {3.1.3.4}Kiểm tra chất lượng dữ liệu}{61}{subsubsection.3.1.3.4}%
+\contentsline {subsubsection}{\numberline {3.1.3.5}Kết quả gán nhãn rủi ro}{61}{subsubsection.3.1.3.5}%
+\contentsline {subsection}{\numberline {3.1.4}Phương pháp phân chia tập dữ liệu thử nghiệm}{63}{subsection.3.1.4}%
+\contentsline {section}{\numberline {3.2}Kết quả huấn luyện và tính toán mô hình}{64}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Kết quả xây dựng và lựa chọn đặc trưng}{64}{subsection.3.2.1}%
+\contentsline {subsubsection}{\numberline {3.2.1.1}Phân tích Information Value}{64}{subsubsection.3.2.1.1}%
+\contentsline {subsubsection}{\numberline {3.2.1.2}Kết quả lựa chọn tập đặc trưng}{66}{subsubsection.3.2.1.2}%
+\contentsline {subsection}{\numberline {3.2.2}Kết quả trên các mô hình cơ sở}{67}{subsection.3.2.2}%
+\contentsline {subsection}{\numberline {3.2.3}Kết quả trên các mô hình học máy nâng cao}{67}{subsection.3.2.3}%
+\contentsline {subsection}{\numberline {3.2.4}Tối ưu hóa siêu tham số cho mô hình}{68}{subsection.3.2.4}%
+\contentsline {section}{\numberline {3.3}Đánh giá hiệu năng và so sánh kết quả thực nghiệm}{69}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Đánh giá qua các chỉ số phân loại}{69}{subsection.3.3.1}%
+\contentsline {subsubsection}{\numberline {3.3.1.1}So sánh với trần Bayes}{70}{subsubsection.3.3.1.1}%
+\contentsline {subsection}{\numberline {3.3.2}Đánh giá khả năng phân tách rủi ro}{71}{subsection.3.3.2}%
+\contentsline {paragraph}{Thống kê KS.}{71}{subsection.3.3.2}%
+\contentsline {paragraph}{Phân tích theo thập phân vị.}{71}{figure.caption.44}%
+\contentsline {paragraph}{Phân bố điểm rủi ro.}{73}{figure.caption.46}%
+\contentsline {subsection}{\numberline {3.3.3}So sánh hiệu năng giữa các thuật toán}{74}{subsection.3.3.3}%
+\contentsline {subsubsection}{\numberline {3.3.3.1}Chênh lệch giữa các thuật toán là nhỏ}{74}{subsubsection.3.3.3.1}%
+\contentsline {subsubsection}{\numberline {3.3.3.2}Giới hạn độ phân giải của phép đo}{74}{subsubsection.3.3.3.2}%
+\contentsline {subsubsection}{\numberline {3.3.3.3}Đánh đổi giữa chất lượng và chi phí tính toán}{75}{subsubsection.3.3.3.3}%
+\contentsline {subsubsection}{\numberline {3.3.3.4}Tiêu chí chọn mô hình triển khai}{76}{subsubsection.3.3.3.4}%
+\contentsline {subsubsection}{\numberline {3.3.3.5}Tác động nghiệp vụ}{77}{subsubsection.3.3.3.5}%
+\contentsline {subsubsection}{\numberline {3.3.3.6}Mức độ quá khớp và độ ổn định theo thời gian}{78}{subsubsection.3.3.3.6}%
+\contentsline {paragraph}{Mức độ quá khớp.}{78}{subsubsection.3.3.3.6}%
+\contentsline {paragraph}{Trôi dạt phân phối dữ liệu.}{78}{table.caption.51}%
+\contentsline {paragraph}{Chất lượng dự báo theo thời gian.}{78}{table.caption.52}%
+\contentsline {section}{\numberline {3.4}Mô phỏng và giải thích mô hình}{79}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Thử nghiệm giải thích quyết định mô hình}{79}{subsection.3.4.1}%
+\contentsline {subsubsection}{\numberline {3.4.1.1}Giải thích ở cấp độ toàn cục}{79}{subsubsection.3.4.1.1}%
+\contentsline {subsubsection}{\numberline {3.4.1.2}Kiểm chứng chéo bằng phép hoán vị}{81}{subsubsection.3.4.1.2}%
+\contentsline {subsubsection}{\numberline {3.4.1.3}Giải thích ở cấp độ từng hồ sơ}{83}{subsubsection.3.4.1.3}%
+\contentsline {subsection}{\numberline {3.4.2}Mô phỏng xác định ngưỡng phê duyệt tín dụng}{83}{subsection.3.4.2}%
+\contentsline {subsubsection}{\numberline {3.4.2.1}So sánh ba tiêu chí xác định điểm cắt}{83}{subsubsection.3.4.2.1}%
+\contentsline {subsubsection}{\numberline {3.4.2.2}Độ nhạy của kết quả theo điểm cắt}{83}{subsubsection.3.4.2.2}%
+\contentsline {subsubsection}{\numberline {3.4.2.3}Hai ngưỡng cho ba vùng quyết định}{85}{subsubsection.3.4.2.3}%
+\contentsline {subsubsection}{\numberline {3.4.2.4}Tần suất vi phạm luật nghiệp vụ}{85}{subsubsection.3.4.2.4}%
+\contentsline {subsection}{\numberline {3.4.3}Thử nghiệm tích hợp API và luồng xử lý hồ sơ}{87}{subsection.3.4.3}%
+\contentsline {subsubsection}{\numberline {3.4.3.1}Kết quả tích hợp dịch vụ REST}{87}{subsubsection.3.4.3.1}%
+\contentsline {subsubsection}{\numberline {3.4.3.2}Thời gian xử lý một hồ sơ}{87}{subsubsection.3.4.3.2}%
+\contentsline {section}{\numberline {3.5}Đánh giá chung}{88}{section.3.5}%
+\contentsline {subsection}{\numberline {3.5.1}So sánh với quy trình thẩm định truyền thống}{88}{subsection.3.5.1}%
+\contentsline {paragraph}{Về chất lượng danh mục -- cải thiện rõ rệt.}{89}{figure.caption.69}%
+\contentsline {paragraph}{Về quy mô cấp tín dụng -- giảm.}{89}{figure.caption.69}%
+\contentsline {paragraph}{Về khối lượng công việc thủ công -- tăng nhẹ.}{89}{figure.caption.69}%
+\contentsline {paragraph}{Về thời gian xử lý.}{89}{figure.caption.69}%
+\contentsline {paragraph}{Diễn giải tổng hợp.}{90}{figure.caption.69}%
+\contentsline {subsection}{\numberline {3.5.2}Đối chiếu kết quả với các công trình nghiên cứu liên quan}{90}{subsection.3.5.2}%
+\contentsline {paragraph}{Về thứ hạng giữa các thuật toán.}{90}{subsection.3.5.2}%
+\contentsline {paragraph}{Về vai trò của đặc trưng so với thuật toán.}{90}{subsection.3.5.2}%
+\contentsline {paragraph}{Về khoảng cách so với các nghiên cứu trong nước.}{90}{subsection.3.5.2}%
+\contentsline {paragraph}{Về điểm khác biệt trong thiết kế thực nghiệm.}{91}{subsection.3.5.2}%
+\contentsline {subsection}{\numberline {3.5.3}Nhận diện hạn chế và định hướng phát triển}{91}{subsection.3.5.3}%
+\contentsline {subsubsection}{\numberline {3.5.3.1}Hạn chế của kết quả thực nghiệm}{91}{subsubsection.3.5.3.1}%
+\contentsline {paragraph}{Hạn chế về dữ liệu.}{91}{subsubsection.3.5.3.1}%
+\contentsline {paragraph}{Hạn chế về phạm vi đo lường.}{91}{subsubsection.3.5.3.1}%
+\contentsline {paragraph}{Hạn chế về phạm vi nghiệp vụ.}{91}{subsubsection.3.5.3.1}%
+\contentsline {paragraph}{Hạn chế về thời gian quan sát.}{91}{subsubsection.3.5.3.1}%
+\contentsline {paragraph}{Hạn chế về kiểm định công bằng.}{91}{subsubsection.3.5.3.1}%
+\contentsline {subsubsection}{\numberline {3.5.3.2}Định hướng phát triển}{92}{subsubsection.3.5.3.2}%
+\contentsline {section}{Kết luận chương 3}{92}{Item.46}%
+\contentsline {chapter}{KẾT LUẬN}{94}{chapter*.70}%
+\contentsline {section}{1. Kết quả nghiên cứu}{94}{chapter*.70}%
+\contentsline {section}{2. Hạn chế của nghiên cứu}{96}{chapter*.70}%
+\contentsline {section}{3. Hướng phát triển}{97}{chapter*.70}%
+\contentsline {chapter}{DANH MỤC TÀI LIỆU THAM KHẢO}{98}{chapter*.71}%
+\contentsline {chapter}{\numberline {A}CẤU TRÚC MÃ NGUỒN VÀ HƯỚNG DẪN TÁI LẬP KẾT QUẢ}{102}{appendix.A}%
+\contentsline {section}{\numberline {A.1}Tổ chức mã nguồn}{102}{appendix.A.1}%
+\contentsline {section}{\numberline {A.2}Hướng dẫn tái lập kết quả}{103}{appendix.A.2}%
+\contentsline {subsection}{\numberline {A.2.1}Cài đặt môi trường}{103}{subsection.A.2.1}%
+\contentsline {subsection}{\numberline {A.2.2}Chạy toàn bộ quy trình}{103}{subsection.A.2.2}%
+\contentsline {subsection}{\numberline {A.2.3}Chạy nhanh để kiểm tra}{104}{subsection.A.2.3}%
+\contentsline {subsection}{\numberline {A.2.4}Khởi động dịch vụ và giao diện}{105}{subsection.A.2.4}%
+\contentsline {subsection}{\numberline {A.2.5}Biên dịch đề án}{105}{subsection.A.2.5}%
+\contentsline {chapter}{\numberline {B}DANH MỤC LUẬT NGHIỆP VỤ}{106}{appendix.B}%
+\contentsline {chapter}{\numberline {C}DANH MỤC ĐẶC TRƯNG}{109}{appendix.C}%

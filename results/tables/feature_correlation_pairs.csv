@@ -1,0 +1,11 @@
+﻿feature_dropped,feature_kept,abs_correlation,iv_dropped,iv_kept
+inflow_180d,inflow_90d,0.9672,0.5206,0.5464
+txn_amt_std_180d,txn_amt_std_90d,0.9723,0.4433,0.4477
+avg_txn_amt_180d,avg_txn_amt_90d,0.962,0.3846,0.3988
+salary_amt_180d,salary_amt_90d,0.9571,0.3822,0.3915
+outflow_90d,outflow_180d,0.975,0.2397,0.2568
+txn_cnt_90d,txn_cnt_180d,0.9787,0.1327,0.1333
+mobile_txn_cnt_180d,txn_cnt_180d,0.9625,0.1143,0.1333
+salary_regularity,salary_cnt_180d,0.9993,0.1088,0.1088
+has_collateral,ltv,0.9602,0.0402,0.0431
+large_txn_cnt_90d,large_txn_cnt_180d,0.9534,0.0288,0.0355

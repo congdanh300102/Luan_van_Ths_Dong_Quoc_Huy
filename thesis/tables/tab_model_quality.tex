@@ -1,0 +1,28 @@
+\begin{table}[!htbp]
+\centering
+\caption{So sánh chất lượng dự báo của các mô hình trên tập kiểm thử}
+\label{tab:model-quality}
+\small
+\setlength{\tabcolsep}{3.0pt}
+\begin{tabular}{@{}L{4.374cm}R{1.350cm}R{1.350cm}R{1.350cm}R{1.350cm}R{1.350cm}R{1.350cm}R{1.350cm}@{}}
+\toprule
+\textbf{Mô hình} & \textbf{AUC} & \textbf{Gini} & \textbf{KS} & \textbf{PR-AUC} & \textbf{F1} & \textbf{Brier} & \textbf{ECE} \\
+\midrule
+\textbf{Kết hợp xếp tầng (Stacking)} & \textbf{0,8620} & \textbf{0,7240} & \textbf{0,5702} & \textbf{0,6141} & \textbf{0,4445} & \textbf{0,0981} & \textbf{0,0063} \\
+CatBoost & 0,8614 & 0,7229 & 0,5689 & 0,6257 & 0,4731 & 0,0976 & 0,0075 \\
+XGBoost & 0,8612 & 0,7223 & 0,5729 & 0,6213 & 0,4689 & 0,0980 & 0,0101 \\
+LightGBM & 0,8590 & 0,7181 & 0,5647 & 0,6107 & 0,4482 & 0,0988 & 0,0053 \\
+Hồi quy logistic & 0,8579 & 0,7158 & 0,5629 & 0,5914 & 0,4418 & 0,1007 & 0,0070 \\
+Gradient Boosting (histogram) & 0,8575 & 0,7150 & 0,5594 & 0,5999 & 0,4453 & 0,0993 & 0,0107 \\
+Thẻ điểm WOE + Hồi quy logistic & 0,8570 & 0,7140 & 0,5621 & 0,6025 & 0,4627 & 0,1000 & 0,0112 \\
+Mạng nơ-ron truyền thẳng (MLP) & 0,8560 & 0,7119 & 0,5602 & 0,6012 & 0,4649 & 0,0999 & 0,0083 \\
+Máy vectơ hỗ trợ (SVM-RBF) & 0,8540 & 0,7080 & 0,5619 & 0,5953 & 0,4517 & 0,1005 & 0,0070 \\
+Rừng ngẫu nhiên & 0,8527 & 0,7054 & 0,5531 & 0,5930 & 0,4654 & 0,1008 & 0,0064 \\
+Cây cực ngẫu nhiên (Extra Trees) & 0,8471 & 0,6942 & 0,5448 & 0,5808 & 0,4360 & 0,1030 & 0,0078 \\
+Cây quyết định (CART) & 0,8206 & 0,6412 & 0,4970 & 0,5299 & 0,4052 & 0,1092 & 0,0066 \\
+\bottomrule
+\end{tabular}
+
+\vspace{2pt}
+{\footnotesize\itshape Sắp xếp theo ROC-AUC giảm dần. Trần Bayes (tính từ xác suất vỡ nợ thực của quá trình sinh dữ liệu) là 0,9109.}
+\end{table}

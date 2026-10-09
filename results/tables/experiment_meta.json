@@ -1,0 +1,36 @@
+{
+  "n_total": 60000,
+  "n_train": 42000,
+  "n_train_fit": 35700,
+  "n_train_es": 6300,
+  "n_valid": 9000,
+  "n_test": 9000,
+  "n_features": 116,
+  "n_numeric": 113,
+  "n_categorical": 3,
+  "default_rate_train": 0.14352380952380953,
+  "default_rate_test": 0.17677777777777778,
+  "scale_pos_weight": 6.111553784860558,
+  "best_model": "catboost",
+  "best_display_name": "CatBoost",
+  "best_test_auc": 0.8614263285373532,
+  "best_test_ks": 0.5689154958648064,
+  "top_auc_model": "stacking_ensemble",
+  "top_auc_display_name": "Kết hợp xếp tầng (Stacking)",
+  "top_auc_test_auc": 0.862,
+  "n_tied_models": 3,
+  "tie_tolerance_auc": 0.002,
+  "bayes_auc_test": 0.9109394701383702,
+  "cost_fn": 12.0,
+  "cost_fp": 1.0,
+  "train_period": [
+    "2024-07-01",
+    "2025-11-24"
+  ],
+  "test_period": [
+    "2026-03-12",
+    "2026-06-30"
+  ],
+  "total_training_seconds": 1638.7,
+  "n_models_trained": 12
+}

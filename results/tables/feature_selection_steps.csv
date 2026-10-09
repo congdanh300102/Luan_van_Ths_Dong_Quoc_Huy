@@ -1,0 +1,5 @@
+﻿Bước,Số đặc trưng,Đã loại
+Tập đặc trưng ban đầu,154,0
+Sau lọc theo IV (≥ 0.02),126,28
+Sau lọc theo tương quan (|r| ≤ 0.95),116,10
+Sau lọc theo độ ổn định (PSI ≤ 0.25),116,0

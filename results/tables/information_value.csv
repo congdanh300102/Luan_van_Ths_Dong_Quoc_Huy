@@ -1,0 +1,155 @@
+﻿feature,iv,n_bins,strength,group,description
+cic_score,1.243935677919836,11,Rất mạnh (cần kiểm tra rò rỉ nhãn),CIC,Điểm tín dụng CIC (300-850)
+worst_group_12m,1.1793411157557763,5,Rất mạnh (cần kiểm tra rò rỉ nhãn),CIC,Nhóm nợ xấu nhất 12 tháng
+dpd_max_12m,1.1059126401674426,6,Rất mạnh (cần kiểm tra rò rỉ nhãn),CIC,Số ngày quá hạn tối đa 12 tháng
+current_group,0.9594004108059062,4,Rất mạnh (cần kiểm tra rò rỉ nhãn),CIC,Nhóm nợ hiện tại (1-5)
+dpd_x_institutions,0.9478310395346818,5,Rất mạnh (cần kiểm tra rò rỉ nhãn),DERIVED,Tương tác giữa số ngày quá hạn và số TCTD
+num_bad_debt_institutions,0.8212311953174646,4,Rất mạnh (cần kiểm tra rò rỉ nhãn),CIC,Số TCTD từng phát sinh nợ xấu
+disposable_income,0.7389395576555149,10,Rất mạnh (cần kiểm tra rò rỉ nhãn),DERIVED,Thu nhập còn lại sau trả nợ và chi phí sinh hoạt tối thiểu
+disposable_ratio,0.6604906122993898,10,Rất mạnh (cần kiểm tra rò rỉ nhãn),DERIVED,Tỷ lệ thu nhập còn lại trên thu nhập
+total_avg_balance,0.5637849369996094,10,Rất mạnh (cần kiểm tra rò rỉ nhãn),STATIC,Tổng số dư bình quân 3 tháng
+inflow_90d,0.5464394033764719,10,Rất mạnh (cần kiểm tra rò rỉ nhãn),BEHAVIOUR,Tổng dòng tiền vào 90 ngày
+inflow_180d,0.5205824586361836,10,Rất mạnh (cần kiểm tra rò rỉ nhãn),BEHAVIOUR,Tổng dòng tiền vào 180 ngày
+monthly_income,0.503049928314548,10,Rất mạnh (cần kiểm tra rò rỉ nhãn),STATIC,Thu nhập khai báo hàng tháng
+txn_amt_std_90d,0.4477426078519282,10,Mạnh,BEHAVIOUR,Độ lệch chuẩn giá trị giao dịch 90 ngày
+txn_amt_std_180d,0.4432903464278256,10,Mạnh,BEHAVIOUR,Độ lệch chuẩn giá trị giao dịch 180 ngày
+net_flow_180d,0.43209853572494356,10,Mạnh,BEHAVIOUR,Dòng tiền thuần 180 ngày
+net_flow_90d,0.4235586522238626,10,Mạnh,BEHAVIOUR,Dòng tiền thuần 90 ngày
+avg_txn_amt_90d,0.3988435466172477,10,Mạnh,BEHAVIOUR,Giá trị giao dịch trung bình 90 ngày
+salary_amt_90d,0.3915016671490441,9,Mạnh,BEHAVIOUR,Tổng lương nhận 90 ngày
+inflow_30d,0.38779356226774087,10,Mạnh,BEHAVIOUR,Tổng dòng tiền vào 30 ngày
+ecom_amt_180d,0.385677439656691,10,Mạnh,BEHAVIOUR,Chi tiêu thương mại điện tử 180 ngày
+avg_txn_amt_180d,0.3845676452502848,10,Mạnh,BEHAVIOUR,Giá trị giao dịch trung bình 180 ngày
+salary_amt_180d,0.38215237707158467,10,Mạnh,BEHAVIOUR,Tổng lương nhận 180 ngày
+dti,0.36729781507443027,10,Mạnh,DERIVED,Debt-to-Income: (trả góp mới + nghĩa vụ hiện hữu) / thu nhập
+utility_amt_180d,0.3661447674760316,10,Mạnh,BEHAVIOUR,Chi tiêu hóa đơn tiện ích 180 ngày
+has_written_off_debt,0.352053945139895,2,Mạnh,CIC,Có nợ đã xử lý rủi ro
+income_per_dependent,0.3508081941103643,10,Mạnh,DERIVED,Thu nhập bình quân đầu người trong hộ
+txn_amt_std_30d,0.3295932777272871,10,Mạnh,BEHAVIOUR,Độ lệch chuẩn giá trị giao dịch 30 ngày
+ecom_amt_90d,0.3253054812584674,10,Mạnh,BEHAVIOUR,Chi tiêu thương mại điện tử 90 ngày
+balance_to_installment,0.3229764719124403,10,Mạnh,DERIVED,Số dư bình quân / khoản trả góp hàng tháng
+avg_txn_amt_30d,0.31451109087413603,10,Mạnh,BEHAVIOUR,Giá trị giao dịch trung bình 30 ngày
+outstanding_to_income,0.30533362665586106,10,Mạnh,DERIVED,Tổng dư nợ hiện hữu / thu nhập hàng tháng
+utility_amt_90d,0.2893231409464757,10,Trung bình,BEHAVIOUR,Chi tiêu hóa đơn tiện ích 90 ngày
+net_flow_30d,0.27040743411303536,10,Trung bình,BEHAVIOUR,Dòng tiền thuần 30 ngày
+outflow_180d,0.25678085409705254,10,Trung bình,BEHAVIOUR,Tổng dòng tiền ra 180 ngày
+num_inquiries_3m,0.25587266609347514,4,Trung bình,CIC,Số lần truy vấn tín dụng 3 tháng
+outflow_90d,0.23969833316468037,10,Trung bình,BEHAVIOUR,Tổng dòng tiền ra 90 ngày
+cash_ratio_180d,0.2392794951385868,10,Trung bình,BEHAVIOUR,Tỷ trọng rút tiền mặt 180 ngày
+num_active_contracts,0.21962572003404962,7,Trung bình,CIC,Số hợp đồng còn hiệu lực
+inflow_to_installment,0.20572598282234966,10,Trung bình,DERIVED,Dòng tiền vào 30 ngày / khoản trả góp hàng tháng
+cash_ratio_90d,0.19905537373434995,9,Trung bình,BEHAVIOUR,Tỷ trọng rút tiền mặt 90 ngày
+ecom_amt_30d,0.1931032189084943,7,Trung bình,BEHAVIOUR,Chi tiêu thương mại điện tử 30 ngày
+salary_amt_30d,0.19218357479471854,5,Trung bình,BEHAVIOUR,Tổng lương nhận 30 ngày
+monthly_installment,0.18966670055396628,10,Trung bình,LOAN,Khoản trả góp hàng tháng
+outflow_30d,0.18534507690226304,10,Trung bình,BEHAVIOUR,Tổng dòng tiền ra 30 ngày
+num_institutions,0.17398568452732646,6,Trung bình,CIC,Số TCTD đang có quan hệ
+utility_amt_30d,0.16627518141111125,8,Trung bình,BEHAVIOUR,Chi tiêu hóa đơn tiện ích 30 ngày
+income_verification_ratio,0.15997928230438938,10,Trung bình,BEHAVIOUR,Tỷ lệ dòng tiền vào thực tế so với thu nhập khai báo
+education_code,0.15182438938243725,5,Trung bình,STATIC,Trình độ học vấn (1-5)
+repay_amt_180d,0.15032675002565715,10,Trung bình,BEHAVIOUR,Tổng tiền trả nợ 180 ngày
+requested_amount,0.14557505401775359,10,Trung bình,LOAN,Số tiền đề nghị vay
+outflow_ratio_90d,0.1455744972395361,10,Trung bình,BEHAVIOUR,Tỷ lệ dòng tiền ra trên dòng tiền vào 90 ngày
+risky_amt_180d,0.14382911844527316,6,Trung bình,BEHAVIOUR,Chi tiêu nhóm rủi ro 180 ngày
+risky_ratio_180d,0.13925611303902546,6,Trung bình,BEHAVIOUR,Tỷ trọng chi tiêu rủi ro 180 ngày
+outflow_ratio_180d,0.1341971801234438,10,Trung bình,BEHAVIOUR,Tỷ lệ dòng tiền ra trên dòng tiền vào 180 ngày
+txn_cnt_180d,0.13326032319771147,10,Trung bình,BEHAVIOUR,Số giao dịch trong 180 ngày
+txn_cnt_90d,0.1327098481434904,10,Trung bình,BEHAVIOUR,Số giao dịch trong 90 ngày
+repay_amt_90d,0.13076273709958727,9,Trung bình,BEHAVIOUR,Tổng tiền trả nợ 90 ngày
+outflow_ratio_30d,0.1291302015714954,10,Trung bình,BEHAVIOUR,Tỷ lệ dòng tiền ra trên dòng tiền vào 30 ngày
+txn_amt_cv_180d,0.12396650224037566,10,Trung bình,BEHAVIOUR,Hệ số biến thiên giá trị giao dịch 180 ngày
+avg_txn_amt_7d,0.12106161076459804,10,Trung bình,BEHAVIOUR,Giá trị giao dịch trung bình 7 ngày
+txn_amt_cv_90d,0.11955575318479816,10,Trung bình,BEHAVIOUR,Hệ số biến thiên giá trị giao dịch 90 ngày
+occupation,0.11939667897414362,10,Trung bình,STATIC,Nghề nghiệp
+income_stability,0.11760057146235772,10,Trung bình,BEHAVIOUR,Độ ổn định thu nhập (1 - hệ số biến thiên dòng tiền vào theo tháng)
+high_dti_short_tenure,0.11525329267662078,2,Trung bình,DERIVED,"Cờ rủi ro: DTI > 0,5 và thâm niên công việc < 12 tháng"
+mobile_txn_cnt_180d,0.11426355691135161,10,Trung bình,BEHAVIOUR,Số giao dịch qua mobile banking 180 ngày
+credit_utilization,0.11133951560023016,11,Trung bình,CIC,Tỷ lệ sử dụng hạn mức
+net_flow_7d,0.11101274823815023,9,Trung bình,BEHAVIOUR,Dòng tiền thuần 7 ngày
+txn_cnt_30d,0.1106325751592743,10,Trung bình,BEHAVIOUR,Số giao dịch trong 30 ngày
+salary_regularity,0.10883888168565753,7,Trung bình,BEHAVIOUR,Mức độ đều đặn của việc nhận lương trong 180 ngày
+salary_cnt_180d,0.10883888168565753,7,Trung bình,BEHAVIOUR,Số lần nhận lương 180 ngày
+repay_burden_180d,0.1077122936472592,10,Trung bình,BEHAVIOUR,Gánh nặng trả nợ trên dòng tiền vào 180 ngày
+txn_amt_cv_30d,0.1075793451464634,10,Trung bình,BEHAVIOUR,Hệ số biến thiên giá trị giao dịch 30 ngày
+mobile_txn_cnt_90d,0.10600455330724695,10,Trung bình,BEHAVIOUR,Số giao dịch qua mobile banking 90 ngày
+salary_cnt_90d,0.10520086544593595,6,Trung bình,BEHAVIOUR,Số lần nhận lương 90 ngày
+risky_amt_90d,0.10455360855950986,5,Trung bình,BEHAVIOUR,Chi tiêu nhóm rủi ro 90 ngày
+cash_wd_cnt_180d,0.10294391906362182,9,Trung bình,BEHAVIOUR,Số lần rút tiền mặt 180 ngày
+monthly_debt_payment,0.10173890587631511,11,Trung bình,CIC,Nghĩa vụ trả nợ hàng tháng hiện hữu
+repay_burden_90d,0.10003928100512059,9,Trung bình,BEHAVIOUR,Gánh nặng trả nợ trên dòng tiền vào 90 ngày
+txn_amt_std_7d,0.0998799067458349,8,Yếu,BEHAVIOUR,Độ lệch chuẩn giá trị giao dịch 7 ngày
+cash_wd_cnt_90d,0.09939069111063997,7,Yếu,BEHAVIOUR,Số lần rút tiền mặt 90 ngày
+night_txn_cnt_180d,0.09737477886375726,10,Yếu,BEHAVIOUR,Số giao dịch ban đêm (0h-5h) 180 ngày
+total_outstanding,0.09594436154755442,11,Yếu,CIC,Tổng dư nợ tại các TCTD
+outflow_7d,0.09419136338380013,9,Yếu,BEHAVIOUR,Tổng dòng tiền ra 7 ngày
+oldest_account_months,0.09112176792034601,11,Yếu,CIC,Độ dài lịch sử tín dụng (tháng)
+cash_wd_amt_90d,0.08908693895613,9,Yếu,BEHAVIOUR,Giá trị rút tiền mặt 90 ngày
+night_txn_cnt_90d,0.08729818346985481,10,Yếu,BEHAVIOUR,Số giao dịch ban đêm (0h-5h) 90 ngày
+inflow_7d,0.0856403398490416,5,Yếu,BEHAVIOUR,Tổng dòng tiền vào 7 ngày
+repay_amt_30d,0.08500686325782594,6,Yếu,BEHAVIOUR,Tổng tiền trả nợ 30 ngày
+outflow_ratio_7d,0.08368370228164561,9,Yếu,BEHAVIOUR,Tỷ lệ dòng tiền ra trên dòng tiền vào 7 ngày
+credit_history_ratio,0.0819221314938767,10,Yếu,DERIVED,Độ dài lịch sử tín dụng so với tuổi trưởng thành
+cash_wd_amt_30d,0.08114316174785668,6,Yếu,BEHAVIOUR,Giá trị rút tiền mặt 30 ngày
+mobile_txn_cnt_30d,0.08004193939448476,8,Yếu,BEHAVIOUR,Số giao dịch qua mobile banking 30 ngày
+job_tenure_months,0.07770431170620253,10,Yếu,STATIC,Thâm niên công việc (tháng)
+debt_per_institution,0.07713566925025271,10,Yếu,DERIVED,Dư nợ bình quân trên mỗi tổ chức tín dụng
+cash_ratio_30d,0.07546720658776176,6,Yếu,BEHAVIOUR,Tỷ trọng rút tiền mặt 30 ngày
+pti,0.07364050660850618,10,Yếu,DERIVED,Payment-to-Income: trả góp khoản vay mới / thu nhập
+risky_ratio_90d,0.06908804403407884,5,Yếu,BEHAVIOUR,Tỷ trọng chi tiêu rủi ro 90 ngày
+num_closed_contracts,0.06824605955596894,6,Yếu,CIC,Số hợp đồng đã tất toán
+product_code,0.06279125741330063,6,Yếu,LOAN,Mã sản phẩm tín dụng
+interest_rate,0.05975395589538582,10,Yếu,LOAN,Lãi suất áp dụng (năm)
+has_salary_account,0.059078376618703514,2,Yếu,STATIC,Có tài khoản nhận lương
+night_txn_cnt_30d,0.058012490842273154,7,Yếu,BEHAVIOUR,Số giao dịch ban đêm (0h-5h) 30 ngày
+txn_cnt_7d,0.055046700836538565,7,Yếu,BEHAVIOUR,Số giao dịch trong 7 ngày
+repay_burden_30d,0.053504981993770254,6,Yếu,BEHAVIOUR,Gánh nặng trả nợ trên dòng tiền vào 30 ngày
+inflow_trend_90_180,0.053353240869635034,10,Yếu,BEHAVIOUR,Xu thế dòng tiền vào: 90 ngày so với mức trung bình 180 ngày
+cash_wd_amt_180d,0.05134118060289379,10,Yếu,BEHAVIOUR,Giá trị rút tiền mặt 180 ngày
+salary_cnt_30d,0.05043064364560783,3,Yếu,BEHAVIOUR,Số lần nhận lương 30 ngày
+cash_wd_cnt_30d,0.048757751724633806,4,Yếu,BEHAVIOUR,Số lần rút tiền mặt 30 ngày
+txn_amt_cv_7d,0.04800175303433999,8,Yếu,BEHAVIOUR,Hệ số biến thiên giá trị giao dịch 7 ngày
+ecom_amt_7d,0.04658642910246243,4,Yếu,BEHAVIOUR,Chi tiêu thương mại điện tử 7 ngày
+utility_amt_7d,0.04611644222781819,4,Yếu,BEHAVIOUR,Chi tiêu hóa đơn tiện ích 7 ngày
+ltv,0.04313714206953786,6,Yếu,LOAN,Tỷ lệ vay trên giá trị TSBĐ
+has_collateral,0.04016797767154205,2,Yếu,LOAN,Có tài sản bảo đảm
+tenor_months,0.03934572893484224,8,Yếu,LOAN,Kỳ hạn vay (tháng)
+customer_since_months,0.03580705046053564,10,Yếu,STATIC,Thời gian quan hệ với ngân hàng
+large_txn_cnt_180d,0.03546110605084878,2,Yếu,BEHAVIOUR,Số giao dịch giá trị lớn (>50 triệu) 180 ngày
+risky_amt_30d,0.035218055286886644,3,Yếu,BEHAVIOUR,Chi tiêu nhóm rủi ro 30 ngày
+mobile_txn_cnt_7d,0.03350396289105262,4,Yếu,BEHAVIOUR,Số giao dịch qua mobile banking 7 ngày
+cash_wd_amt_7d,0.03161730145524281,3,Yếu,BEHAVIOUR,Giá trị rút tiền mặt 7 ngày
+large_txn_cnt_90d,0.028756000223537758,2,Yếu,BEHAVIOUR,Số giao dịch giá trị lớn (>50 triệu) 90 ngày
+employer_type,0.026223739142431875,5,Yếu,STATIC,Loại hình tổ chức làm việc
+days_since_last_txn,0.025023260126738958,10,Yếu,BEHAVIOUR,Số ngày từ giao dịch gần nhất
+risky_ratio_30d,0.02439431451291656,3,Yếu,BEHAVIOUR,Tỷ trọng chi tiêu rủi ro 30 ngày
+night_ratio_7d,0.02317068650488875,5,Yếu,BEHAVIOUR,Tỷ trọng giao dịch ban đêm 7 ngày
+night_ratio_30d,0.022263226160980996,10,Yếu,BEHAVIOUR,Tỷ trọng giao dịch ban đêm 30 ngày
+cash_ratio_7d,0.020197723737548003,3,Yếu,BEHAVIOUR,Tỷ trọng rút tiền mặt 7 ngày
+cash_wd_cnt_7d,0.019421239867421097,3,Không có khả năng phân biệt,BEHAVIOUR,Số lần rút tiền mặt 7 ngày
+inflow_trend_30_90,0.019297676584776675,10,Không có khả năng phân biệt,BEHAVIOUR,Xu thế dòng tiền vào: 30 ngày so với mức trung bình 90 ngày
+province,0.01887707675809687,8,Không có khả năng phân biệt,STATIC,Tỉnh/thành cư trú
+night_txn_cnt_7d,0.016308601897929445,4,Không có khả năng phân biệt,BEHAVIOUR,Số giao dịch ban đêm (0h-5h) 7 ngày
+residence_type,0.013886530679485677,4,Không có khả năng phân biệt,STATIC,Hình thức nhà ở
+n_accounts,0.013520279096084428,3,Không có khả năng phân biệt,STATIC,Số tài khoản đang mở
+num_dependents,0.013321627845505545,5,Không có khả năng phân biệt,STATIC,Số người phụ thuộc
+large_txn_cnt_30d,0.012902174164045457,2,Không có khả năng phân biệt,BEHAVIOUR,Số giao dịch giá trị lớn (>50 triệu) 30 ngày
+repay_amt_7d,0.01255742968001388,3,Không có khả năng phân biệt,BEHAVIOUR,Tổng tiền trả nợ 7 ngày
+txn_cnt_trend_30_90,0.012446382208435237,10,Không có khả năng phân biệt,BEHAVIOUR,Xu thế số giao dịch: 30 ngày so với mức trung bình 90 ngày
+night_ratio_180d,0.008614431744564305,10,Không có khả năng phân biệt,BEHAVIOUR,Tỷ trọng giao dịch ban đêm 180 ngày
+night_ratio_90d,0.008565625112175885,10,Không có khả năng phân biệt,BEHAVIOUR,Tỷ trọng giao dịch ban đêm 90 ngày
+large_txn_cnt_7d,0.007462440755377669,2,Không có khả năng phân biệt,BEHAVIOUR,Số giao dịch giá trị lớn (>50 triệu) 7 ngày
+repay_burden_7d,0.006459914074165443,3,Không có khả năng phân biệt,BEHAVIOUR,Gánh nặng trả nợ trên dòng tiền vào 7 ngày
+risky_amt_7d,0.006252727272722448,2,Không có khả năng phân biệt,BEHAVIOUR,Chi tiêu nhóm rủi ro 7 ngày
+risky_ratio_7d,0.006252727272722448,2,Không có khả năng phân biệt,BEHAVIOUR,Tỷ trọng chi tiêu rủi ro 7 ngày
+age,0.00592961237382761,10,Không có khả năng phân biệt,STATIC,Tuổi khách hàng
+amount_to_income,0.005408836952047104,10,Không có khả năng phân biệt,DERIVED,Số tiền vay / thu nhập hàng tháng
+salary_amt_7d,0.0050677017592107125,2,Không có khả năng phân biệt,BEHAVIOUR,Tổng lương nhận 7 ngày
+salary_cnt_7d,0.0050677017592107125,2,Không có khả năng phân biệt,BEHAVIOUR,Số lần nhận lương 7 ngày
+apply_hour,0.002987467425326339,10,Không có khả năng phân biệt,LOAN,Giờ nộp hồ sơ
+loan_purpose,0.0027611826269737134,9,Không có khả năng phân biệt,LOAN,Mục đích vay
+apply_dayofweek,0.0019197799485167301,7,Không có khả năng phân biệt,LOAN,Ngày trong tuần nộp hồ sơ
+marital_status,0.0014771545359026782,4,Không có khả năng phân biệt,STATIC,Tình trạng hôn nhân
+channel,0.0005455063729963546,5,Không có khả năng phân biệt,LOAN,Kênh tiếp nhận hồ sơ
+cic_missing,0.00019735244024516235,2,Không có khả năng phân biệt,CIC,Không lấy được dữ liệu CIC
+is_thin_file,0.00019735244024516235,2,Không có khả năng phân biệt,CIC,Khách hàng thiếu lịch sử tín dụng
+gender,6.808294174508268e-05,2,Không có khả năng phân biệt,STATIC,Giới tính

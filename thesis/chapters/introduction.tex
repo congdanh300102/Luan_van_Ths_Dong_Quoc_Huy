@@ -1,0 +1,308 @@
+% ===========================================================================
+% MỞ ĐẦU
+% ===========================================================================
+\chapter*{MỞ ĐẦU}
+\addcontentsline{toc}{chapter}{MỞ ĐẦU}
+\markboth{MỞ ĐẦU}{MỞ ĐẦU}
+
+\section*{1. Lý do chọn đề tài}
+\addcontentsline{toc}{section}{1. Lý do chọn đề tài}
+
+Trong những năm gần đây, chuyển đổi số trong lĩnh vực ngân hàng đã thúc đẩy mạnh
+mẽ quá trình số hóa các sản phẩm và dịch vụ tín dụng. Cùng với sự phát triển của
+ngân hàng số, nhu cầu cấp tín dụng nhanh chóng, thuận tiện và có khả năng xử lý
+số lượng lớn hồ sơ ngày càng gia tăng. Đối với các tổ chức tín dụng, kiểm duyệt
+tín dụng là một trong những nghiệp vụ quan trọng, có ảnh hưởng trực tiếp đến chất
+lượng tài sản, khả năng kiểm soát rủi ro và hiệu quả kinh doanh. Do đó, việc ứng
+dụng các mô hình học máy hỗ trợ cán bộ tín dụng trong quá trình đánh giá và ra
+quyết định đang trở thành một yêu cầu thực tiễn.
+
+Trong phương thức kiểm duyệt tín dụng truyền thống, thông tin khách hàng thường
+được tổng hợp từ nhiều nguồn khác nhau như hồ sơ đăng ký vay, thông tin khách
+hàng, lịch sử giao dịch, dữ liệu tín dụng và các thông tin liên quan khác. Quá
+trình tổng hợp, kiểm tra và đánh giá dữ liệu có thể mất nhiều thời gian, đặc biệt
+khi khối lượng hồ sơ lớn. Bên cạnh đó, việc đánh giá dựa nhiều vào các bộ quy tắc
+nghiệp vụ cố định có thể hạn chế khả năng phát hiện các mối quan hệ phức tạp giữa
+các đặc trưng của khách hàng và khả năng phát sinh rủi ro tín dụng.
+
+Hạn chế nêu trên không nằm ở năng lực chuyên môn của cán bộ tín dụng mà nằm ở
+\textit{bản chất của phương pháp đánh giá}. Một bộ quy tắc, dù được xây dựng công
+phu đến đâu, cũng chỉ biểu diễn được quan hệ giữa từng chỉ tiêu riêng lẻ với
+ngưỡng cho phép. Trong khi đó, rủi ro tín dụng thường phát sinh từ \textit{tổ
+hợp} nhiều yếu tố: một khách hàng có thu nhập cao nhưng dòng tiền không ổn định,
+thâm niên công việc ngắn và đang có quan hệ tín dụng với nhiều tổ chức cùng lúc
+có thể rủi ro hơn một khách hàng thu nhập thấp hơn nhưng ổn định về mọi mặt. Bộ
+quy tắc xét từng điều kiện độc lập khó nắm bắt được kiểu tương tác này.
+
+Sự phát triển của các phương pháp học máy mở ra khả năng khai thác dữ liệu lịch
+sử để xây dựng các mô hình dự đoán và hỗ trợ đánh giá rủi ro. Thay vì chỉ dựa
+trên các điều kiện kiểm tra cố định, mô hình học máy có thể học các mối quan hệ
+giữa đặc điểm khách hàng, hành vi tín dụng và kết quả tín dụng trong quá khứ để
+đưa ra dự đoán đối với hồ sơ mới. Khi được tích hợp vào quy trình nghiệp vụ, kết
+quả dự đoán có thể được sử dụng như một nguồn thông tin hỗ trợ cán bộ trong quá
+trình kiểm duyệt tín dụng.
+
+Tuy nhiên, việc ứng dụng học máy vào kiểm duyệt tín dụng không chỉ là bài toán
+xây dựng mô hình dự đoán mà còn liên quan đến quá trình thu thập, chuẩn hóa, biến
+đổi dữ liệu, xây dựng đặc trưng, tích hợp mô hình và cung cấp kết quả dự đoán một
+cách ổn định. Thực tế cho thấy nhiều mô hình đạt chỉ tiêu tốt trong phòng thí
+nghiệm nhưng không áp dụng được, vì thiếu các yếu tố mà môi trường vận hành đòi
+hỏi: xác suất dự báo phải được hiệu chuẩn đúng để dùng làm căn cứ định giá, quyết
+định phải giải trình được trước cán bộ tín dụng và cơ quan quản lý, và mô hình
+phải xử lý được cả những hồ sơ thiếu dữ liệu. Vì vậy, cần có một giải pháp mang
+tính hệ thống, trong đó mô hình học máy được kết hợp với quy trình xử lý dữ liệu
+và các luật nghiệp vụ nhằm hỗ trợ quá trình kiểm duyệt tín dụng.
+
+Xuất phát từ những yêu cầu trên, đề án lựa chọn đề tài
+\textit{``\thesisTitle''} nhằm nghiên cứu, thiết kế và xây dựng thử nghiệm một mô
+hình có khả năng tiếp nhận thông tin hồ sơ tín dụng, xử lý dữ liệu, tạo các đặc
+trưng đầu vào, sử dụng mô hình học máy để đánh giá khả năng rủi ro và cung cấp
+kết quả hỗ trợ kiểm duyệt. Đề tài có ý nghĩa cả về mặt khoa học và thực tiễn,
+đồng thời có tính khả thi nhờ sự phát triển của các công nghệ xử lý dữ liệu, học
+máy và các nền tảng triển khai hiện nay.
+
+\section*{2. Tổng quan về vấn đề nghiên cứu}
+\addcontentsline{toc}{section}{2. Tổng quan về vấn đề nghiên cứu}
+
+Kiểm duyệt tín dụng là một bài toán đã được nghiên cứu rộng rãi trong lĩnh vực
+tài chính -- ngân hàng. Các phương pháp truyền thống thường sử dụng chấm điểm tín
+dụng và các bộ luật nghiệp vụ dựa trên những tiêu chí như thu nhập, lịch
+sử tín dụng, dư nợ, khả năng trả nợ và đặc điểm của khoản vay. Những phương pháp
+này có ưu điểm là dễ giải thích và phù hợp với các quy định nghiệp vụ, tuy nhiên
+khả năng biểu diễn các mối quan hệ phức tạp trong dữ liệu còn hạn chế.
+
+Cùng với sự gia tăng về quy mô và đa dạng của dữ liệu, nhiều nghiên cứu đã tập
+trung áp dụng các thuật toán học máy cho bài toán đánh giá tín dụng. Một số
+phương pháp phổ biến gồm hồi quy Logistic, Decision Tree, Random Forest, Support
+Vector Machine, Gradient Boosting và các mô hình học sâu. Các nghiên cứu cho thấy
+mô hình học máy có khả năng khai thác nhiều đặc trưng đồng thời và cải thiện khả
+năng phân loại khách hàng có nguy cơ tín dụng cao hoặc thấp so với một số phương
+pháp truyền thống.
+
+Công trình đối sánh quy mô lớn của Lessmann và cộng sự~\cite{lessmann2015} trên
+nhiều bộ dữ liệu tín dụng là một mốc tham chiếu quan trọng: các phương pháp học
+tập hợp cho kết quả tốt hơn mô hình đơn lẻ, song mức chênh lệch so với hồi quy
+logistic là \textit{không lớn} -- một kết luận thường bị bỏ qua khi lựa chọn mô
+hình trong thực tiễn. Các tổng quan hệ thống gần đây~\cite{shi2022} tiếp tục
+khẳng định xu hướng này, đồng thời chỉ ra rằng yếu tố quyết định chất lượng mô
+hình thường nằm ở \textit{chất lượng và độ phong phú của đặc trưng} hơn là ở việc
+lựa chọn thuật toán.
+
+Bên cạnh vấn đề lựa chọn thuật toán, các nghiên cứu cũng tập trung vào các bước
+xử lý dữ liệu như làm sạch dữ liệu, xử lý giá trị thiếu, lựa chọn đặc trưng, cân
+bằng dữ liệu và đánh giá mô hình. Các chỉ số như Accuracy, Precision, Recall,
+F1-score, ROC-AUC và Gini thường được sử dụng để đánh giá hiệu quả của mô hình
+phân loại rủi ro tín dụng.
+
+Tuy nhiên, một hạn chế thường gặp là nhiều nghiên cứu tập trung chủ yếu vào hiệu
+quả dự đoán của mô hình, trong khi chưa giải quyết đầy đủ bài toán tích hợp mô
+hình vào một quy trình hỗ trợ kiểm duyệt tín dụng hoàn chỉnh. Trong môi trường
+thực tế, dữ liệu tín dụng có thể đến từ nhiều nguồn, có cấu trúc và chất lượng
+khác nhau, đồng thời yêu cầu xử lý dữ liệu, kiểm tra điều kiện nghiệp vụ và cung
+cấp kết quả trong thời gian phù hợp với quy trình kinh doanh.
+
+Do đó, đề án tập trung nghiên cứu theo hướng kết hợp giữa xử lý dữ liệu, xây dựng
+đặc trưng, mô hình học máy và luật nghiệp vụ để hình thành một mô hình hỗ trợ
+kiểm duyệt tín dụng. Đề án không hướng tới việc thay thế hoàn toàn quyết định của
+cán bộ hoặc tổ chức tín dụng mà tập trung xây dựng một công cụ hỗ trợ, cung cấp
+kết quả đánh giá rủi ro và thông tin tham khảo nhằm nâng cao hiệu quả và tính
+nhất quán của quá trình kiểm duyệt.
+
+\section*{3. Mục tiêu nghiên cứu}
+\addcontentsline{toc}{section}{3. Mục tiêu nghiên cứu}
+
+\subsection*{3.1. Mục tiêu chung}
+
+Đề án nhằm nghiên cứu, thiết kế và xây dựng thử nghiệm mô hình học máy hỗ trợ
+kiểm duyệt tín dụng, trong đó khai thác dữ liệu khách hàng và thông tin tín dụng
+để xây dựng các đặc trưng đầu vào, huấn luyện mô hình học máy và đưa ra kết quả
+dự đoán mức độ rủi ro. Mô hình được xây dựng theo định hướng hỗ trợ quá trình
+kiểm duyệt tín dụng, giúp cung cấp thêm cơ sở định lượng cho việc đánh giá hồ sơ
+thay vì chỉ dựa trên các tiêu chí và quy tắc nghiệp vụ cố định.
+
+\subsection*{3.2. Mục tiêu về mặt lý luận}
+
+Về mặt lý luận, đề án tập trung hệ thống hóa và làm rõ cơ sở lý thuyết về kiểm
+duyệt tín dụng, đánh giá rủi ro tín dụng và khả năng ứng dụng các phương pháp học
+máy trong bài toán hỗ trợ ra quyết định tín dụng. Đề án nghiên cứu quy trình từ
+thu thập và tiền xử lý dữ liệu, xây dựng đặc trưng, lựa chọn mô hình, huấn luyện,
+đánh giá đến tích hợp mô hình. Trên cơ sở đó, đề án phân tích và
+đánh giá mức độ phù hợp của các mô hình học máy đối với bài toán phân loại rủi ro
+tín dụng thông qua các tiêu chí như Accuracy, Precision, Recall, F1-score và
+ROC-AUC. Kết quả nghiên cứu góp phần làm rõ mối quan hệ giữa chất lượng dữ liệu,
+đặc trưng đầu vào, lựa chọn mô hình và hiệu quả dự đoán trong bài toán tín dụng,
+đồng thời bổ sung cơ sở tham khảo cho việc nghiên cứu ứng dụng học máy vào việc
+hỗ trợ ra quyết định trong lĩnh vực tài chính -- ngân hàng.
+
+\subsection*{3.3. Mục tiêu về mặt thực tiễn}
+
+Về mặt thực tiễn, đề án hướng tới xây dựng một mô hình học máy thử nghiệm có khả
+năng tiếp nhận thông tin hồ sơ tín dụng, thực hiện xử lý dữ liệu, tạo đặc trưng
+để đánh giá rủi ro và trả về kết quả hỗ trợ kiểm duyệt. Việc ứng dụng mô hình học
+máy giúp khai thác hiệu quả hơn dữ liệu lịch sử, hỗ trợ nhận diện các hồ sơ có
+mức độ rủi ro khác nhau và cung cấp kết quả đánh giá một cách nhất quán. Qua đó,
+có thể góp phần rút ngắn thời gian đánh giá hồ sơ, giảm khối lượng công việc thủ
+công, nâng cao khả năng phát hiện rủi ro và hỗ trợ cán bộ tín dụng trong quá
+trình ra quyết định. Kết quả của đề án cũng tạo cơ sở thực nghiệm để đánh giá khả
+năng áp dụng mô hình học máy vào quy trình kiểm duyệt tín dụng và làm tiền đề cho
+việc phát triển có quy mô lớn hơn trong môi trường thực tế.
+
+\subsection*{3.4. Các mục tiêu cụ thể}
+
+Từ hai định hướng trên, đề án đặt ra các mục tiêu cụ thể sau:
+
+\begin{enumerate}[label=(\arabic*)]
+  \item Hệ thống hóa cơ sở lý luận về tín dụng, kiểm duyệt tín dụng, rủi ro tín
+  dụng và các phương pháp học máy áp dụng cho bài toán đánh giá tín dụng.
+
+  \item Phân tích bài toán kiểm duyệt tín dụng: xác định các mức độ rủi ro cần dự
+  báo, đặc trưng đầu vào, kết quả đầu ra và các yêu cầu kỹ thuật, pháp lý đối với
+  mô hình.
+
+  \item Xây dựng quy trình thu thập, tổng hợp, kiểm tra chất lượng và tiền xử lý
+  dữ liệu hồ sơ tín dụng.
+
+  \item Trích xuất và lựa chọn tập đặc trưng cho mô hình từ bốn nhóm nguồn dữ
+  liệu: thông tin cá nhân và tài chính, tham số khoản vay, lịch sử tín dụng và
+  quan hệ CIC, hành vi giao dịch tài khoản.
+
+  \item Xây dựng nhãn rủi ro theo tiêu chuẩn nợ xấu và cửa sổ quan sát phù hợp;
+  xác định điểm cắt phê duyệt theo các tiêu chí nghiệp vụ khác nhau.
+
+  \item Thiết kế, huấn luyện, hiệu chuẩn và đánh giá so sánh các mô hình học máy
+  theo bộ chỉ tiêu đầy đủ, bao gồm cả chỉ tiêu đặc thù của ngành tín dụng (KS,
+  Gini, IV, PSI) và thời gian chấm điểm.
+
+  \item Thiết kế và hiện thực bộ máy hỗ trợ ra quyết định kết hợp luật nghiệp vụ
+  với mô hình học máy, có cơ chế giải thích kết quả cho từng hồ sơ.
+
+  \item Mô phỏng luồng xử lý hồ sơ, thử nghiệm tích hợp qua dịch vụ REST và đối
+  chiếu kết quả với quy trình thẩm định truyền thống chỉ dựa trên luật nghiệp vụ.
+\end{enumerate}
+
+\section*{4. Đối tượng và phạm vi nghiên cứu}
+\addcontentsline{toc}{section}{4. Đối tượng và phạm vi nghiên cứu}
+
+\subsection*{4.1. Đối tượng nghiên cứu}
+
+Đối tượng nghiên cứu của đề án là mô hình học máy hỗ trợ kiểm duyệt tín dụng, tập
+trung vào dữ liệu và quy trình đánh giá hồ sơ tín dụng. Cụ thể,
+đề án nghiên cứu các dữ liệu liên quan đến khách hàng và khoản vay như thông tin
+cá nhân, thông tin khoản vay, thu nhập, lịch sử tín dụng, tình trạng dư nợ và các
+đặc trưng có liên quan đến khả năng phát sinh rủi ro tín dụng. Trên cơ sở các dữ
+liệu này, đề án nghiên cứu phương pháp xử lý dữ liệu, xây dựng đặc trưng, huấn
+luyện mô hình học máy và sử dụng kết quả dự đoán để hỗ trợ quá trình kiểm duyệt
+tín dụng. Đối tượng nghiên cứu bao gồm mô hình học máy và kết quả đánh giá rủi ro
+thành một quy trình hỗ trợ kiểm duyệt thống nhất.
+
+\subsection*{4.2. Phạm vi nghiên cứu}
+
+\textbf{Về nội dung:} Đề án giới hạn ở việc xây dựng và thử nghiệm mô hình hỗ trợ
+đánh giá rủi ro tín dụng, bao gồm các bước chính: tiếp nhận dữ liệu hồ sơ,
+tiền xử lý dữ liệu, xây dựng đặc trưng, áp dụng mô hình học máy, đánh giá kết quả
+dự đoán và cung cấp kết quả hỗ trợ kiểm duyệt. Đề án không đi sâu nghiên cứu toàn
+bộ quy trình nghiệp vụ tín dụng của ngân hàng, không xây dựng hệ thống quản lý
+tín dụng hoàn chỉnh và không thay thế các quy định, chính sách hoặc quyết định
+phê duyệt chính thức của tổ chức tín dụng. Các nội dung sau \textit{không} thuộc
+phạm vi: định giá và thẩm định tài sản bảo đảm, quy trình giải ngân và thu hồi
+nợ, mô hình ước lượng tổn thất khi vỡ nợ (LGD) và dư nợ tại thời điểm vỡ nợ
+(EAD).
+
+\textbf{Về không gian:} Nghiên cứu được thực hiện trong phạm vi bài toán kiểm
+duyệt tín dụng tại tổ chức tín dụng/ngân hàng, tập trung vào việc xây dựng mô
+hình và thử nghiệm trong môi trường nghiên cứu. Đề án không giới hạn vào
+một địa bàn cụ thể và không thực hiện triển khai chính thức trên toàn bộ hệ thống
+nghiệp vụ của một ngân hàng.
+
+\textbf{Về dữ liệu:} Do đặc thù bảo mật của dữ liệu tín dụng cá nhân, đề án sử
+dụng \textbf{dữ liệu mô phỏng} được sinh bằng chương trình tự xây dựng theo một
+mô hình xác suất có cấu trúc. Thiết kế, cơ sở hiệu chỉnh và giới hạn của cách
+tiếp cận này được trình bày minh bạch tại mục~\ref{sec:data-design}. Trong trường
+hợp áp dụng trên dữ liệu thực tế, dữ liệu cần được ẩn danh và giới hạn quyền truy
+cập nhằm bảo đảm yêu cầu về bảo mật thông tin.
+
+\textbf{Về thời gian:} Đề án được thực hiện trong thời gian triển khai đề án tốt
+nghiệp. Bộ dữ liệu sử dụng để huấn luyện và đánh giá mô hình được giới hạn trong
+khoảng thời gian phù hợp với dữ liệu nghiên cứu và được phân chia thành các giai
+đoạn phục vụ huấn luyện, kiểm thử và đánh giá mô hình. Các kết quả nghiên cứu
+phản ánh phạm vi dữ liệu và điều kiện thực nghiệm trong thời gian thực hiện đề
+án, chưa nhằm đánh giá khả năng vận hành của mô hình trong thời gian dài hoặc
+trên quy mô dữ liệu sản xuất thực tế.
+
+\textbf{Về kết quả:} Đề án tập trung đánh giá hai khía cạnh chính là hiệu quả của
+mô hình học máy trong dự đoán rủi ro tín dụng và khả năng hỗ trợ quá trình kiểm
+duyệt. Kết quả đầu ra của mô hình là thông tin đánh giá hoặc phân loại mức độ rủi
+ro nhằm hỗ trợ cán bộ tín dụng và quy trình nghiệp vụ; quyết định
+tín dụng cuối cùng vẫn thuộc về người hoặc bộ phận có thẩm quyền theo quy định
+của tổ chức tín dụng.
+
+\section*{5. Phương pháp nghiên cứu}
+\addcontentsline{toc}{section}{5. Phương pháp nghiên cứu}
+
+Đề án sử dụng kết hợp phương pháp nghiên cứu lý thuyết và phương pháp nghiên cứu
+thực nghiệm nhằm nghiên cứu, xây dựng và đánh giá mô hình học máy trong hỗ trợ
+kiểm duyệt tín dụng.
+
+\textbf{Phương pháp nghiên cứu lý thuyết.} Đề án tiến hành thu thập, tổng hợp và
+phân tích các tài liệu, giáo trình, công trình nghiên cứu và các tài liệu chuyên
+ngành liên quan đến tín dụng, kiểm duyệt tín dụng, đánh giá rủi ro tín dụng, chấm
+điểm tín dụng và ứng dụng học máy trong lĩnh vực tài chính -- ngân hàng. Trên cơ
+sở nghiên cứu lý thuyết, đề án làm rõ các khái niệm, đặc điểm của bài toán đánh
+giá tín dụng, các yếu tố ảnh hưởng đến rủi ro tín dụng và nguyên lý hoạt động của
+các mô hình học máy phù hợp. Đồng thời, nghiên cứu các phương pháp tiền xử lý dữ
+liệu, lựa chọn và xây dựng đặc trưng, huấn luyện và đánh giá mô hình. Kết quả
+nghiên cứu lý thuyết được sử dụng làm cơ sở để lựa chọn mô hình học máy, thiết kế
+quy trình xử lý dữ liệu và xây dựng mô hình học máy hỗ trợ kiểm duyệt tín dụng.
+
+\textbf{Phương pháp nghiên cứu thực nghiệm.} Đề án tiến hành xây dựng môi trường
+thực nghiệm để kiểm chứng các nội dung nghiên cứu lý thuyết trên bộ dữ liệu tín
+dụng phục vụ nghiên cứu. Dữ liệu được phân tích và xử lý thông qua các bước làm
+sạch, xử lý dữ liệu thiếu, mã hóa dữ liệu, xây dựng và lựa chọn đặc trưng trước
+khi đưa vào mô hình. Một số mô hình học máy phù hợp với bài toán phân loại rủi ro
+tín dụng được xây dựng, huấn luyện và kiểm thử trên dữ liệu thực nghiệm. Cụ thể,
+phương pháp thực nghiệm được triển khai qua bốn nhóm công việc:
+
+\begin{itemize}
+  \item \textbf{Phân tích dữ liệu:} thống kê mô tả tập dữ liệu, kiểm tra tính hợp
+  lệ theo ràng buộc nghiệp vụ, phân tích giá trị khuyết thiếu và giá trị ngoại
+  lệ; đánh giá năng lực dự báo của từng đặc trưng thông qua chỉ số Information
+  Value.
+
+  \item \textbf{Thực nghiệm học máy:} huấn luyện, hiệu chuẩn và so sánh các mô
+  hình theo phương pháp kiểm định ngoài thời gian (\eng{out-of-time validation});
+  tinh chỉnh siêu tham số bằng kiểm định chéo theo chuỗi thời gian; giải thích mô
+  hình bằng phương pháp SHAP và phép hoán vị.
+
+  \item \textbf{Mô phỏng quy trình kiểm duyệt:} xây dựng bộ máy hỗ trợ ra quyết
+  định, mô phỏng luồng xử lý hồ sơ, xác định ngưỡng phê duyệt theo ba tiêu chí
+  nghiệp vụ và thử nghiệm tích hợp qua dịch vụ REST.
+
+  \item \textbf{Đánh giá đối chiếu:} so sánh kết quả của mô hình đề xuất với quy
+  trình thẩm định truyền thống chỉ dựa trên luật nghiệp vụ, và đối chiếu với các
+  công trình nghiên cứu liên quan.
+\end{itemize}
+
+\section*{6. Kết cấu của đề án}
+\addcontentsline{toc}{section}{6. Kết cấu của đề án}
+
+Ngoài phần Mở đầu, Kết luận, Danh mục tài liệu tham khảo và Phụ lục, nội dung đề
+án được trình bày trong ba chương:
+
+\begin{itemize}
+  \item \textbf{Chương 1 -- Cơ sở lý luận:} trình bày tổng quan về tín dụng và
+  kiểm duyệt tín dụng, tổng quan về học máy trong đánh giá tín dụng, dữ liệu và
+  đặc trưng trong bài toán tín dụng, các mô hình học máy áp dụng trong đánh giá
+  tín dụng cùng cơ sở so sánh và lựa chọn mô hình phù hợp.
+
+  \item \textbf{Chương 2 -- Xây dựng mô hình học máy trong hỗ trợ kiểm duyệt tín
+  dụng:} phân tích bài toán kiểm duyệt tín dụng; trình bày quy trình thu thập
+  và tổng hợp dữ liệu, tiền xử lý và làm sạch dữ liệu, trích xuất và lựa chọn đặc trưng, xây
+  dựng nhãn và xác định quy tắc phê duyệt; thiết kế mô hình học máy và quy trình
+  huấn luyện, tối ưu mô hình.
+
+  \item \textbf{Chương 3 -- Triển khai thực nghiệm và đánh giá kết quả:} trình
+  bày kịch bản và môi trường thực nghiệm, kết quả huấn luyện các mô hình, đánh
+  giá hiệu năng và so sánh giữa các thuật toán, mô phỏng và giải thích mô hình;
+  cuối cùng là phần đánh giá chung, đối chiếu với quy trình thẩm định
+  truyền thống và với các công trình nghiên cứu liên quan.
+\end{itemize}

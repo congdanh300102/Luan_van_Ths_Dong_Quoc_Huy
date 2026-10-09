@@ -1,0 +1,1207 @@
+% ===========================================================================
+% CHƯƠNG 2: XÂY DỰNG MÔ HÌNH HỌC MÁY TRONG HỖ TRỢ KIỂM DUYỆT TÍN DỤNG
+% ===========================================================================
+\chapter{XÂY DỰNG MÔ HÌNH HỌC MÁY TRONG HỖ TRỢ KIỂM DUYỆT TÍN DỤNG}
+% Tiêu đề chạy rút gọn: tiêu đề chương đầy đủ dài hơn một dòng đầu trang,
+% khiến fancyhdr phải nới \headheight và làm lệch khung chữ của cả chương.
+\markboth{Chương 2. Xây dựng mô hình học máy hỗ trợ kiểm duyệt tín dụng}{}
+\label{chap:xay-dung-he-thong}
+
+\noindent\textit{Chương 2 trình bày thực trạng quy trình thẩm định tín dụng, xác
+định bài toán học máy và phương pháp thu thập, tiền xử lý dữ liệu hồ sơ vay. Nội
+dung chương tập trung vào kỹ thuật trích xuất đặc trưng, gán nhãn rủi ro và thiết
+lập quy trình huấn luyện, tối ưu mô hình làm tiền đề cho các thực nghiệm trình
+bày ở Chương~\ref{chap:thuc-nghiem}.}
+
+\section{Phân tích bài toán kiểm duyệt tín dụng}
+\label{sec:phan-tich-bai-toan}
+
+\subsection{Xác định các mức độ rủi ro và trạng thái khoản vay cần dự báo}
+\label{subsec:muc-do-rui-ro}
+
+\paragraph{Biến mục tiêu.} Đối tượng dự báo của mô hình là xác suất một hồ sơ
+vay phát sinh nợ xấu trong cửa sổ quan sát kể từ thời điểm cấp tín dụng. Biến mục
+tiêu được định nghĩa nhị phân:
+
+\begin{equation}
+y_i =
+\begin{cases}
+1, & \text{nếu hồ sơ } i \text{ phát sinh nợ nhóm 3--5 (quá hạn} \ge 90 \text{ ngày)} \\
+   & \text{trong vòng 12 tháng kể từ ngày cấp tín dụng,} \\[4pt]
+0, & \text{trong trường hợp còn lại.}
+\end{cases}
+\label{eq:target}
+\end{equation}
+
+\paragraph{Ba trạng thái thay vì hai.} Mặc dù biến mục tiêu là nhị phân, quá
+trình gán nhãn phải phân biệt \textbf{ba} trạng thái. Ngoài hai trạng thái
+\textit{Tốt} và \textit{Xấu}, cần nhận diện trạng thái \textit{Chưa xác định}
+dành cho các hồ sơ chưa đi hết cửa sổ quan sát tại thời điểm trích xuất dữ liệu.
+Nếu bỏ qua và mặc định xếp nhóm này vào loại Tốt, dữ liệu huấn luyện sẽ chứa nhãn
+sai một cách có hệ thống ở chính những hồ sơ mới nhất -- nhóm gần nhất với điều
+kiện hiện tại. Hệ quả là mô hình đánh giá thấp rủi ro của các hồ sơ gần đây. Đề
+án loại nhóm Chưa xác định khỏi tập huấn luyện và tập đánh giá.
+
+\paragraph{Thang phân hạng rủi ro.} Kết quả đầu ra không dừng ở một giá trị xác
+suất. Để phục vụ nghiệp vụ, thang $\PD$ liên tục được ánh xạ sang bảy hạng rủi ro
+theo thông lệ xếp hạng tín dụng, trình bày tại Bảng~\ref{tab:risk-bands-design}.
+
+\begin{table}[htbp]
+\centering
+\caption{Thang phân hạng rủi ro theo xác suất vỡ nợ}
+\label{tab:risk-bands-design}
+\small
+\begin{tabular}{@{}cccl@{}}
+\toprule
+\textbf{Hạng} & \textbf{Khoảng $\PD$} & \textbf{Mức rủi ro} &
+\textbf{Định hướng xử lý} \\
+\midrule
+AA  & $[0{,}00;\ 0{,}02)$ & Rất thấp    & Ưu tiên duyệt, có thể ưu đãi lãi suất \\
+A   & $[0{,}02;\ 0{,}05)$ & Thấp        & Duyệt theo điều kiện chuẩn \\
+BBB & $[0{,}05;\ 0{,}08)$ & Trung bình thấp & Duyệt, có thể yêu cầu bổ sung điều kiện \\
+BB  & $[0{,}08;\ 0{,}15)$ & Trung bình  & Chuyển thẩm định thủ công \\
+B   & $[0{,}15;\ 0{,}25)$ & Trung bình cao & Chuyển thẩm định thủ công \\
+CCC & $[0{,}25;\ 0{,}40)$ & Cao         & Thẩm định kỹ hoặc từ chối \\
+D   & $[0{,}40;\ 1{,}00]$ & Rất cao     & Từ chối \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Đặc trưng đầu vào và đầu ra của mô hình kiểm duyệt tín dụng}
+\label{subsec:dau-vao-dau-ra}
+
+\paragraph{Đầu vào.} Vectơ đặc trưng của mỗi hồ sơ được tổng hợp từ bốn nhóm
+nguồn dữ liệu đã phân tích ở mục~\ref{subsec:nhom-du-lieu}, bổ sung thêm nhóm thứ
+năm gồm các biến tổ hợp và biến tương tác. Nguyên tắc bắt buộc đối với mọi đặc
+trưng là \textbf{tính đúng đắn theo thời điểm}: giá trị của mọi biến chỉ được
+tính từ dữ liệu tồn tại trước hoặc tại thời điểm nộp hồ sơ.
+
+\paragraph{Đầu ra.} Khác với bài toán phân loại thông thường chỉ trả về một nhãn,
+kết quả đầu ra của mô hình gồm năm thành phần, phản ánh vai trò hỗ trợ chứ không
+thay thế con người:
+
+\begin{enumerate}[label=(\arabic*)]
+  \item \textbf{Xác suất vỡ nợ} $\PD \in (0, 1)$ đã được hiệu chuẩn;
+  \item \textbf{Hạng rủi ro} theo thang bảy mức ở Bảng~\ref{tab:risk-bands-design};
+  \item \textbf{Khuyến nghị} thuộc một trong ba giá trị: \code{APPROVE} (khuyến
+  nghị duyệt), \code{REVIEW} (chuyển thẩm định thủ công), \code{REJECT} (khuyến
+  nghị từ chối);
+  \item \textbf{Danh sách lý do} (\eng{reason codes}) gồm các luật nghiệp vụ bị
+  vi phạm và các chỉ tiêu định lượng có ảnh hưởng lớn nhất tới kết quả;
+  \item \textbf{Đề xuất điều kiện cấp tín dụng} gồm hạn mức, kỳ hạn và mức lãi
+  suất theo rủi ro, trong trường hợp khuyến nghị duyệt.
+\end{enumerate}
+
+Thành phần thứ tư (danh sách lý do) là điểm phân biệt giữa mô hình đóng vai trò
+hỗ trợ và mô hình ra quyết định tự động. Thiếu thành phần này, cán bộ tín dụng
+chỉ nhận được
+một con số mà không có căn cứ để chấp nhận hay bác bỏ, dẫn tới hai thái cực đều
+không mong muốn: chấp nhận kết quả một cách thụ động hoặc bỏ qua hoàn toàn khuyến
+nghị của mô hình.
+
+\subsection{Yêu cầu kỹ thuật và pháp lý đối với mô hình kiểm duyệt tín dụng}
+\label{subsec:yeu-cau}
+
+\subsubsection{Yêu cầu chức năng}
+
+Quy trình kiểm duyệt phải thực hiện được tám chức năng, tương ứng các chặng của
+một lượt xử lý hồ sơ. Trên \textit{đường xử lý chính}, quy trình
+\textbf{tiếp nhận hồ sơ} qua
+giao diện dịch vụ và kiểm tra tính đầy đủ, hợp lệ của dữ liệu đầu vào;
+\textbf{tổng hợp dữ liệu} khách hàng, tài khoản, giao dịch và bản tin CIC về cấp
+độ hồ sơ; \textbf{xây dựng đặc trưng} theo đúng định nghĩa đã dùng khi huấn
+luyện, bảo đảm tính đúng đắn theo thời điểm; \textbf{chấm điểm rủi ro} bằng mô
+hình đã hiệu chuẩn; \textbf{áp dụng bộ luật nghiệp vụ}; và \textbf{đưa ra khuyến
+nghị} ba mức theo thứ tự ưu tiên xác định, kèm \textbf{danh sách lý do} và
+\textbf{đề xuất điều kiện cấp tín dụng} (hạn mức, kỳ hạn, lãi suất theo rủi ro).
+
+Ngoài đường xử lý chính, quy trình cần hỗ trợ \textbf{chấm điểm theo lô} phục vụ
+tái đánh giá danh mục hiện hữu, và \textbf{giám sát mô hình} thông qua theo dõi
+trôi dạt dữ liệu cùng chất lượng dự báo theo thời gian.
+
+\subsubsection{Yêu cầu phi chức năng}
+
+\begin{itemize}
+  \item \textbf{Tính nhất quán:} cùng một hồ sơ với cùng dữ liệu đầu vào phải
+  luôn cho cùng kết quả. Yêu cầu này đòi hỏi định nghĩa đặc trưng khi huấn luyện
+  và khi chấm điểm phải trùng khớp tuyệt đối.
+
+  \item \textbf{Thời gian phản hồi:} thời gian chấm điểm một hồ sơ phải đủ nhỏ để
+  tích hợp được vào giao diện làm việc trực tuyến của cán bộ tín dụng. Đề án đặt
+  mục tiêu thời gian xử lý một hồ sơ ở mức dưới 100 ms.
+
+  \item \textbf{Khả năng hoạt động khi thiếu dữ liệu:} mô hình phải trả về kết
+  quả cả khi không truy vấn được bản tin CIC. Trong trường hợp đó, kết quả là
+  \code{REVIEW} kèm lý do, chứ không phải một thông báo lỗi.
+
+  \item \textbf{Khả năng tái lập:} toàn bộ quy trình từ dữ liệu tới kết quả phải
+  tái lập được với cùng một hạt giống ngẫu nhiên.
+\end{itemize}
+
+\subsubsection{Yêu cầu pháp lý và tuân thủ}
+
+Mô hình sử dụng trong hoạt động cấp tín dụng chịu ràng buộc bởi các quy định pháp
+lý, trong đó năm nhóm yêu cầu sau ảnh hưởng trực tiếp tới thiết kế.
+
+\textit{Giải trình được:} mọi khuyến nghị phải kèm lý do có thể trình bày cho
+khách hàng và cơ quan quản lý. Yêu cầu này loại trừ khả năng sử dụng mô hình như
+một hộp đen, và là lý do đề án tích hợp cơ chế giải thích SHAP ngay trong thiết
+kế chứ không coi đó là phần bổ sung.
+
+\textit{Không phân biệt đối xử:} mô hình không được sử dụng các biến bị cấm hoặc
+biến đại diện cho chúng làm căn cứ phân biệt. Trong tập đặc trưng của đề án, biến
+giới tính được giữ lại phục vụ phân tích thống kê mô tả nhưng cần cân nhắc loại
+bỏ khi triển khai thực tế, tùy quy định áp dụng.
+
+\textit{Tuân thủ định nghĩa phân loại nợ:} nhãn rủi ro phải được xây dựng theo
+đúng quy định hiện hành~\cite{tt11}, bảo đảm kết quả của mô hình tương thích với
+các báo cáo quản trị rủi ro và trích lập dự phòng.
+
+\textit{Bảo mật dữ liệu cá nhân:} đề án sử dụng dữ liệu mô phỏng; khi áp dụng
+trên dữ liệu thực, dữ liệu cần được ẩn danh và giới hạn quyền truy
+cập~\cite{tt15}.
+
+\textit{Thẩm quyền quyết định thuộc về con người:} đây là ràng buộc bao trùm --
+mô hình cung cấp thông tin hỗ trợ, quyết định cấp tín dụng cuối cùng thuộc về
+người hoặc bộ phận có thẩm quyền theo phân cấp của tổ chức tín dụng.
+
+\section{Thu thập và tổng hợp dữ liệu}
+\label{sec:thu-thap-du-lieu}
+
+\subsection{Nguồn dữ liệu tín dụng truyền thống và dữ liệu bổ sung}
+\label{subsec:nguon-du-lieu}
+
+Hệ thống sử dụng năm bảng dữ liệu, chia thành hai nhóm.
+
+\paragraph{Dữ liệu tín dụng truyền thống.} Gồm ba nguồn đã được sử dụng từ lâu
+trong thẩm định tín dụng: (i) \textit{hồ sơ khách hàng} chứa thông tin nhân khẩu
+học, nghề nghiệp và thu nhập khai báo; (ii) \textit{đơn đề nghị vay} chứa tham số
+khoản vay; và (iii) \textit{bản tin CIC} chứa lịch sử quan hệ tín dụng của khách
+hàng với toàn hệ thống tổ chức tín dụng.
+
+\paragraph{Dữ liệu bổ sung.} Gồm hai nguồn mà tổ chức tín dụng tự sở hữu nhưng
+thường chưa được khai thác đầy đủ trong thẩm định: (iv) \textit{thông tin tài
+khoản} và (v) \textit{lịch sử giao dịch}. Nhóm này có ba ưu thế: không phụ thuộc
+dịch vụ bên ngoài, phản ánh tình trạng tài chính hiện tại thay vì lịch sử, và đặc
+biệt có giá trị với nhóm khách hàng thiếu lịch sử tín dụng -- nhóm mà bản tin CIC
+gần như không cung cấp thông tin.
+
+Bảng~\ref{tab:data-schema} mô tả lược đồ của năm nguồn dữ liệu.
+
+\begin{table}[htbp]
+\centering
+\caption{Lược đồ các bảng dữ liệu sử dụng trong đề án}
+\label{tab:data-schema}
+\small
+\begin{tabular}{@{}L{2.4cm}L{2.7cm}L{7.0cm}@{}}
+\toprule
+\textbf{Bảng} & \textbf{Khóa chính} & \textbf{Nội dung} \\
+\midrule
+\code{customers} & \code{customer\_id} &
+Nhân khẩu học, nghề nghiệp, thu nhập khai báo, nơi cư trú và thời gian quan hệ
+với ngân hàng \\[2pt]
+\code{accounts} & \code{account\_id} &
+Loại tài khoản, ngày mở, số dư bình quân ba tháng, số dư hiện tại, trạng thái
+\\[2pt]
+\code{transactions} & \code{txn\_id} &
+Thời điểm, chiều giao dịch, số tiền, nhóm giao dịch và kênh thực hiện \\[2pt]
+\code{applications} & \code{application\_id} &
+Thời điểm nộp, sản phẩm, số tiền đề nghị, kỳ hạn, lãi suất, mục đích vay, kênh
+tiếp nhận, tài sản bảo đảm và khoản trả góp \\[2pt]
+\code{cic\_reports} & \code{report\_id} &
+Thời điểm truy vấn, điểm CIC, nhóm nợ, số ngày quá hạn, số tổ chức có quan hệ, dư
+nợ, hạn mức và số lần truy vấn tín dụng \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Thu thập và trích xuất dữ liệu khách hàng vay vốn}
+\label{subsec:trich-xuat-du-lieu}
+
+\paragraph{Đơn vị phân tích.} Toàn bộ dữ liệu được quy về đơn vị phân tích là
+\textit{hồ sơ vay}: mỗi dòng trong ma trận đặc trưng cuối cùng tương ứng một hồ
+sơ, được xác định bởi cặp (mã hồ sơ, thời điểm nộp). Việc chọn hồ sơ -- thay vì
+khách hàng -- làm đơn vị phân tích là cần thiết vì một khách hàng có thể nộp
+nhiều hồ sơ ở các thời điểm khác nhau, và tình trạng tài chính tại mỗi thời điểm
+là khác nhau.
+
+\paragraph{Quy tắc ghép nối theo thời điểm.} Đây là điểm kỹ thuật quan trọng nhất
+của bước thu thập dữ liệu. Với mỗi hồ sơ nộp tại thời điểm $t$, việc ghép nối các
+nguồn phải tuân thủ:
+
+\begin{itemize}
+  \item Thông tin khách hàng và tài khoản: lấy trạng thái tại thời điểm $t$;
+  \item Bản tin CIC: chỉ sử dụng bản tin được truy vấn tại thời điểm không muộn
+  hơn $t$;
+  \item Giao dịch: chỉ tổng hợp các giao dịch có thời điểm phát sinh nhỏ hơn hoặc
+  bằng $t$.
+\end{itemize}
+
+Vi phạm bất kỳ quy tắc nào trong ba quy tắc trên đều dẫn tới rò rỉ thông tin từ
+tương lai. Đề án đưa quy tắc thứ nhất và thứ ba vào chính thuật toán tính đặc
+trưng (mục~\ref{subsec:dac-trung-hanh-vi}), còn quy tắc thứ hai được kiểm tra
+tường minh trong bước kiểm tra tính hợp lệ dữ liệu.
+
+\subsection{Phân tích thống kê mô tả tập dữ liệu tín dụng}
+\label{subsec:thong-ke-mo-ta}
+
+Bước thống kê mô tả lập bảng đặc tả cho từng biến, gồm: kiểu dữ liệu, số quan sát
+hợp lệ, tỷ lệ giá trị khuyết, số giá trị phân biệt, và với biến định lượng là các
+phân vị 1\%, 25\%, 50\%, 75\%, 99\% cùng trung bình và độ lệch chuẩn.
+
+Bảng mô tả phục vụ ba quyết định ở các bước sau. Tỷ lệ khuyết của từng biến quyết
+định chiến lược điền khuyết và xác định biến nào cần loại bỏ do độ phủ quá thấp.
+Khoảng cách giữa phân vị 99\% và giá trị lớn nhất cho biết mức độ nặng của đuôi
+phân phối, làm căn cứ quyết định có cần cắt ngọn hay không. Số giá trị phân biệt
+của biến định tính quyết định cách mã hóa: biến có ít hạng mục phù hợp với mã hóa
+one-hot, biến có nhiều hạng mục cần cơ chế xử lý riêng.
+
+\subsection{Phát hiện và xử lý dữ liệu ngoại lệ, dữ liệu không hợp lệ}
+\label{subsec:du-lieu-khong-hop-le}
+
+Hai khái niệm dưới đây thường bị gộp chung nhưng có bản chất khác nhau và đòi
+hỏi cách xử lý khác nhau.
+
+\paragraph{Dữ liệu không hợp lệ} là dữ liệu \textit{sai} -- vi phạm ràng buộc
+nghiệp vụ hoặc ràng buộc logic. Ví dụ: tuổi khách hàng bằng 15, thu nhập âm, nhóm
+nợ xấu nhất trong 12 tháng lại tốt hơn nhóm nợ hiện tại, hoặc bản tin CIC được
+truy vấn sau thời điểm nộp hồ sơ. Đây là lỗi dữ liệu và phải được loại bỏ hoặc
+sửa chữa.
+
+\paragraph{Giá trị ngoại lệ} là giá trị nằm xa phần lớn quan sát nhưng \textit{có
+thể đúng}. Một khách hàng có thu nhập gấp hai mươi lần trung vị hoặc một giao
+dịch trị giá vài tỷ đồng là bất thường về mặt thống kê nhưng hoàn toàn có thể có
+thật. Loại bỏ những quan sát này đồng nghĩa với việc loại bỏ chính nhóm khách
+hàng mà tổ chức tín dụng quan tâm.
+
+Đề án xây dựng bộ mười lăm ràng buộc nghiệp vụ để phát hiện dữ liệu không hợp lệ,
+chia theo ba bảng dữ liệu chính. Bảng~\ref{tab:validity-rules} trình bày các ràng
+buộc này.
+
+\begin{table}[htbp]
+\centering
+\caption{Bộ ràng buộc kiểm tra tính hợp lệ của dữ liệu}
+\label{tab:validity-rules}
+\small
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{@{}L{2.5cm}L{4.8cm}L{6.6cm}@{}}
+\toprule
+\textbf{Bảng} & \textbf{Mã ràng buộc} & \textbf{Nội dung} \\
+\midrule
+\code{customers}
+  & \code{CUS\_AGE\_RANGE}        & Tuổi khách hàng trong khoảng 18--75 \\
+  & \code{CUS\_INCOME\_POSITIVE}  & Thu nhập khai báo lớn hơn 0 \\
+  & \code{CUS\_TENURE\_NONNEG}    & Thâm niên công việc không âm \\
+  & \code{CUS\_DEPENDENTS\_RANGE} & Số người phụ thuộc trong khoảng 0--10 \\
+\midrule
+\code{applications}
+  & \code{APP\_AMOUNT\_POSITIVE}     & Số tiền đề nghị vay lớn hơn 0 \\
+  & \code{APP\_TENOR\_RANGE}         & Kỳ hạn vay trong khoảng 3--360 tháng \\
+  & \code{APP\_RATE\_RANGE}          & Lãi suất trong khoảng 0--40\%/năm \\
+  & \code{APP\_INSTALLMENT\_POSITIVE} & Khoản trả góp hàng tháng lớn hơn 0 \\
+  & \code{APP\_LTV\_RANGE}           & Tỷ lệ vay trên giá trị tài sản bảo đảm
+  không vượt 1,2 \\
+\midrule
+\code{cic\_reports}
+  & \code{CIC\_SCORE\_RANGE}       & Điểm CIC trong khoảng 300--850 \\
+  & \code{CIC\_GROUP\_RANGE}       & Nhóm nợ trong khoảng 1--5 \\
+  & \code{CIC\_GROUP\_ORDER}       & Nhóm nợ xấu nhất 12 tháng không tốt hơn
+  nhóm nợ hiện tại \\
+  & \code{CIC\_DPD\_NONNEG}        & Số ngày quá hạn không âm \\
+  & \code{CIC\_UTILIZATION\_RANGE} & Tỷ lệ sử dụng hạn mức trong khoảng 0--2 \\
+  & \code{CIC\_QUERY\_BEFORE\_APPLY} & Bản tin CIC được truy vấn không muộn hơn
+  thời điểm nộp hồ sơ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Kiểm chứng cơ chế phát hiện.} Một bảng kết quả kiểm tra không ghi nhận
+vi phạm nào có thể tương ứng hai khả năng: dữ liệu thực sự sạch, hoặc cơ chế kiểm
+tra không hoạt động. Để phân biệt, đề án thực hiện phép \textbf{tiêm lỗi}: tạo
+một bản sao dữ liệu, cố ý đưa vào một tỷ lệ lỗi đã biết trước ứng với từng ràng
+buộc, rồi chạy lại cơ chế kiểm tra và đối chiếu số lỗi phát hiện được với số lỗi
+đã tiêm. Kết quả kiểm chứng được trình bày ở
+mục~\ref{subsec:kq-chat-luong-du-lieu}.
+
+\paragraph{Xử lý giá trị ngoại lệ.} Đối với giá trị ngoại lệ, đề án không loại bỏ
+quan sát mà áp dụng kỹ thuật \textbf{cắt ngọn} (\eng{winsorize}) tại phân vị 1\%
+và 99\% học từ tập huấn luyện. Cách này giữ nguyên số quan sát -- do đó không làm
+mất nhóm khách hàng đặc thù -- đồng thời hạn chế ảnh hưởng quá mức của vài giá
+trị cực trị lên các mô hình nhạy cảm với thang đo như hồi quy logistic, SVM và
+mạng nơ-ron. Việc phát hiện ngoại lệ sử dụng quy tắc $k \times \text{IQR}$ với
+$k = 3$ thay vì giá trị thông thường $k = 1{,}5$, bởi các biến tiền tệ trong dữ
+liệu tín dụng có phân phối lệch phải mạnh; ngưỡng $1{,}5 \times \text{IQR}$ sẽ
+đánh dấu một tỷ lệ rất lớn quan sát là ngoại lệ mà không mang lại thông tin hữu
+ích.
+
+\subsection{Phân chia dữ liệu theo khoảng thời gian và nhóm khách hàng}
+\label{subsec:phan-chia-du-lieu}
+
+Đề án sử dụng hai chiến lược phân chia với hai mục đích khác nhau.
+
+\paragraph{Phân chia theo thời gian (chính).} Dữ liệu được sắp xếp theo thời điểm
+nộp hồ sơ và chia thành ba đoạn liên tiếp: 70\% đầu làm tập huấn luyện, 15\% tiếp
+theo làm tập kiểm định, 15\% cuối làm tập kiểm thử. Chiến lược này mô phỏng đúng
+điều kiện vận hành thực tế -- mô hình luôn được huấn luyện trên quá khứ và áp
+dụng cho tương lai -- nên phản ánh cả ảnh hưởng của trôi dạt dữ liệu.
+
+\paragraph{Phân chia theo nhóm khách hàng (phương án bổ sung).} Toàn bộ hồ sơ của
+một khách hàng được đặt vào cùng một tập. Chiến lược này loại trừ rò rỉ thông tin
+theo khách hàng nhưng không phản ánh trôi dạt theo thời gian, nên chỉ phù hợp khi
+tập dữ liệu có nhiều khách hàng nộp lặp nhiều hồ sơ. Hệ thống hiện thực sẵn
+phương án này để có thể đối chiếu khi áp dụng trên dữ liệu thực; toàn bộ kết quả
+thực nghiệm trình bày ở Chương~\ref{chap:thuc-nghiem} sử dụng cách chia theo thời
+gian.
+
+\paragraph{Tách riêng vai trò trong tập huấn luyện.} Với các mô hình có cơ chế
+dừng sớm (gradient boosting), cần một tập dữ liệu độc lập để đánh giá tiêu chí
+dừng. Nếu lấy tập này từ tập kiểm định, tập kiểm định sẽ đồng thời phục vụ hai
+mục đích -- dừng sớm và hiệu chuẩn xác suất -- làm suy giảm tính độc lập của cả
+hai. Đề án tách 15\% cuối của tập huấn luyện thành tập dừng sớm riêng biệt, cho
+cấu trúc bốn phần:
+
+\begin{center}
+\begin{tabular}{@{}cccc@{}}
+\toprule
+\textbf{Tập} & \textbf{Tỷ trọng} & \textbf{Vai trò} & \textbf{Sử dụng} \\
+\midrule
+\code{train\_fit} & 59,5\% & Huấn luyện & Mọi mô hình \\
+\code{train\_es}  & 10,5\% & Dừng sớm   & Mô hình boosting \\
+\code{valid}      & 15,0\% & Hiệu chuẩn xác suất, chọn ngưỡng & Mọi mô hình \\
+\code{test}       & 15,0\% & Đánh giá cuối cùng & Chỉ dùng một lần \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Nguyên tắc quan trọng nhất là tập \code{test} chỉ được sử dụng \textit{một lần
+duy nhất} ở bước báo cáo kết quả cuối cùng. Mọi quyết định về lựa chọn mô hình,
+siêu tham số và ngưỡng đều dựa trên tập \code{valid}.
+
+\section{Tiền xử lý và làm sạch dữ liệu}
+\label{sec:tien-xu-ly}
+
+Nguyên tắc xuyên suốt của toàn bộ khối tiền xử lý: \textbf{mọi tham số biến đổi
+chỉ được ước lượng trên tập huấn luyện} rồi áp dụng cho các tập còn lại. Nếu ước
+lượng trung vị, trung bình hay phân vị trên toàn bộ dữ liệu, thông tin từ tập
+kiểm thử rò rỉ vào quá trình huấn luyện và kết quả đánh giá sẽ lạc quan hơn thực
+tế.
+
+\subsection{Xử lý giá trị khuyết thiếu}
+\label{subsec:xu-ly-khuyet}
+
+Trong dữ liệu tín dụng, giá trị khuyết không đồng nghĩa với lỗi thu thập. Đề án
+phân biệt hai loại và xử lý theo hai cách khác nhau.
+
+\paragraph{Khuyết mang thông tin.} Khách hàng chưa từng có quan hệ tín dụng
+(\eng{thin-file}) sẽ có toàn bộ trường CIC trống. Bản thân trạng thái ``không có
+lịch sử tín dụng'' là một tín hiệu rủi ro riêng biệt. Cách xử lý đúng gồm hai
+phần: điền giá trị theo \textit{quy ước nghiệp vụ} và bổ sung \textit{biến chỉ
+báo khuyết} để mô hình tự học mức rủi ro thực tế của nhóm này. Quy ước điền được
+chọn theo hướng trung tính -- không giả định khách hàng tốt cũng không giả định
+khách hàng xấu: điểm CIC đặt bằng 600 (mức giữa của thang 300--850), nhóm nợ đặt
+bằng 1 (chưa phát sinh nợ), các chỉ tiêu đếm và dư nợ đặt bằng 0.
+
+\paragraph{Khuyết ngẫu nhiên.} Với các trường như thu nhập khai báo hay thâm niên
+công việc, giá trị khuyết phản ánh việc khách hàng không cung cấp thông tin. Đề
+án điền bằng \textit{trung vị của tập huấn luyện} kèm biến chỉ báo. Trung vị được
+chọn thay vì trung bình vì ít nhạy cảm với đuôi phân phối lệch phải điển hình của
+các biến tiền tệ.
+
+Việc điền theo thống kê được thực hiện \textit{bên trong} pipeline huấn luyện của
+scikit-learn, nhờ đó tham số điền được ước lượng lại ở mỗi lần khớp mô hình trong
+kiểm định chéo, loại bỏ hoàn toàn nguy cơ rò rỉ.
+
+\subsection{Phát hiện và xử lý dữ liệu ngoại lệ}
+\label{subsec:xu-ly-ngoai-le}
+
+Quy trình xử lý ngoại lệ gồm hai bước. Bước thứ nhất -- thống kê -- sử dụng quy
+tắc $3 \times \text{IQR}$ để lập bảng các biến có giá trị nằm ngoài ngưỡng, kèm
+tỷ lệ và giá trị các phân vị biên. Bảng này là cơ sở để đánh giá mức độ lệch của
+từng biến.
+
+Bước thứ hai -- xử lý -- áp dụng phép cắt ngọn tại phân vị 1\% và 99\%. Ngưỡng
+cắt được học từ tập huấn luyện và áp dụng nguyên vẹn cho tập kiểm định và tập
+kiểm thử; nếu học lại trên từng tập, phép biến đổi sẽ khác nhau giữa các tập và
+làm sai lệch kết quả đánh giá.
+
+Phép cắt ngọn chỉ cần thiết với nhóm mô hình nhạy cảm với thang đo. Các mô hình dựa trên cây chia theo ngưỡng nên bất biến với phép biến
+đổi đơn điệu, do đó không chịu ảnh hưởng của giá trị cực trị theo cách tương tự.
+
+\subsection{Chuẩn hóa và mã hóa biến định tính/định lượng}
+\label{subsec:chuan-hoa-ma-hoa}
+
+Mỗi họ mô hình có yêu cầu khác nhau về dạng đầu vào, nên đề án sử dụng bốn phương
+án biến đổi song song thay vì một phương án chung
+(Bảng~\ref{tab:encoding-schemes}).
+
+\begin{table}[htbp]
+\centering
+\caption{Bốn phương án biến đổi dữ liệu theo yêu cầu của từng họ mô hình}
+\label{tab:encoding-schemes}
+\small
+\begin{tabular}{@{}L{2.3cm}L{4.4cm}L{5.5cm}@{}}
+\toprule
+\textbf{Phương án} & \textbf{Nội dung biến đổi} & \textbf{Mô hình áp dụng và lý
+do} \\
+\midrule
+\code{numeric\_ohe} &
+Điền khuyết bằng trung vị, chuẩn hóa z-score cho biến định lượng; mã hóa one-hot
+cho biến định tính &
+Hồi quy logistic, SVM, mạng nơ-ron. Các mô hình dựa trên khoảng cách hoặc
+gradient nhạy cảm với chênh lệch thang đo giữa các biến \\[2pt]
+\code{ordinal} &
+Điền khuyết; mã hóa thứ tự cho biến định tính &
+Cây quyết định, rừng ngẫu nhiên, Extra Trees, Hist Gradient Boosting. Cây chia
+theo ngưỡng nên bất biến với phép biến đổi đơn điệu; chuẩn hóa không cần thiết và
+làm mất khả năng diễn giải ngưỡng \\[2pt]
+\code{native\_cat} &
+Giữ nguyên biến định tính ở dạng hạng mục &
+XGBoost, LightGBM, CatBoost. Các thư viện này có cơ chế xử lý biến định tính
+riêng, hiệu quả hơn mã hóa bên ngoài \\[2pt]
+\code{woe} &
+Rời rạc hóa và thay mỗi khoảng bằng giá trị $\WOE$ &
+Mô hình thẻ điểm. Đưa mọi biến về thang log-odds và cho phép áp ràng buộc đơn
+điệu \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Toàn bộ phép biến đổi được gói trong cấu trúc \code{ColumnTransformer} của
+scikit-learn, bảo đảm tham số chỉ được ước lượng trên dữ liệu huấn luyện của từng
+lần khớp mô hình.
+
+\paragraph{Xử lý hạng mục chưa từng xuất hiện.} Khi chấm điểm một hồ sơ mới, biến
+định tính có thể nhận giá trị chưa từng xuất hiện trong tập huấn luyện. Đề án
+``đóng băng'' danh mục hạng mục theo tập huấn luyện và lưu kèm mô hình; hạng mục
+lạ được quy về giá trị khuyết. Đây là hành vi đúng khi triển khai: mô hình không
+có cơ sở nào để đánh giá một hạng mục chưa từng quan sát.
+
+\subsection{Phân chia tập dữ liệu huấn luyện, kiểm thử}
+\label{subsec:chia-tap}
+
+Cấu trúc bốn tập dữ liệu đã được trình bày ở mục~\ref{subsec:phan-chia-du-lieu}.
+Nội dung cần làm rõ ở đây là \textbf{thứ tự thao tác} giữa việc phân chia và các
+phép tiền xử lý:
+
+\begin{center}
+gán nhãn $\rightarrow$ loại hồ sơ chưa đủ cửa sổ quan sát $\rightarrow$ chia tập
+$\rightarrow$ học tham số biến đổi trên tập huấn luyện $\rightarrow$ áp dụng cho
+các tập còn lại.
+\end{center}
+
+Việc phân chia phải diễn ra \textit{trước} mọi phép biến đổi có ước lượng tham
+số. Nếu đảo ngược, chẳng hạn chuẩn hóa trên toàn bộ dữ liệu rồi mới chia tập,
+trung bình và độ lệch chuẩn dùng để chuẩn hóa sẽ chứa thông tin của tập kiểm thử;
+mô hình khi đó được đánh giá trên dữ liệu mà nó đã gián tiếp tiếp xúc, cho kết
+quả lạc quan hơn thực tế.
+
+\section{Trích xuất và lựa chọn đặc trưng}
+\label{sec:trich-xuat-dac-trung}
+
+\subsection{Trích xuất nhóm đặc trưng thông tin cá nhân và tài chính}
+\label{subsec:dac-trung-ca-nhan}
+
+Nhóm này gồm mười lăm đặc trưng lấy trực tiếp từ hồ sơ khách hàng và thông tin
+tài khoản, chia thành ba mảng: \textit{nhân khẩu học} (tuổi, giới tính, tình
+trạng hôn nhân, số người phụ thuộc, trình độ học vấn, tỉnh/thành cư trú, hình
+thức nhà ở); \textit{nghề nghiệp và thu nhập} (nghề nghiệp, loại hình tổ chức làm
+việc, thâm niên công việc, thu nhập khai báo); và \textit{quan hệ với ngân hàng}
+(thời gian quan hệ, việc có tài khoản nhận lương, số tài khoản đang mở, tổng số
+dư bình quân ba tháng). Danh mục đầy đủ kèm mô tả từng đặc trưng được liệt kê tại
+Phụ lục~\ref{app:features}.
+
+Mảng thứ ba phản ánh \textit{mức độ gắn bó} của khách hàng với tổ chức tín dụng,
+yếu tố có giá trị dự báo nhưng không xuất hiện trong bộ quy tắc thẩm định truyền
+thống.
+
+\subsection{Trích xuất nhóm đặc trưng lịch sử tín dụng và quan hệ CIC}
+\label{subsec:dac-trung-cic}
+
+Nhóm này gồm mười sáu đặc trưng lấy từ bản tin CIC, phản ánh bốn khía cạnh của
+quan hệ tín dụng: \textit{mức độ tín nhiệm} (điểm CIC), \textit{lịch sử trả nợ}
+(nhóm nợ hiện tại, nhóm nợ xấu nhất 12 tháng, số ngày quá hạn tối đa, nợ đã xử lý
+rủi ro, số tổ chức từng phát sinh nợ xấu), \textit{mức độ và cơ cấu dư nợ} (số tổ
+chức đang có quan hệ, số hợp đồng còn hiệu lực và đã tất toán, tổng dư nợ, tỷ lệ
+sử dụng hạn mức, nghĩa vụ trả nợ hàng tháng, độ dài lịch sử tín dụng), và
+\textit{mức độ tìm kiếm tín dụng} (số lần truy vấn trong 3 tháng).
+
+Bổ sung vào nhóm là hai biến chỉ báo tạo ra ở bước xử lý khuyết, phản ánh hai
+tình huống khác nhau về bản chất: khách hàng \textit{không có} lịch sử tín dụng
+và trường hợp \textit{không truy vấn được} dữ liệu.
+
+\subsection{Trích xuất nhóm đặc trưng hành vi và biến tương tác}
+\label{subsec:dac-trung-hanh-vi}
+
+\subsubsection{Đặc trưng hành vi theo cửa sổ thời gian}
+
+Từ lịch sử giao dịch, đề án tính hai mươi ba độ đo trên mỗi cửa sổ thời gian
+$W \in \{7, 30, 90, 180\}$ ngày, thuộc bốn mảng: \textit{quy mô hoạt động} (số
+giao dịch, dòng tiền vào, dòng tiền ra, dòng tiền thuần, giá trị giao dịch trung
+bình); \textit{mức biến động} (độ lệch chuẩn và hệ số biến thiên của giá trị giao
+dịch); \textit{cơ cấu dòng tiền theo mục đích} (nhận lương, trả nợ, chi tiêu nhóm
+rủi ro, rút tiền mặt, thương mại điện tử, hóa đơn tiện ích); và \textit{dấu hiệu
+hành vi} (giao dịch ban đêm, giao dịch giá trị lớn, giao dịch qua kênh di động),
+cùng năm tỷ số phái sinh từ các độ đo trên.
+
+Bổ sung thêm bảy đặc trưng không phụ thuộc cửa sổ: số ngày kể từ giao dịch gần
+nhất, ba biến xu thế so sánh cửa sổ ngắn với cửa sổ dài, tỷ lệ dòng tiền vào thực
+tế so với thu nhập khai báo, mức độ đều đặn của việc nhận lương và độ ổn định thu
+nhập.
+
+Trong số này, biến \textit{tỷ lệ dòng tiền vào thực tế so với thu nhập khai báo}
+có ý nghĩa nghiệp vụ riêng: nó cung cấp một phép kiểm chứng độc lập cho thông tin
+thu nhập khách hàng tự khai, công việc mà quy trình thẩm định truyền thống phải
+thực hiện thủ công qua đối chiếu chứng từ.
+
+\subsubsection{Thuật toán bảo đảm tính đúng đắn theo thời điểm}
+\label{subsubsec:point-in-time}
+
+Yêu cầu tính đúng đắn theo thời điểm đặt ra một thách thức về tính toán. Cách làm
+trực tiếp, tức với mỗi hồ sơ lọc toàn bộ giao dịch của khách hàng trong cửa sổ rồi
+tổng hợp -- có độ phức tạp $O(N \times |W| \times \bar{m})$ với $N$ là số hồ sơ,
+$|W|$ là số cửa sổ và $\bar{m}$ là số giao dịch trung bình mỗi khách hàng. Với
+hàng chục nghìn hồ sơ và hàng triệu giao dịch, chi phí này không chấp nhận được.
+
+Đề án sử dụng kỹ thuật \textbf{luỹ kế theo nhóm kết hợp ghép gần nhất theo thời
+gian}. Với mỗi độ đo $m$, gọi $C_m(i, t)$ là tổng luỹ kế của độ đo đó cho khách
+hàng $i$ tính đến thời điểm $t$. Khi đó tổng của độ đo trong cửa sổ $(t - W, t]$
+được tính bằng hiệu hai giá trị luỹ kế:
+
+\begin{equation}
+S_m(i, t, W) = C_m(i, t) - C_m(i, t - W).
+\label{eq:cumsum-window}
+\end{equation}
+
+Hai giá trị luỹ kế được truy xuất bằng phép ghép gần nhất hướng lùi
+(\code{merge\_asof}), tương đương thao tác ``tìm bản ghi gần nhất không vượt quá
+mốc thời gian'' với độ phức tạp tuyến tính sau khi dữ liệu đã được sắp xếp. Nhờ
+đó, toàn bộ đặc trưng cửa sổ cho $N$ hồ sơ được tính bằng $2 \times |W|$ phép
+ghép vectơ hóa thay vì $N \times |W|$ truy vấn riêng lẻ.
+
+Phương pháp này còn có một ưu điểm về mặt đúng đắn: vì công thức chỉ sử dụng giá
+trị luỹ kế tại hai mốc thời gian, nó \textit{không thể} vô tình bao gồm giao dịch
+phát sinh sau thời điểm nộp hồ sơ. Tính đúng đắn theo thời điểm được bảo đảm bởi
+chính cấu trúc thuật toán chứ không phụ thuộc vào việc kiểm tra bổ sung.
+
+\subsubsection{Biến tổ hợp và biến tương tác}
+
+Mười ba biến phái sinh được xây dựng nhằm biểu diễn các chỉ tiêu nghiệp vụ then
+chốt mà không biến gốc nào thể hiện được:
+
+\begin{table}[htbp]
+\centering
+\caption{Các biến tổ hợp và biến tương tác}
+\label{tab:derived-features}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}L{3.3cm}C{5.3cm}L{6.1cm}@{}}
+\toprule
+\textbf{Biến} & \textbf{Công thức} & \textbf{Ý nghĩa nghiệp vụ} \\
+\midrule
+\code{dti} &
+$\dfrac{\text{Trả góp mới} + \text{Nợ hiện hữu}}{\text{Thu nhập}}$ &
+Tổng gánh nặng nợ trên thu nhập, chỉ tiêu trung tâm của đánh giá khả năng trả nợ
+\\[6pt]
+\code{pti} &
+$\dfrac{\text{trả góp khoản vay mới}}{\text{thu nhập}}$ &
+Gánh nặng riêng của khoản vay đang xét \\[6pt]
+\code{disposable\_income} &
+thu nhập $-$ trả nợ $-$ chi phí sinh hoạt &
+Thu nhập còn lại thực tế sau khi trừ nghĩa vụ và chi phí tối thiểu \\[6pt]
+\code{credit\_history\_ratio} &
+$\dfrac{\text{độ dài lịch sử tín dụng}}{\text{số tháng từ tuổi 18}}$ &
+Mức độ tham gia thị trường tín dụng so với độ tuổi \\[6pt]
+\code{dpd\_x\_institutions} &
+số ngày quá hạn $\times$ số tổ chức &
+Biến tương tác: quá hạn tại nhiều tổ chức nghiêm trọng hơn quá hạn tại một tổ
+chức \\[6pt]
+\code{high\_dti\_short\_tenure} &
+$\mathbb{1}[\DTI > 0{,}5 \wedge \text{thâm niên} < 12]$ &
+Cờ rủi ro kết hợp: gánh nặng nợ cao đi kèm công việc chưa ổn định \\[6pt]
+\code{income\_verification\_ratio} &
+$\dfrac{\text{dòng tiền vào 30 ngày}}{\text{thu nhập khai báo}}$ &
+Kiểm chứng độc lập thông tin thu nhập tự khai \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Biến \code{disposable\_income} sử dụng mô hình chi phí sinh hoạt gồm hai thành
+phần: một mức sàn cố định phụ thuộc số người phụ thuộc, và một phần tỷ lệ thuận
+với thu nhập. Cách mô hình hóa này khắc phục nhược điểm của việc dùng một mức cố
+định duy nhất, vốn quá khắt khe với nhóm thu nhập thấp và quá nới lỏng với nhóm
+thu nhập cao.
+
+\subsection{Đánh giá mức độ quan trọng của các đặc trưng}
+\label{subsec:danh-gia-dac-trung}
+
+Đề án sử dụng ba phương pháp bổ trợ nhau để đánh giá tầm quan trọng của đặc
+trưng, mỗi phương pháp trả lời một câu hỏi khác nhau.
+
+\paragraph{Information Value -- năng lực dự báo đơn biến.} Trả lời câu hỏi: mỗi
+đặc trưng, xét riêng lẻ, phân biệt hồ sơ tốt và xấu tốt đến mức nào? Ưu điểm là
+chi phí tính toán thấp và không phụ thuộc mô hình. Hạn chế là không tính đến
+tương tác: một biến có $\IV$ thấp vẫn có thể có giá trị khi kết hợp với biến
+khác.
+
+\paragraph{SHAP -- đóng góp trong mô hình đã huấn luyện.} Trả lời câu hỏi: trong
+mô hình cụ thể đã được huấn luyện, đặc trưng nào thực sự chi phối kết quả dự báo?
+Phương pháp này tính đến tương tác và cho kết quả ở cả cấp độ toàn cục lẫn cấp độ
+từng hồ sơ.
+
+\paragraph{Phép hoán vị -- kiểm chứng chéo.} Trả lời câu hỏi: nếu phá vỡ quan hệ
+giữa một đặc trưng và nhãn bằng cách xáo trộn ngẫu nhiên giá trị của nó, chất
+lượng dự báo suy giảm bao nhiêu? Phương pháp này độc lập với cấu trúc nội bộ của
+mô hình, nên dùng làm phép kiểm chứng chéo cho kết quả SHAP.
+
+\subsection{Lựa chọn tập đặc trưng tối ưu cho mô hình}
+\label{subsec:lua-chon-dac-trung}
+
+Tập đặc trưng ban đầu gồm \NFeaturesInitial{} biến, trong đó nhiều biến được sinh
+theo cùng một mẫu trên bốn cửa sổ thời gian khác nhau nên tương quan mạnh với
+nhau. Đề án áp dụng quy trình lọc ba bước nối tiếp, sắp xếp từ rẻ đến đắt về chi
+phí tính toán (Hình~\ref{fig:feature-selection}).
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+  node distance=0.62cm,
+  fstep/.style={draw, rounded corners=2pt, align=center, minimum height=1.0cm,
+               text width=3.05cm, font=\small, fill=blue!4},
+  arrow/.style={-{Stealth[length=2mm]}, thick, draw=black!65},
+  note/.style={font=\footnotesize\itshape, align=center, text width=3.05cm},
+]
+\node[fstep] (s0) {Tập đặc trưng\\ban đầu};
+\node[fstep, right=of s0] (s1) {Bước 1\\Lọc theo $\IV$};
+\node[fstep, right=of s1] (s2) {Bước 2\\Lọc theo tương quan};
+\node[fstep, right=of s2] (s3) {Bước 3\\Lọc theo $\PSI$};
+
+\draw[arrow] (s0) -- (s1);
+\draw[arrow] (s1) -- (s2);
+\draw[arrow] (s2) -- (s3);
+
+\node[note, below=0.32cm of s1] {loại biến\\không phân biệt được};
+\node[note, below=0.32cm of s2] {loại biến\\dư thừa};
+\node[note, below=0.32cm of s3] {loại biến\\không ổn định};
+\end{tikzpicture}
+\caption{Quy trình lựa chọn tập đặc trưng qua ba bộ lọc nối tiếp}
+\label{fig:feature-selection}
+\end{figure}
+
+\paragraph{Bước 1 -- lọc theo năng lực dự báo.} Loại các đặc trưng có
+$\IV < 0{,}02$, ngưỡng mà theo thực hành ngành tương ứng với ``không có khả năng
+phân biệt''. Ngưỡng trên được đặt ở mức $\IV = 2{,}0$ để phát hiện trường hợp rò
+rỉ nhãn. Lưu ý rằng nhóm đặc trưng CIC vốn có $\IV$ cao (khoảng 0,9--1,3) do phản
+ánh trực tiếp lịch sử trả nợ; các biến này đã được kiểm tra tính đúng đắn theo
+thời điểm nên $\IV$ cao là bản chất của dữ liệu chứ không phải dấu hiệu rò rỉ.
+
+\paragraph{Bước 2 -- lọc theo tương quan.} Trong mỗi cặp biến có hệ số tương quan
+tuyệt đối vượt 0,95, giữ lại biến có $\IV$ cao hơn. Bước này chủ yếu loại bỏ các
+biến trùng lặp giữa các cửa sổ thời gian liền kề.
+
+\paragraph{Bước 3 -- lọc theo độ ổn định.} Loại các đặc trưng có $\PSI > 0{,}25$
+giữa giai đoạn huấn luyện và giai đoạn kiểm thử. Mô hình phụ thuộc vào biến không
+ổn định sẽ suy giảm nhanh khi vận hành.
+
+\section{Xây dựng nhãn và xác định quy tắc phê duyệt}
+\label{sec:xay-dung-nhan}
+
+\subsection{Định nghĩa trạng thái rủi ro và tiêu chuẩn nợ xấu}
+\label{subsec:dinh-nghia-nhan}
+
+\paragraph{Tiêu chuẩn nợ xấu.} Đề án sử dụng định nghĩa theo quy định phân loại
+nợ hiện hành~\cite{tt11}: khoản vay bị coi là nợ xấu khi được phân vào nhóm 3, 4
+hoặc 5, tương ứng với số ngày quá hạn từ 90 ngày trở lên. Định nghĩa này trùng
+với ngưỡng mà chuẩn mực Basel~\cite{bcbs2006} sử dụng cho khái niệm vỡ nợ, nhờ đó
+kết quả nghiên cứu có thể đối chiếu với các công trình quốc tế.
+
+\paragraph{Cửa sổ quan sát.} Một hồ sơ chỉ được gán nhãn sau khi đã trải qua cửa
+sổ quan sát hiệu quả trả nợ đủ dài. Đề án chọn cửa sổ 12 tháng dựa trên hai căn
+cứ đối lập nhau cần cân bằng: cửa sổ quá ngắn bỏ sót phần lớn trường hợp vỡ nợ
+muộn, làm tỷ lệ nợ xấu quan sát được thấp hơn thực tế và mô hình lệch về phía lạc
+quan; cửa sổ quá dài buộc phải loại nhiều hồ sơ gần đây khỏi tập huấn luyện, làm
+dữ liệu cũ đi và mô hình kém phản ánh điều kiện hiện tại.
+
+Căn cứ định lượng cho lựa chọn này là \textbf{phân tích vintage}: đo tỷ lệ nợ xấu
+tích luỹ theo từng tháng kể từ thời điểm cấp tín dụng. Điểm mà đường cong tích
+luỹ bắt đầu đi ngang chính là độ dài cửa sổ hợp lý. Kết quả phân tích được trình
+bày ở mục~\ref{subsec:kq-gan-nhan}.
+
+\subsection{Phương pháp gán nhãn dữ liệu hồ sơ vay}
+\label{subsec:phuong-phap-gan-nhan}
+
+Quy trình gán nhãn gồm ba bước:
+
+\begin{enumerate}[label=(\arabic*)]
+  \item \textbf{Xác định thời điểm kết thúc cửa sổ quan sát} cho từng hồ sơ, bằng
+  thời điểm cấp tín dụng cộng với độ dài cửa sổ.
+
+  \item \textbf{Phân loại trạng thái.} Hồ sơ có thời điểm kết thúc cửa sổ vượt
+  quá mốc trích xuất dữ liệu được gán \code{INDETERMINATE}. Trong số các hồ sơ
+  còn lại, hồ sơ phát sinh nợ xấu \textit{trong} cửa sổ được gán \code{BAD}, phần
+  còn lại được gán \code{GOOD}. Trường hợp vỡ nợ muộn hơn cửa sổ không được tính
+  là \code{BAD}, vì nằm ngoài phạm vi dự báo của mô hình.
+
+  \item \textbf{Loại nhóm chưa xác định} khỏi tập dữ liệu mô hình hóa.
+\end{enumerate}
+
+\subsection{Xác định điểm cắt phê duyệt}
+\label{subsec:diem-cat}
+
+\subsubsection{Vì sao ngưỡng 0,5 không phù hợp}
+
+Ngưỡng mặc định 0,5 của bài toán phân loại nhị phân không phù hợp với bài toán
+tín dụng vì hai lý do. Thứ nhất, dữ liệu mất cân bằng: với tỷ lệ nợ xấu khoảng
+15\%, rất ít hồ sơ có $\PD$ vượt 0,5, nên dùng ngưỡng này gần như duyệt toàn bộ.
+Thứ hai, chi phí hai loại sai lầm rất khác nhau: bỏ sót một hồ sơ xấu gây tổn
+thất bằng một phần đáng kể dư nợ, trong khi từ chối sai một hồ sơ tốt chỉ làm mất
+phần lãi biên.
+
+\subsubsection{Ba tiêu chí xác định điểm cắt}
+
+Đề án hiện thực ba phương pháp xác định điểm cắt, tương ứng ba cách đặt bài toán
+khác nhau trong thực tế nghiệp vụ.
+
+\paragraph{Tiêu chí 1 -- tối thiểu chi phí kỳ vọng.} Chọn ngưỡng $\tau$ làm cực
+tiểu chi phí kỳ vọng:
+
+\begin{equation}
+\tau^* = \argmin_{\tau}
+\left[ c_{FN} \cdot \text{FN}(\tau) + c_{FP} \cdot \text{FP}(\tau) \right] / n,
+\label{eq:cost-threshold}
+\end{equation}
+
+với $c_{FN} : c_{FP} = 12 : 1$. Áp dụng khi tổ chức tín dụng ước lượng được chi
+phí của hai loại sai lầm.
+
+\paragraph{Tiêu chí 2 -- đạt tỷ lệ duyệt mục tiêu.} Chọn ngưỡng bằng phân vị
+tương ứng với tỷ lệ duyệt mong muốn. Áp dụng khi ngưỡng bị ràng buộc bởi kế hoạch
+tăng trưởng dư nợ.
+
+\paragraph{Tiêu chí 3 -- bảo đảm trần nợ xấu.} Chọn ngưỡng cao nhất mà tỷ lệ nợ
+xấu trong nhóm được duyệt vẫn dưới mức trần cho phép. Chọn ngưỡng \textit{cao
+nhất} thỏa mãn ràng buộc nhằm tối đa hóa quy mô cấp tín dụng trong giới hạn khẩu
+vị rủi ro.
+
+\subsubsection{Hai ngưỡng cho ba vùng quyết định}
+
+Hệ thống hỗ trợ kiểm duyệt cần \textbf{hai} ngưỡng chứ không phải một, chia thang
+$\PD$ thành ba vùng:
+
+\begin{equation}
+\text{Khuyến nghị} =
+\begin{cases}
+\texttt{APPROVE}, & \PD \le \tau_{\text{duyệt}}, \\
+\texttt{REVIEW},  & \tau_{\text{duyệt}} < \PD \le \tau_{\text{từ chối}}, \\
+\texttt{REJECT},  & \PD > \tau_{\text{từ chối}}.
+\end{cases}
+\label{eq:three-zones}
+\end{equation}
+
+Hai ngưỡng được đặt đối xứng quanh điểm cắt tối ưu chi phí, sao cho tỷ lệ hồ sơ
+rơi vào vùng chuyển thẩm định xấp xỉ một mức mục tiêu định trước. Tỷ lệ này là
+\textit{tham số chính sách} chứ không phải tham số kỹ thuật: tăng lên thì mức độ
+an toàn cao hơn nhưng khối lượng thẩm định thủ công lớn hơn; giảm xuống thì tự
+động hóa cao hơn nhưng rủi ro khuyến nghị sai tăng. Đề án đặt mục tiêu vùng thẩm
+định ở mức 20\%.
+
+\section{Thiết kế mô hình học máy kiểm duyệt tín dụng}
+\label{sec:thiet-ke-mo-hinh}
+
+\subsection{Lựa chọn các thuật toán học máy dự kiến}
+\label{subsec:lua-chon-thuat-toan}
+
+Đề án lựa chọn mười hai mô hình để so sánh, trong đó năm thuật toán là trọng tâm
+nghiên cứu -- hồi quy logistic, cây quyết định, rừng ngẫu nhiên, máy vectơ hỗ trợ
+và gradient boosting -- và bảy mô hình còn lại là các biến thể hiện đại của cùng
+những họ thuật toán đó, đưa vào nhằm đánh giá xem mức cải thiện thực tế có tương
+xứng với chi phí triển khai hay không
+(Bảng~\ref{tab:model-selection}).
+
+\begin{table}[htbp]
+\centering
+\caption{Danh mục mô hình được thiết kế và so sánh}
+\label{tab:model-selection}
+\small
+\begin{tabular}{@{}clL{3.0cm}L{5.2cm}@{}}
+\toprule
+\textbf{TT} & \textbf{Mô hình} & \textbf{Nhóm} & \textbf{Vai trò trong so sánh} \\
+\midrule
+1  & Hồi quy logistic      & Tuyến tính & Mô hình cơ sở tham chiếu \\
+2  & Thẻ điểm WOE          & Tuyến tính & Chuẩn mực thực tiễn ngân hàng \\
+3  & Cây quyết định (CART) & Cây đơn    & Mô hình phi tuyến đơn giản nhất \\
+4  & Rừng ngẫu nhiên       & Bagging    & Học tập hợp song song \\
+5  & Extra Trees           & Bagging    & Biến thể tăng mức ngẫu nhiên hóa \\
+6  & Máy vectơ hỗ trợ      & SVM        & Tiếp cận theo lề cực đại \\
+7  & Hist Gradient Boosting& Boosting   & Học tập hợp tuần tự \\
+8  & XGBoost               & Boosting   & Biến thể có điều chuẩn tường minh \\
+9  & LightGBM              & Boosting   & Biến thể sinh cây theo chiều lá \\
+10 & CatBoost              & Boosting   & Biến thể xử lý biến định tính \\
+11 & Mạng nơ-ron (MLP)     & Mạng nơ-ron& Mô hình phi tuyến toàn cục \\
+12 & Kết hợp xếp tầng      & Ensemble   & Tổ hợp các mô hình cơ sở khác biệt \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Ghi chú về hiện thực SVM.} Như đã phân tích ở mục~\ref{subsec:svm},
+SVM hạt nhân có chi phí huấn luyện từ $O(n^2)$ đến $O(n^3)$, không khả thi với
+tập huấn luyện hàng chục nghìn hồ sơ. Đề án sử dụng phép xấp xỉ Nystroem với 600
+điểm mốc, sau đó huấn luyện SVM tuyến tính trên không gian đặc trưng xấp xỉ. Xác
+suất đầu ra được quy đổi từ giá trị hàm quyết định bằng phương pháp Platt qua
+kiểm định chéo ba tầng.
+
+\subsection{Thiết kế kiến trúc tổng thể của mô hình học máy hỗ trợ ra quyết định}
+\label{subsec:kien-truc-tong-the}
+
+\subsubsection{Kiến trúc phân tầng}
+
+Hệ thống được tổ chức thành bốn tầng (Hình~\ref{fig:architecture}), tách bạch
+giữa phần \textit{xây dựng mô hình} (thực hiện định kỳ, ngoại tuyến) và phần
+\textit{sử dụng mô hình} (thực hiện mỗi khi có hồ sơ mới).
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+  node distance=0.5cm and 0.5cm,
+  layer/.style={draw, rounded corners=3pt, align=center, font=\small\bfseries,
+                minimum height=0.8cm, text width=2.0cm},
+  comp/.style={draw, rounded corners=2pt, align=center, font=\footnotesize,
+               minimum height=0.85cm, text width=2.4cm, fill=blue!4},
+  arrow/.style={-{Stealth[length=2mm]}, thick, draw=black!65},
+]
+% Tầng 1: dữ liệu
+\node[layer, fill=gray!12] (l1) {Tầng\\dữ liệu};
+\node[comp, right=of l1] (d1) {Hồ sơ khách hàng\\và tài khoản};
+\node[comp, right=of d1] (d2) {Đơn đề nghị vay};
+\node[comp, right=of d2] (d3) {Bản tin CIC};
+\node[comp, right=of d3] (d4) {Lịch sử giao dịch};
+
+% Tầng 2: xử lý
+\node[layer, fill=gray!12, below=1.0cm of l1] (l2) {Tầng\\xử lý dữ liệu};
+\node[comp, right=of l2, fill=orange!8] (p1) {Kiểm tra\\chất lượng};
+\node[comp, right=of p1, fill=orange!8] (p2) {Tiền xử lý\\và làm sạch};
+\node[comp, right=of p2, fill=orange!8] (p3) {Trích xuất\\đặc trưng};
+\node[comp, right=of p3, fill=orange!8] (p4) {Lựa chọn\\đặc trưng};
+
+% Tầng 3: mô hình
+\node[layer, fill=gray!12, below=1.0cm of l2] (l3) {Tầng\\mô hình};
+\node[comp, right=of l3, fill=green!8] (m1) {Huấn luyện\\và tối ưu};
+\node[comp, right=of m1, fill=green!8] (m2) {Hiệu chuẩn\\xác suất};
+\node[comp, right=of m2, fill=green!8] (m3) {Giải thích\\(SHAP)};
+\node[comp, right=of m3, fill=green!8] (m4) {Giám sát\\trôi dạt};
+
+% Tầng 4: quyết định
+\node[layer, fill=gray!12, below=1.0cm of l3] (l4) {Tầng hỗ trợ\\quyết định};
+\node[comp, right=of l4, fill=red!6] (e1) {Luật\\nghiệp vụ};
+\node[comp, right=of e1, fill=red!6] (e2) {Chấm điểm\\$\PD$};
+\node[comp, right=of e2, fill=red!6] (e3) {Chính sách\\hạn mức};
+\node[comp, right=of e3, fill=red!6] (e4) {Khuyến nghị\\và lý do};
+
+\draw[arrow] (d2.south) -- ++(0,-0.32) -| (p1.north);
+\draw[arrow] (p1) -- (p2);
+\draw[arrow] (p2) -- (p3);
+\draw[arrow] (p3) -- (p4);
+\draw[arrow] (p3.south) -- ++(0,-0.32) -| (m1.north);
+\draw[arrow] (m1) -- (m2);
+\draw[arrow] (m2.south) -- ++(0,-0.32) -| (e2.north);
+\draw[arrow] (e1) -- (e2);
+\draw[arrow] (e2) -- (e3);
+\draw[arrow] (e3) -- (e4);
+\end{tikzpicture}
+\caption{Kiến trúc phân tầng của mô hình hỗ trợ kiểm duyệt tín dụng}
+\label{fig:architecture}
+\end{figure}
+
+\subsubsection{Logic tổng hợp khuyến nghị}
+
+Khuyến nghị cuối cùng là kết quả của một chuỗi ưu tiên rõ ràng, trong đó luật
+nghiệp vụ có quyền phủ quyết cao hơn mô hình thống kê:
+
+\begin{enumerate}[label=\arabic*.]
+  \item Có luật loại trừ cứng bị vi phạm $\Rightarrow$ \code{REJECT}
+  \item Mô hình gặp lỗi khi chấm điểm $\Rightarrow$ \code{REVIEW}
+  \item Không truy vấn được dữ liệu CIC $\Rightarrow$ \code{REVIEW}
+  \item $\PD > \tau_{\text{từ chối}}$ $\Rightarrow$ \code{REJECT}
+  \item Có luật yêu cầu thẩm định bị vi phạm $\Rightarrow$ \code{REVIEW}
+  \item $\PD > \tau_{\text{duyệt}}$ $\Rightarrow$ \code{REVIEW}
+  \item Hạn mức tính được bằng 0 $\Rightarrow$ \code{REJECT}
+  \item Các trường hợp còn lại $\Rightarrow$ \code{APPROVE}
+\end{enumerate}
+
+Thứ tự này phản ánh một nguyên tắc thiết kế: \textit{ràng buộc tuân thủ đứng
+trước đánh giá thống kê}. Một hồ sơ vi phạm điều kiện pháp lý hoặc chính sách
+phải bị từ chối bất kể mô hình cho điểm rủi ro thấp đến đâu. Ngược lại, khi hệ
+thống không đủ thông tin hoặc không đủ chắc chắn, kết quả mặc định là chuyển cho
+con người xem xét chứ không phải tự quyết.
+
+\subsubsection{Bộ luật nghiệp vụ}
+
+Đề án xây dựng bộ luật gồm hai mươi mốt luật, chia theo sáu nhóm và ba mức hành
+động (Bảng~\ref{tab:rule-groups}).
+
+\begin{table}[htbp]
+\centering
+\caption{Cơ cấu bộ luật nghiệp vụ theo nhóm và mức hành động}
+\label{tab:rule-groups}
+\small
+\begin{tabular}{@{}L{3.2cm}L{4.2cm}L{5.0cm}@{}}
+\toprule
+\textbf{Nhóm luật} & \textbf{Nội dung kiểm tra} & \textbf{Ví dụ} \\
+\midrule
+Điều kiện vay & Độ tuổi, thu nhập tối thiểu, thâm niên công việc &
+Tuổi ngoài khoảng 20--62 $\Rightarrow$ từ chối \\
+Lịch sử tín dụng & Nhóm nợ, số ngày quá hạn, nợ đã xử lý rủi ro &
+Nhóm nợ xấu nhất 12 tháng $> 2$ $\Rightarrow$ từ chối \\
+Khả năng trả nợ & $\DTI$, thu nhập còn lại sau trả nợ &
+$\DTI > 0{,}6$ $\Rightarrow$ từ chối \\
+Tài sản bảo đảm & Tỷ lệ vay trên giá trị tài sản &
+$\LTV > 0{,}85$ $\Rightarrow$ chuyển thẩm định \\
+Chất lượng dữ liệu & Thiếu dữ liệu CIC, khách hàng thin-file &
+Không có bản tin CIC $\Rightarrow$ chuyển thẩm định \\
+Dấu hiệu bất thường & Số lần truy vấn tín dụng, hành vi giao dịch &
+Truy vấn tín dụng $> 5$ lần trong 3 tháng $\Rightarrow$ chuyển thẩm định \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Ba mức hành động gồm: \code{HARD\_REJECT} (từ chối, có quyền phủ quyết cao nhất),
+\code{REVIEW} (buộc chuyển thẩm định thủ công) và \code{WARNING} (ghi nhận vào
+danh sách lý do nhưng không thay đổi khuyến nghị).
+
+\subsection{Xác định các hàm mất mát}
+\label{subsec:ham-mat-mat}
+
+\paragraph{Hàm mất mát huấn luyện.} Toàn bộ mô hình sử dụng hàm entropy chéo nhị
+phân~\eqref{eq:logloss}. Lựa chọn này không phải quy ước tùy tiện: log-loss là
+quy tắc chấm điểm chính đáng, nghĩa là kỳ vọng của nó đạt cực tiểu khi và chỉ khi
+giá trị dự báo bằng đúng xác suất thật. Đặc điểm này có ý nghĩa quyết định vì hệ
+thống sử dụng giá trị $\PD$ trực tiếp chứ không chỉ dùng để xếp hạng.
+
+\paragraph{Bù mất cân bằng lớp.} Với tỷ lệ nợ xấu khoảng 15\%, hàm mất mát được
+bổ sung trọng số lớp:
+
+\begin{equation}
+\ell_w(y, p) = -\big[\, w_1 \, y \log p + w_0 \,(1 - y) \log (1 - p) \,\big],
+\qquad
+w_1 = \frac{n_0}{n_1},\ w_0 = 1,
+\label{eq:weighted-logloss}
+\end{equation}
+
+trong đó $n_0, n_1$ là số quan sát của lớp âm và lớp dương. Việc dùng trọng số
+lớp làm xác suất đầu ra bị lệch hệ thống về phía cao hơn thực tế; đây là lý do
+bước hiệu chuẩn xác suất trở thành bắt buộc chứ không phải tùy chọn.
+
+\paragraph{Hàm chi phí nghiệp vụ.} Tách biệt với hàm mất mát huấn luyện, hàm chi
+phí nghiệp vụ được dùng ở bước chọn ngưỡng quyết định:
+
+\begin{equation}
+\mathcal{C}(\tau) = \frac{1}{n}\Big[ c_{FN} \cdot \text{FN}(\tau)
+                                   + c_{FP} \cdot \text{FP}(\tau) \Big].
+\label{eq:business-cost}
+\end{equation}
+
+Việc tách hai hàm này là một lựa chọn thiết kế có chủ đích: mô hình được huấn
+luyện để ước lượng xác suất đúng, còn chính sách chi phí được áp dụng ở bước
+quyết định. Nhờ vậy, khi tổ chức tín dụng thay đổi khẩu vị rủi ro, chỉ cần điều
+chỉnh ngưỡng mà không phải huấn luyện lại mô hình.
+
+\subsection{Lựa chọn chỉ số đánh giá hiệu năng}
+\label{subsec:chi-so-danh-gia}
+
+Trên cơ sở bộ chỉ tiêu đã trình bày ở mục~\ref{subsec:so-sanh-mo-hinh}, đề
+án bổ sung nhóm chỉ tiêu thứ năm mang tính nghiệp vụ nhằm quy đổi chất lượng
+thống kê thành hệ quả kinh doanh. Bảng~\ref{tab:metrics-design} nêu vai trò của
+từng nhóm trong quy trình đánh giá.
+
+\begin{table}[htbp]
+\centering
+\caption{Hệ thống chỉ tiêu đánh giá và vai trò trong quy trình}
+\label{tab:metrics-design}
+\small
+\begin{tabular}{@{}L{2.4cm}L{3.4cm}L{6.6cm}@{}}
+\toprule
+\textbf{Nhóm} & \textbf{Chỉ tiêu} & \textbf{Vai trò} \\
+\midrule
+Phân loại phổ quát & Accuracy, Precision, Recall, F1, PR-AUC &
+Báo cáo đầy đủ; Recall được ưu tiên hơn Precision do chi phí bỏ sót hồ sơ xấu cao
+\\[2pt]
+Đặc thù tín dụng & $\AUC$, Gini, $\KS$ &
+Tiêu chí chính để xếp hạng và lựa chọn mô hình; không phụ thuộc ngưỡng \\[2pt]
+Hiệu chuẩn & Brier, ECE, đường cong hiệu chuẩn &
+Điều kiện cần để dùng $\PD$ trong phân vùng quyết định và tính tổn thất kỳ vọng
+\\[2pt]
+Vận hành & Thời gian huấn luyện, thời gian chấm điểm, mức độ giải thích được &
+Quyết định khả năng triển khai thực tế \\[2pt]
+Nghiệp vụ & Tỷ lệ duyệt, tỷ lệ nợ xấu nhóm duyệt, chi phí kỳ vọng, bảng gains &
+Quy đổi chất lượng thống kê thành hệ quả kinh doanh \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Tích hợp cơ chế giải thích mô hình}
+\label{subsec:tich-hop-giai-thich}
+
+Cơ chế giải thích được tích hợp ở hai cấp độ.
+
+\paragraph{Cấp độ toàn cục.} Phân tích SHAP trên một mẫu đại diện của tập kiểm
+thử cho biết đặc trưng nào chi phối kết quả dự báo của mô hình nói chung, và mỗi
+nhóm nguồn dữ liệu đóng góp bao nhiêu phần vào quyết định. Kết quả này phục vụ
+hai mục đích: kiểm chứng rằng mô hình học được quan hệ hợp lý về mặt nghiệp vụ,
+và định lượng giá trị của từng nguồn dữ liệu để làm cơ sở cho quyết định đầu tư
+dữ liệu.
+
+\paragraph{Cấp độ từng hồ sơ.} Với mỗi hồ sơ được chấm điểm, mô hình sinh danh
+sách lý do gồm ba thành phần theo thứ tự ưu tiên: (i) các luật nghiệp vụ bị vi
+phạm -- đây là loại lý do tường minh và dễ hiểu nhất; (ii) các chỉ tiêu định
+lượng then chốt kèm giá trị thực tế của hồ sơ; và (iii) các đặc trưng có đóng góp
+SHAP lớn nhất. Danh sách này được trả về cùng kết quả chấm điểm, cho phép cán bộ
+tín dụng đánh giá xem khuyến nghị của mô hình có hợp lý hay không.
+
+\section{Quy trình huấn luyện và tối ưu mô hình}
+\label{sec:quy-trinh-huan-luyen}
+
+\subsection{Thiết lập môi trường và công cụ huấn luyện}
+\label{subsec:moi-truong-huan-luyen}
+
+Toàn bộ quy trình được hiện thực bằng Python, tổ chức thành một gói phần mềm mà
+mỗi gói con tương ứng một mục của chương này: \code{data} cho khâu thu thập và
+kiểm tra chất lượng dữ liệu, \code{preprocessing} cho tiền xử lý, \code{features}
+cho trích xuất và lựa chọn đặc trưng, \code{labeling} cho gán nhãn và điểm cắt,
+\code{models} cho huấn luyện và đánh giá mô hình, \code{decision} cho bộ máy hỗ
+trợ quyết định, \code{serving} cho dịch vụ REST và \code{monitoring} cho giám
+sát. Cấu trúc thư mục chi tiết được trình bày tại Phụ lục~\ref{app:source}.
+
+Các thư viện chính gồm: \comp{scikit-learn} cho các mô hình cơ sở và khung
+pipeline; \comp{XGBoost}, \comp{LightGBM}, \comp{CatBoost} cho các biến thể
+gradient boosting; \comp{SHAP} cho giải thích mô hình; \comp{pandas} và
+\comp{NumPy} cho xử lý dữ liệu; \comp{FastAPI} cho dịch vụ REST. Toàn bộ tham số
+được đặt tập trung trong một file cấu hình duy nhất, và hạt giống ngẫu nhiên được
+cố định để bảo đảm khả năng tái lập.
+
+\subsection{Quy trình thử nghiệm và kiểm tra chéo}
+\label{subsec:kiem-tra-cheo}
+
+\paragraph{Kiểm định ngoài thời gian cho đánh giá cuối cùng.} Việc đánh giá chất
+lượng mô hình được thực hiện trên tập kiểm thử gồm các hồ sơ thuộc giai đoạn sau
+giai đoạn huấn luyện. Đây là phương pháp phản ánh đúng điều kiện vận hành.
+
+\paragraph{Kiểm định chéo theo chuỗi thời gian cho tinh chỉnh tham số.} Với việc
+tinh chỉnh siêu tham số, đề án sử dụng \code{TimeSeriesSplit} -- phương pháp chia
+tập huấn luyện thành nhiều lần khớp liên tiếp, trong đó mỗi lần dùng dữ liệu quá
+khứ để huấn luyện và dữ liệu kế tiếp để đánh giá:
+
+\begin{center}
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Lần khớp} & \textbf{Phân chia} \\
+\midrule
+1 & Huấn luyện: đoạn 1 \quad$\rightarrow$\quad Đánh giá: đoạn 2 \\
+2 & Huấn luyện: đoạn 1--2 \quad$\rightarrow$\quad Đánh giá: đoạn 3 \\
+3 & Huấn luyện: đoạn 1--3 \quad$\rightarrow$\quad Đánh giá: đoạn 4 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Phương pháp này khác với kiểm định chéo $k$-fold thông thường ở chỗ nó không bao
+giờ dùng dữ liệu tương lai để huấn luyện -- điều kiện bắt buộc với dữ liệu có cấu
+trúc thời gian.
+
+\subsection{Phương pháp tối ưu hóa siêu tham số}
+\label{subsec:toi-uu-sieu-tham-so}
+
+Đề án sử dụng \textbf{tìm kiếm ngẫu nhiên} thay vì tìm kiếm lưới. Lựa chọn này
+dựa trên kết quả của Bergstra và Bengio~\cite{bergstra2012}: với cùng một ngân
+sách tính toán, tìm kiếm ngẫu nhiên thường tìm được cấu hình tốt hơn tìm kiếm
+lưới. Nguyên nhân là trong không gian siêu tham số nhiều chiều, chỉ một số ít
+chiều thực sự ảnh hưởng tới kết quả; tìm kiếm lưới lãng phí phần lớn số lần thử
+để dò các giá trị khác nhau của những chiều không quan trọng, trong khi tìm kiếm
+ngẫu nhiên bao phủ được nhiều giá trị khác biệt hơn ở những chiều quan trọng.
+
+Không gian tìm kiếm được xác định cho ba mô hình có nhiều siêu tham số nhất --
+LightGBM, XGBoost và rừng ngẫu nhiên -- bao gồm các tham số về độ sâu/số lá, tốc
+độ học, số quan sát tối thiểu tại lá, tỷ lệ lấy mẫu quan sát và đặc trưng, cùng
+các hệ số điều chuẩn. Tiêu chí lựa chọn là $\AUC$ trung bình trên các lần khớp
+của kiểm định chéo theo chuỗi thời gian.
+
+Để bảo đảm tính nhất quán, việc tinh chỉnh siêu tham số phải được thực hiện trên
+\textit{đúng tập đặc trưng} mà mô hình cuối cùng sẽ sử dụng. Nếu
+tinh chỉnh trên tập đầy đủ rồi áp dụng tham số cho tập đã rút gọn, siêu tham số
+tìm được không còn tối ưu.
+
+\subsection{Mức độ kiểm soát hiện tượng quá khớp}
+\label{subsec:kiem-soat-qua-khop}
+
+Đề án áp dụng bốn cơ chế kiểm soát quá khớp, tác động ở các giai đoạn khác nhau
+của quy trình.
+
+\paragraph{Điều chuẩn trong hàm mục tiêu.} Hồi quy logistic và SVM sử dụng điều
+chuẩn $L_2$; các mô hình boosting sử dụng đồng thời điều chuẩn $L_1$ và $L_2$
+trên giá trị lá.
+
+\paragraph{Ràng buộc cấu trúc mô hình.} Giới hạn độ sâu cây, số lá tối đa và số
+quan sát tối thiểu tại mỗi lá. Với cây quyết định đơn, bổ sung tỉa nhánh theo độ
+phức tạp chi phí~\eqref{eq:ccp}.
+
+\paragraph{Dừng sớm.} Các mô hình boosting theo dõi $\AUC$ trên tập
+\code{train\_es} và dừng khi chỉ tiêu này ngừng cải thiện trong một số vòng lặp
+liên tiếp. Cần chỉ định $\AUC$ là chỉ tiêu dừng \textit{duy nhất}: khi sử dụng
+trọng số lớp, hàm log-loss trên tập đánh giá xấu đi rất sớm do xác suất bị lệch
+hệ thống, nên nếu để cơ chế mặc định theo dõi nhiều chỉ tiêu, quá trình huấn
+luyện sẽ dừng quá sớm và mô hình bị dưới khớp.
+
+\paragraph{Lấy mẫu ngẫu nhiên.} Rừng ngẫu nhiên và các mô hình boosting sử dụng
+lấy mẫu con quan sát và đặc trưng ở mỗi bước, vừa giảm tương quan giữa các cây
+vừa đóng vai trò điều chuẩn ngẫu nhiên.
+
+Mức độ quá khớp được đo bằng chênh lệch $\AUC$ giữa tập kiểm định và tập kiểm
+thử; chênh lệch lớn là dấu hiệu mô hình phụ thuộc quá mức vào đặc thù của giai
+đoạn huấn luyện. Kết quả đo được trình bày tại mục~\ref{subsec:kq-on-dinh}.
+
+\subsection{Phương pháp đánh giá độ ổn định mô hình theo thời gian}
+\label{subsec:do-on-dinh}
+
+Độ ổn định được đánh giá trên hai phương diện.
+
+\paragraph{Ổn định của dữ liệu đầu vào.} Đo bằng chỉ số $\PSI$~\eqref{eq:psi} cho
+từng đặc trưng, so sánh phân phối giữa giai đoạn huấn luyện và giai đoạn kiểm
+thử. Ngưỡng cảnh báo 0,10 và ngưỡng báo động 0,25.
+
+\paragraph{Ổn định của chất lượng dự báo.} Chia tập kiểm thử theo tháng và tính
+$\AUC$, $\KS$ cùng tỷ lệ nợ xấu thực tế cho từng tháng. Xu hướng giảm liên tục
+của $\AUC$ là dấu hiệu mô hình đang mất dần hiệu lực và cần được huấn luyện lại.
+
+Hai phương diện này bổ trợ nhau: $\PSI$ phát hiện sớm sự thay đổi của dữ liệu đầu
+vào ngay cả khi chưa có nhãn, trong khi chất lượng dự báo theo tháng chỉ đo được
+sau khi nhãn đã sẵn sàng. Trong vận hành thực tế, $\PSI$ đóng vai trò cảnh báo
+sớm còn chất lượng dự báo đóng vai trò xác nhận.
+
+\section*{Kết luận chương 2}
+\addcontentsline{toc}{section}{Kết luận chương 2}
+
+Chương 2 đã trình bày quá trình xây dựng mô hình học máy hỗ trợ kiểm duyệt tín
+dụng, từ
+phân tích bài toán tới thiết kế quy trình huấn luyện mô hình, với bốn nhóm kết
+quả.
+
+Về \textit{phân tích bài toán}: xác định biến mục tiêu là xác suất phát sinh nợ
+xấu trong 12 tháng, phân biệt ba trạng thái khi gán nhãn, thiết kế thang bảy hạng
+rủi ro và năm thành phần của kết quả đầu ra; hệ thống hóa mười yêu cầu chức năng,
+bốn yêu cầu phi chức năng và năm nhóm yêu cầu pháp lý.
+
+Về \textit{xử lý dữ liệu}: thiết lập quy tắc ghép nối bảo đảm tính đúng đắn theo
+thời điểm, xây dựng bộ mười lăm ràng buộc kiểm tra tính hợp lệ kèm cơ chế kiểm
+chứng bằng phép tiêm lỗi, phân biệt hai cách xử lý khác nhau cho dữ liệu không
+hợp lệ và giá trị ngoại lệ, thiết kế chiến lược phân chia bốn tập với vai trò
+tách bạch.
+
+Về \textit{đặc trưng}: trình bày cách trích xuất năm nhóm đặc trưng cùng thuật
+toán luỹ kế bảo đảm tính đúng đắn theo thời điểm với chi phí tuyến tính, và quy
+trình lựa chọn ba bước theo năng lực dự báo, mức tương quan và độ ổn định.
+
+Về \textit{mô hình}: lựa chọn mười hai mô hình để so sánh, thiết kế kiến trúc
+phân tầng với logic tổng hợp khuyến nghị theo tám mức ưu tiên, tách hàm mất mát
+huấn luyện khỏi hàm chi phí nghiệp vụ, và thiết lập bốn cơ chế kiểm soát quá
+khớp.
+
+Toàn bộ thiết kế này được kiểm chứng bằng thực nghiệm ở
+Chương~\ref{chap:thuc-nghiem}.

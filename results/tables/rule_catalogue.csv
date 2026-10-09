@@ -1,0 +1,22 @@
+﻿Mã luật,Tên luật,Nhóm,Hành động,Diễn giải,Căn cứ
+R001,Tuổi nằm ngoài khoảng cho phép [20; 62],Điều kiện cơ bản,HARD_REJECT,Khách hàng phải trong độ tuổi từ 20 đến 62 tại thời điểm đề nghị vay,Quy chế cho vay nội bộ
+R002,Thu nhập dưới mức tối thiểu 6 triệu VND,Điều kiện cơ bản,HARD_REJECT,Thu nhập hàng tháng không đạt mức tối thiểu của sản phẩm,-
+R003,Thâm niên công việc dưới 6 tháng,Điều kiện cơ bản,REVIEW,Thâm niên công việc chưa đủ để đánh giá tính ổn định của thu nhập,-
+R101,Nhóm nợ xấu nhất 12 tháng vượt nhóm 2,Lịch sử tín dụng,HARD_REJECT,Khách hàng phát sinh nợ xấu trong 12 tháng gần nhất,Thông tư 11/2021/TT-NHNN về phân loại nợ
+R102,Đang có nợ nhóm 3 trở lên,Lịch sử tín dụng,HARD_REJECT,Khách hàng đang có khoản nợ được phân loại từ nhóm 3 (nợ dưới tiêu chuẩn),Thông tư 11/2021/TT-NHNN
+R103,Có nợ đã xử lý rủi ro / xóa nợ,Lịch sử tín dụng,HARD_REJECT,Lịch sử có khoản nợ đã được xử lý rủi ro hoặc xóa nợ,-
+R104,Số ngày quá hạn tối đa 12 tháng vượt 30 ngày,Lịch sử tín dụng,REVIEW,Từng chậm trả vượt ngưỡng cho phép trong 12 tháng gần nhất,-
+R105,Quan hệ tín dụng với hơn 6 tổ chức,Lịch sử tín dụng,REVIEW,"Số lượng tổ chức tín dụng đang có quan hệ ở mức cao, tiềm ẩn rủi ro vay đảo nợ",-
+R106,Truy vấn tín dụng 3 tháng vượt 5 lần,Lịch sử tín dụng,WARNING,Khách hàng tìm kiếm tín dụng dồn dập tại nhiều tổ chức,-
+R107,Tỷ lệ sử dụng hạn mức trên 95%,Lịch sử tín dụng,WARNING,Hạn mức tín dụng hiện có đã được sử dụng gần hết,-
+R201,Tỷ lệ nợ trên thu nhập (DTI) vượt 60%,Khả năng trả nợ,HARD_REJECT,Tổng nghĩa vụ trả nợ vượt quá khả năng chi trả từ thu nhập,-
+R202,Thu nhập còn lại sau trả nợ không đủ chi phí sinh hoạt,Khả năng trả nợ,HARD_REJECT,"Sau khi trừ nghĩa vụ trả nợ và chi phí sinh hoạt tối thiểu, thu nhập còn lại âm",-
+R203,Tỷ lệ trả góp trên thu nhập (PTI) vượt 45%,Khả năng trả nợ,REVIEW,Riêng khoản vay mới đã chiếm tỷ trọng lớn trong thu nhập,-
+R204,Số tiền vay vượt 60 lần thu nhập hàng tháng,Khả năng trả nợ,REVIEW,"Quy mô khoản vay rất lớn so với thu nhập, cần thẩm định bổ sung",-
+R301,Tỷ lệ vay trên giá trị TSBĐ (LTV) vượt 85%,Tài sản bảo đảm,REVIEW,Giá trị tài sản bảo đảm không đủ tỷ lệ bao phủ yêu cầu,-
+R401,Không lấy được dữ liệu CIC,Chất lượng dữ liệu,REVIEW,Hệ thống CIC không phản hồi - chuyển thẩm định thủ công theo quy trình dự phòng,-
+R402,Khách hàng thiếu lịch sử tín dụng (thin-file),Chất lượng dữ liệu,WARNING,Không có/ít lịch sử tín dụng; đánh giá dựa chủ yếu vào dữ liệu hành vi giao dịch,-
+R403,Thiếu dữ liệu hành vi giao dịch,Chất lượng dữ liệu,REVIEW,Số giao dịch trong 180 ngày quá ít để tính đặc trưng hành vi đáng tin cậy,-
+R501,Dòng tiền vào thực tế thấp hơn nhiều so với thu nhập khai báo,Dấu hiệu bất thường,REVIEW,Khách hàng nhận lương qua tài khoản nhưng dòng tiền vào 30 ngày dưới 35% thu nhập khai báo - cần xác minh thu nhập,-
+R502,Tỷ trọng chi tiêu nhóm rủi ro cao bất thường,Dấu hiệu bất thường,REVIEW,Trên 15% dòng tiền ra thuộc nhóm giao dịch rủi ro cao,-
+R503,Không phát sinh giao dịch trong 60 ngày gần nhất,Dấu hiệu bất thường,WARNING,Tài khoản không hoạt động trong thời gian dài trước khi đề nghị vay,-

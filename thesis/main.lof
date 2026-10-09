@@ -1,0 +1,26 @@
+\babel@toc {vietnamese}{}\relax 
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {1.1}{\ignorespaces Quy trình xây dựng và vận hành mô hình học máy cho bài toán tín dụng}}{17}{figure.caption.12}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Quy trình lựa chọn tập đặc trưng qua ba bộ lọc nối tiếp}}{46}{figure.caption.20}%
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Kiến trúc phân tầng của mô hình hỗ trợ kiểm duyệt tín dụng}}{50}{figure.caption.22}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Phân bố các biến chính trong tập dữ liệu thực nghiệm}}{60}{figure.caption.27}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Xếp hạng đặc trưng theo Information Value}}{66}{figure.caption.37}%
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Đường cong ROC của các mô hình trên tập kiểm thử}}{70}{figure.caption.42}%
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Đường cong hiệu chuẩn xác suất sau khi hiệu chuẩn đẳng hướng}}{71}{figure.caption.43}%
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Đường cong Kolmogorov--Smirnov của mô hình được chọn triển khai}}{72}{figure.caption.44}%
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Đường cong gains và lift theo thập phân vị điểm rủi ro}}{73}{figure.caption.46}%
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Phân bố xác suất vỡ nợ dự báo theo nhóm hồ sơ thực tế}}{73}{figure.caption.47}%
+\contentsline {figure}{\numberline {3.8}{\ignorespaces Đánh đổi giữa chất lượng dự báo và thời gian chấm điểm một hồ sơ}}{76}{figure.caption.49}%
+\contentsline {figure}{\numberline {3.9}{\ignorespaces Diễn biến chất lượng dự báo theo tháng trên giai đoạn kiểm thử}}{80}{figure.caption.54}%
+\contentsline {figure}{\numberline {3.10}{\ignorespaces Biểu đồ tóm tắt SHAP của hai mươi đặc trưng quan trọng nhất}}{81}{figure.caption.56}%
+\contentsline {figure}{\numberline {3.11}{\ignorespaces Tỷ trọng đóng góp vào quyết định theo nhóm nguồn dữ liệu}}{82}{figure.caption.57}%
+\contentsline {figure}{\numberline {3.12}{\ignorespaces Tầm quan trọng đặc trưng theo phép hoán vị}}{82}{figure.caption.58}%
+\contentsline {figure}{\numberline {3.13}{\ignorespaces Đánh đổi giữa tỷ lệ duyệt và tỷ lệ nợ xấu theo điểm cắt}}{84}{figure.caption.61}%
+\contentsline {figure}{\numberline {3.14}{\ignorespaces Cơ cấu khuyến nghị và tỷ lệ nợ xấu thực tế theo từng nhóm}}{85}{figure.caption.63}%
+\contentsline {figure}{\numberline {3.15}{\ignorespaces Tần suất vi phạm các luật nghiệp vụ}}{86}{figure.caption.65}%
+\contentsline {figure}{\numberline {3.16}{\ignorespaces So sánh mô hình đề xuất với quy trình thẩm định truyền thống}}{89}{figure.caption.69}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }

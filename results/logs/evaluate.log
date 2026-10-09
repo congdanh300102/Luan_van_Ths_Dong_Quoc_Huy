@@ -1,0 +1,114 @@
+16:10:57 | INFO    | Nạp 60,000 hồ sơ, 159 cột
+16:10:57 | INFO    | Chia dữ liệu theo thời gian (out-of-time):
+16:10:57 | INFO    |   train_fit   35,700 hồ sơ | 2024-07-01 -> 2025-09-09 | tỷ lệ vỡ nợ 14.06%
+16:10:57 | INFO    |   train_es     6,300 hồ sơ | 2025-09-09 -> 2025-11-24 | tỷ lệ vỡ nợ 16.00%
+16:10:57 | INFO    |   valid        9,000 hồ sơ | 2025-11-24 -> 2026-03-12 | tỷ lệ vỡ nợ 16.82%
+16:10:57 | INFO    |   test         9,000 hồ sơ | 2026-03-12 -> 2026-06-30 | tỷ lệ vỡ nợ 17.68%
+16:10:58 | INFO    | Decision Engine đã nạp mô hình: xgboost@auc=0.8625
+16:21:15 | INFO    | ========================================================================
+16:21:15 | INFO    | 1. Mô phỏng xác định ngưỡng phê duyệt
+16:21:15 | INFO    | Điểm cắt theo chi phí: PD ≤ 0.0739 | duyệt 52.7% | nợ xấu nhóm duyệt 3.42%
+16:21:15 | INFO    | So sánh ba tiêu chí xác định điểm cắt:
+                            Tiêu chí  Điểm cắt PD  Tỷ lệ duyệt (%)  Nợ xấu nhóm duyệt (%)  Nợ xấu nhóm từ chối (%)  Chi phí kỳ vọng
+Tối thiểu chi phí (c_FN:c_FP = 12:1)       0.0739            52.69                   3.42                    31.75           0.5389
+            Tỷ lệ duyệt mục tiêu 70%       0.1535            70.07                   5.58                    43.13           0.6396
+           Trần nợ xấu nhóm duyệt 5%       0.1364            65.49                   4.94                    39.38           0.5972
+16:21:15 | INFO    | Điểm cắt theo chi phí: PD ≤ 0.0739 | duyệt 52.7% | nợ xấu nhóm duyệt 3.42%
+16:21:15 | INFO    | Ba vùng quyết định: duyệt PD ≤ 0.0564 | thẩm định (0.0564; 0.1339] | từ chối PD > 0.1339
+16:21:17 | INFO    |   hình: cutoff_sensitivity
+16:21:17 | INFO    | ========================================================================
+16:21:17 | INFO    | 2. Mô phỏng luồng xử lý 5,000 hồ sơ
+16:25:33 | INFO    | Xử lý xong trong 255.8 giây (51.16 ms/hồ sơ)
+16:25:33 | INFO    | Cơ cấu khuyến nghị:
+                  Kết quả  Số hồ sơ  Tỷ trọng (%)  Tỷ lệ nợ xấu thực tế (%)
+        Khuyến nghị duyệt      1434         28.68                      3.21
+Chuyển thẩm định thủ công      1632         32.64                     10.66
+      Khuyến nghị từ chối      1934         38.68                     34.38
+16:25:33 | INFO    | Tỷ lệ hồ sơ được xử lý tự động: 67.36%
+16:25:34 | INFO    |   hình: decision_mix
+16:25:34 | INFO    | Thời gian xử lý một hồ sơ:
+           Chặng xử lý  Trung bình (ms)  p50 (ms)  p95 (ms)  p99 (ms)
+     Chấm điểm mô hình           50.614    48.184    77.381    93.543
+Áp dụng luật nghiệp vụ            0.042     0.041     0.065     0.110
+    Áp dụng chính sách            0.042     0.041     0.060     0.076
+             Tổng cộng           50.740    48.301    77.529    93.712
+16:25:34 | INFO    |   hình: rule_hits
+16:25:34 | INFO    | ========================================================================
+16:25:34 | INFO    | 3. Thử nghiệm tích hợp dịch vụ REST
+16:25:37 | INFO    | Khởi tạo dịch vụ hỗ trợ kiểm duyệt tín dụng...
+16:25:52 | INFO    | Đã nạp kho đặc trưng: 60,000 hồ sơ, 155 cột
+16:25:52 | INFO    | Decision Engine đã nạp mô hình: xgboost@auc=0.8625
+16:25:52 | INFO    | Đã nạp mô hình: XGBoost (AUC = 0.8625)
+16:25:52 | INFO    | HTTP Request: GET http://testserver/health "HTTP/1.1 200 OK"
+16:25:52 | INFO    | HTTP Request: POST http://testserver/api/v1/screen "HTTP/1.1 200 OK"
+16:25:53 | INFO    | HTTP Request: POST http://testserver/api/v1/screen "HTTP/1.1 200 OK"
+16:25:53 | INFO    | HTTP Request: POST http://testserver/api/v1/screen "HTTP/1.1 200 OK"
+16:25:53 | INFO    | HTTP Request: POST http://testserver/api/v1/screen "HTTP/1.1 200 OK"
+16:25:53 | INFO    | HTTP Request: POST http://testserver/api/v1/screen "HTTP/1.1 200 OK"
+16:25:53 | INFO    | HTTP Request: POST http://testserver/api/v1/screen "HTTP/1.1 200 OK"
+16:25:53 | INFO    | HTTP Request: POST http://testserver/api/v1/screen "HTTP/1.1 200 OK"
+16:25:53 | INFO    | HTTP Request: POST http://testserver/api/v1/screen "HTTP/1.1 200 OK"
+16:25:53 | INFO    | HTTP Request: POST http://testserver/api/v1/screen "HTTP/1.1 200 OK"
+16:25:53 | INFO    | HTTP Request: POST http://testserver/api/v1/screen "HTTP/1.1 200 OK"
+16:25:53 | INFO    | HTTP Request: POST http://testserver/api/v1/screen "HTTP/1.1 200 OK"
+16:25:53 | INFO    | HTTP Request: POST http://testserver/api/v1/screen "HTTP/1.1 200 OK"
+16:25:53 | INFO    | HTTP Request: POST http://testserver/api/v1/screen "HTTP/1.1 200 OK"
+16:25:54 | INFO    | HTTP Request: POST http://testserver/api/v1/screen "HTTP/1.1 200 OK"
+16:25:54 | INFO    | HTTP Request: POST http://testserver/api/v1/screen "HTTP/1.1 200 OK"
+16:25:54 | INFO    | HTTP Request: POST http://testserver/api/v1/screen "HTTP/1.1 200 OK"
+16:25:54 | INFO    | HTTP Request: POST http://testserver/api/v1/screen "HTTP/1.1 200 OK"
+16:25:54 | INFO    | HTTP Request: POST http://testserver/api/v1/screen "HTTP/1.1 200 OK"
+16:25:54 | INFO    | HTTP Request: POST http://testserver/api/v1/screen "HTTP/1.1 200 OK"
+16:25:54 | INFO    | HTTP Request: POST http://testserver/api/v1/screen "HTTP/1.1 200 OK"
+16:25:54 | INFO    | HTTP Request: POST http://testserver/api/v1/screen "HTTP/1.1 200 OK"
+16:25:54 | INFO    | HTTP Request: POST http://testserver/api/v1/screen "HTTP/1.1 200 OK"
+16:25:54 | INFO    | HTTP Request: POST http://testserver/api/v1/screen "HTTP/1.1 200 OK"
+16:25:54 | INFO    | HTTP Request: POST http://testserver/api/v1/screen "HTTP/1.1 200 OK"
+16:25:54 | INFO    | HTTP Request: POST http://testserver/api/v1/screen "HTTP/1.1 200 OK"
+16:25:54 | INFO    | HTTP Request: POST http://testserver/api/v1/screen "HTTP/1.1 200 OK"
+16:25:54 | INFO    | HTTP Request: POST http://testserver/api/v1/screen "HTTP/1.1 200 OK"
+16:25:54 | INFO    | HTTP Request: POST http://testserver/api/v1/screen "HTTP/1.1 200 OK"
+16:25:54 | INFO    | HTTP Request: POST http://testserver/api/v1/screen "HTTP/1.1 200 OK"
+16:25:54 | INFO    | HTTP Request: POST http://testserver/api/v1/screen "HTTP/1.1 200 OK"
+16:25:54 | INFO    | HTTP Request: POST http://testserver/api/v1/screen "HTTP/1.1 200 OK"
+16:25:54 | INFO    | HTTP Request: POST http://testserver/api/v1/screen "HTTP/1.1 200 OK"
+16:25:55 | INFO    | HTTP Request: POST http://testserver/api/v1/screen "HTTP/1.1 200 OK"
+16:25:55 | INFO    | HTTP Request: POST http://testserver/api/v1/screen "HTTP/1.1 200 OK"
+16:25:55 | INFO    | HTTP Request: POST http://testserver/api/v1/screen "HTTP/1.1 200 OK"
+16:25:55 | INFO    | HTTP Request: POST http://testserver/api/v1/screen "HTTP/1.1 200 OK"
+16:25:55 | INFO    | HTTP Request: POST http://testserver/api/v1/screen "HTTP/1.1 200 OK"
+16:25:55 | INFO    | HTTP Request: POST http://testserver/api/v1/screen "HTTP/1.1 200 OK"
+16:25:55 | INFO    | HTTP Request: POST http://testserver/api/v1/screen "HTTP/1.1 200 OK"
+16:25:55 | INFO    | HTTP Request: POST http://testserver/api/v1/screen "HTTP/1.1 200 OK"
+16:25:55 | INFO    | HTTP Request: POST http://testserver/api/v1/screen "HTTP/1.1 200 OK"
+16:25:55 | INFO    | HTTP Request: POST http://testserver/api/v1/screen "HTTP/1.1 200 OK"
+16:25:55 | INFO    | HTTP Request: POST http://testserver/api/v1/screen "HTTP/1.1 200 OK"
+16:25:55 | INFO    | HTTP Request: POST http://testserver/api/v1/screen "HTTP/1.1 200 OK"
+16:25:55 | INFO    | HTTP Request: POST http://testserver/api/v1/screen "HTTP/1.1 200 OK"
+16:25:55 | INFO    | HTTP Request: POST http://testserver/api/v1/screen "HTTP/1.1 200 OK"
+16:25:55 | INFO    | HTTP Request: POST http://testserver/api/v1/screen "HTTP/1.1 200 OK"
+16:25:55 | INFO    | HTTP Request: POST http://testserver/api/v1/screen "HTTP/1.1 200 OK"
+16:25:55 | INFO    | HTTP Request: POST http://testserver/api/v1/screen "HTTP/1.1 200 OK"
+16:25:55 | INFO    | HTTP Request: POST http://testserver/api/v1/screen "HTTP/1.1 200 OK"
+16:25:58 | INFO    | HTTP Request: POST http://testserver/api/v1/screen/batch "HTTP/1.1 200 OK"
+16:25:58 | INFO    | HTTP Request: GET http://testserver/api/v1/features/APP00051001 "HTTP/1.1 200 OK"
+16:25:58 | INFO    | HTTP Request: GET http://testserver/admin/rules "HTTP/1.1 200 OK"
+16:25:58 | INFO    | Dừng dịch vụ...
+16:25:58 | INFO    | Kết quả tích hợp API:
+                Điểm cuối                                Mô tả  Mã HTTP                            Kết quả
+              GET /health          Kiểm tra trạng thái dịch vụ      200                                Đạt
+      POST /api/v1/screen   Kiểm duyệt từng hồ sơ (50 lần gọi)      200    50/50 thành công, 59.9 ms/hồ sơ
+POST /api/v1/screen/batch          Kiểm duyệt theo lô 50 hồ sơ      200 50 hồ sơ, 2366 ms (47.24 ms/hồ sơ)
+GET /api/v1/features/{id}   Truy xuất vector đặc trưng đầu vào      200                      157 đặc trưng
+         GET /admin/rules Danh mục luật nghiệp vụ đang áp dụng      200                            21 luật
+16:25:58 | INFO    | ========================================================================
+16:25:58 | INFO    | 4. So sánh với quy trình thẩm định truyền thống
+16:25:59 | INFO    | So sánh hai phương pháp:
+                                Phương pháp  Tỷ lệ duyệt (%)  Tỷ lệ thẩm định thủ công (%)  Tỷ lệ từ chối (%)  Nợ xấu nhóm duyệt (%)  Nợ xấu chặn được (%)  Tỷ lệ tự động hóa (%)  Thời gian xử lý (ms/hồ sơ)
+Quy trình truyền thống (chỉ luật nghiệp vụ)            35.82                         27.22              36.96                   6.14                 33.93                  72.78                       0.108
+  Hệ thống đề xuất (luật + mô hình học máy)            28.68                         32.64              38.68                   3.21                 34.38                  67.36                      50.740
+16:25:59 | INFO    |   hình: traditional_comparison
+16:25:59 | INFO    | Tỷ lệ nợ xấu trong nhóm hồ sơ được duyệt giảm 2.93 điểm phần trăm (tương đương 47.7%)
+16:25:59 | INFO    | ========================================================================
+16:25:59 | INFO    | HOÀN THÀNH sau 15.0 phút
+16:25:59 | INFO    | ========================================================================

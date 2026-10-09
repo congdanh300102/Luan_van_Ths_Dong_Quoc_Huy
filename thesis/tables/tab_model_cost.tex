@@ -1,0 +1,25 @@
+\begin{table}[!htbp]
+\centering
+\caption{Chi phí huấn luyện và thời gian chấm điểm một hồ sơ}
+\label{tab:model-cost}
+\small
+\setlength{\tabcolsep}{3.0pt}
+\begin{tabular}{@{}L{3.799cm}L{2.849cm}R{1.899cm}R{1.994cm}R{1.994cm}R{1.709cm}@{}}
+\toprule
+\textbf{Mô hình} & \textbf{Nhóm} & \textbf{Thời gian HL (s)} & \textbf{Chấm điểm p50 (ms)} & \textbf{Chấm điểm p95 (ms)} & \textbf{Số vòng lặp} \\
+\midrule
+Kết hợp xếp tầng (Stacking) & Kết hợp xếp tầng & 214,8 & 141,38 & 202,39 & -- \\
+CatBoost & Học tập hợp tuần tự & 91,5 & 4,61 & 10,46 & 353 \\
+XGBoost & Học tập hợp tuần tự & 20,7 & 16,78 & 18,53 & 706 \\
+LightGBM & Học tập hợp tuần tự & 10,8 & 7,85 & 8,81 & 156 \\
+Hồi quy logistic & Tuyến tính & 3,2 & 10,63 & 16,55 & 94 \\
+Gradient Boosting (histogram) & Học tập hợp tuần tự & 50,5 & 13,14 & 23,23 & 184 \\
+Thẻ điểm WOE + Hồi quy logistic & Tuyến tính & 7,6 & 11,12 & 22,77 & 74 \\
+Mạng nơ-ron truyền thẳng (MLP) & Mạng nơ-ron & 24,1 & 6,42 & 13,44 & 35 \\
+Máy vectơ hỗ trợ (SVM-RBF) & Máy vectơ hỗ trợ & 16,1 & 15,10 & 20,64 & -- \\
+Rừng ngẫu nhiên & Học tập hợp song song & 24 & 188,81 & 236,25 & -- \\
+Cây cực ngẫu nhiên (Extra Trees) & Học tập hợp song song & 11,8 & 383,00 & 516,63 & -- \\
+Cây quyết định (CART) & Cây quyết định & 5,5 & 12,06 & 14,93 & -- \\
+\bottomrule
+\end{tabular}
+\end{table}

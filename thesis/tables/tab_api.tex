@@ -1,0 +1,18 @@
+\begin{table}[!htbp]
+\centering
+\caption{Kết quả thử nghiệm tích hợp dịch vụ REST}
+\label{tab:api}
+\small
+\setlength{\tabcolsep}{5.0pt}
+\begin{tabular}{@{}L{4.600cm}L{4.161cm}R{1.702cm}L{3.783cm}@{}}
+\toprule
+\textbf{Điểm cuối} & \textbf{Mô tả} & \textbf{Mã HTTP} & \textbf{Kết quả} \\
+\midrule
+GET /health & Kiểm tra trạng thái dịch vụ & 200 & Đạt \\
+POST /api/v1/screen & Kiểm duyệt từng hồ sơ (50 lần gọi) & 200 & 50/50 thành công, 62.4 ms/hồ sơ \\
+POST /api/v1/screen/batch & Kiểm duyệt theo lô 50 hồ sơ & 200 & 50 hồ sơ, 2245 ms (44.79 ms/hồ sơ) \\
+GET /api/v1/features/\{id\} & Truy xuất vector đặc trưng đầu vào & 200 & 157 đặc trưng \\
+GET /admin/rules & Danh mục luật nghiệp vụ đang áp dụng & 200 & 21 luật \\
+\bottomrule
+\end{tabular}
+\end{table}

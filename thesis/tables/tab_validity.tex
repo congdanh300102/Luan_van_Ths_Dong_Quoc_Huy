@@ -1,0 +1,22 @@
+\begin{table}[!htbp]
+\centering
+\caption{Kiểm chứng cơ chế phát hiện dữ liệu không hợp lệ bằng phép tiêm lỗi}
+\label{tab:validity}
+\small
+\setlength{\tabcolsep}{5.0pt}
+\begin{tabular}{@{}L{3.3cm}L{5.2cm}R{1.7cm}R{1.7cm}L{1.9cm}@{}}
+\toprule
+\textbf{Mã ràng buộc} & \textbf{Nội dung ràng buộc} & \textbf{Số lỗi tiêm vào} & \textbf{Số lỗi phát hiện} & \textbf{Kết quả} \\
+\midrule
+CUS\_\allowbreak AGE\_\allowbreak RANGE & Tuổi khách hàng phải nằm trong khoảng 18-75 & 400 & 400 & Phát hiện đủ \\
+CUS\_\allowbreak INCOME\_\allowbreak POSITIVE & Thu nhập khai báo phải lớn hơn 0 & 400 & 400 & Phát hiện đủ \\
+APP\_\allowbreak AMOUNT\_\allowbreak POSITIVE & Số tiền đề nghị vay phải lớn hơn 0 & 600 & 600 & Phát hiện đủ \\
+APP\_\allowbreak RATE\_\allowbreak RANGE & Lãi suất phải nằm trong khoảng 0-40\%/năm & 600 & 600 & Phát hiện đủ \\
+CIC\_\allowbreak SCORE\_\allowbreak RANGE & Điểm CIC phải nằm trong khoảng 300-850 & 600 & 600 & Phát hiện đủ \\
+CIC\_\allowbreak GROUP\_\allowbreak ORDER & Nhóm nợ xấu nhất 12 tháng không thể tốt hơn nhóm nợ hiện tại & 600 & 600 & Phát hiện đủ \\
+\bottomrule
+\end{tabular}
+
+\vspace{2pt}
+{\footnotesize\itshape Phép tiêm lỗi được thực hiện trên một bản sao dữ liệu với tỷ lệ 1\% mỗi loại lỗi; dữ liệu gốc không bị thay đổi.}
+\end{table}

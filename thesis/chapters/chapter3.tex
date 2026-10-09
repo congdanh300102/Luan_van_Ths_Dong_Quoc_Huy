@@ -1,0 +1,947 @@
+% ===========================================================================
+% CHƯƠNG 3: TRIỂN KHAI THỰC NGHIỆM VÀ ĐÁNH GIÁ KẾT QUẢ
+% ===========================================================================
+\chapter{TRIỂN KHAI THỰC NGHIỆM VÀ ĐÁNH GIÁ KẾT QUẢ}
+% Tiêu đề chạy rút gọn: tiêu đề chương đầy đủ dài hơn một dòng đầu trang,
+% khiến fancyhdr phải nới \headheight và làm lệch khung chữ của cả chương.
+\markboth{Chương 3. Triển khai thực nghiệm và đánh giá kết quả}{}
+\label{chap:thuc-nghiem}
+
+\noindent\textit{Chương 3 trình bày kịch bản thực nghiệm, kết quả huấn luyện mô
+hình học máy và đánh giá hiệu năng mô hình kiểm duyệt tín dụng. Nội dung chương
+tập trung mô phỏng vận hành và bàn luận, đối chiếu kết quả thực nghiệm
+thu được.}
+
+\section{Thiết lập kịch bản và môi trường thực nghiệm}
+\label{sec:moi-truong-thuc-nghiem}
+
+\subsection{Hạ tầng phần cứng, phần mềm và thư viện sử dụng}
+\label{subsec:ha-tang}
+
+Toàn bộ thực nghiệm được thực hiện trên một máy tính cá nhân với cấu hình và môi
+trường phần mềm trình bày tại Bảng~\ref{tab:environment}.
+
+\begin{table}[htbp]
+\centering
+\caption{Cấu hình phần cứng và môi trường phần mềm}
+\label{tab:environment}
+\small
+\begin{tabular}{@{}L{4.2cm}L{9.6cm}@{}}
+\toprule
+\textbf{Thành phần} & \textbf{Thông số} \\
+\midrule
+Hệ điều hành & Windows 11 (64-bit) \\
+Ngôn ngữ lập trình & Python 3.12 \\
+Xử lý dữ liệu & pandas, NumPy, PyArrow (định dạng lưu trữ Parquet) \\
+Mô hình cơ sở & scikit-learn 1.9 \\
+Mô hình boosting & XGBoost, LightGBM, CatBoost \\
+Giải thích mô hình & SHAP \\
+Dịch vụ REST & FastAPI, Uvicorn \\
+Trực quan hóa & Matplotlib, Streamlit \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Các số đo thời gian trong chương này được thực hiện trên một máy đơn, một tiến
+trình, nên phản ánh chi phí tính toán của thuật toán chứ không bao gồm thời gian
+truyền qua mạng hay ảnh hưởng của tải đồng thời; chúng có giá trị để \textit{so
+sánh tương đối} giữa các mô hình (xem thêm mục~\ref{subsec:han-che-dinh-huong}).
+
+Toàn bộ tham số của thực nghiệm được đặt tập trung trong một file cấu hình duy
+nhất và hạt giống ngẫu nhiên được cố định, bảo đảm kết quả tái lập được. Quy
+trình thực nghiệm gồm sáu bước, mỗi bước là một chương trình độc lập: chuẩn bị dữ
+liệu, phân tích và lựa chọn đặc trưng, tinh chỉnh siêu tham số, huấn luyện mô
+hình, mô phỏng quy trình kiểm duyệt, và xuất kết quả.
+
+\subsection{Kịch bản thực nghiệm các mô hình học máy}
+\label{subsec:kich-ban}
+
+Thực nghiệm được thiết kế theo nguyên tắc \textbf{so sánh công bằng}: toàn bộ
+\NModels{} mô hình được huấn luyện trên cùng một tập dữ liệu, cùng một tập đặc
+trưng, cùng cách chia dữ liệu và được đánh giá bằng cùng một bộ chỉ tiêu. Mỗi mô
+hình đi qua đúng bốn bước:
+
+\begin{enumerate}[label=(\arabic*)]
+  \item Huấn luyện trên tập \code{train\_fit}; các mô hình boosting bổ sung cơ
+  chế dừng sớm trên tập \code{train\_es};
+  \item Hiệu chuẩn xác suất bằng hồi quy đẳng hướng trên tập \code{valid};
+  \item Lựa chọn ngưỡng quyết định theo hàm chi phí trên tập \code{valid};
+  \item Đánh giá cuối cùng trên tập \code{test} -- chỉ thực hiện một lần.
+\end{enumerate}
+
+Về mặt phương pháp, mọi quyết định liên quan tới mô hình đều dựa trên tập
+\code{valid}. Tập \code{test} hoàn toàn không tham gia vào bất kỳ lựa
+chọn nào, nhờ đó ước lượng hiệu năng cuối cùng không bị lạc quan.
+
+\subsection{Thiết kế và kiểm chứng tập dữ liệu thực nghiệm}
+\label{sec:data-design}
+
+\subsubsection{Cơ sở lựa chọn dữ liệu mô phỏng}
+
+Dữ liệu tín dụng cá nhân thuộc nhóm dữ liệu nhạy cảm, chịu ràng buộc chặt chẽ về
+bảo mật. Việc tiếp cận dữ liệu thực của một tổ chức tín dụng cho mục đích nghiên
+cứu học thuật đòi hỏi quy trình phê duyệt phức tạp và thường không khả thi trong
+khuôn khổ một đề án tốt nghiệp. Mặt khác, các bộ dữ liệu tín dụng công khai
+thường có ba hạn chế khiến chúng không phù hợp với đề án này: quy mô nhỏ (vài
+nghìn quan sát), không có thông tin thời gian nên không cho phép kiểm định ngoài
+thời gian, và đặc biệt là \textit{không có dữ liệu giao dịch} -- nhóm dữ liệu mà
+đề án muốn đánh giá đóng góp.
+
+Vì vậy đề án sử dụng dữ liệu mô phỏng được sinh bằng chương trình tự xây dựng.
+Cách tiếp cận này có một ưu điểm phương pháp luận quan trọng ngoài việc giải
+quyết vấn đề tiếp cận dữ liệu: vì quá trình sinh dữ liệu xác định tường minh xác
+suất vỡ nợ thật của từng hồ sơ, ta biết được \textbf{trần Bayes} -- giới hạn lý
+thuyết mà không mô hình nào có thể vượt qua. Nhờ đó có thể đánh giá một mô hình
+còn cách giới hạn lý thuyết bao xa, điều không thể làm được với dữ liệu thực.
+
+Giới hạn tương ứng của cách tiếp cận này là các chỉ tiêu chất lượng thu được
+\textbf{không nên được hiểu là dự báo về hiệu quả trên dữ liệu thực}. Giá trị
+của thực nghiệm nằm ở việc so sánh \textit{tương đối} giữa các mô hình trong cùng điều kiện và ở việc
+kiểm chứng tính đúng đắn của toàn bộ quy trình từ dữ liệu tới quyết định.
+
+\subsubsection{Mô hình sinh dữ liệu biến tiềm ẩn}
+
+Dữ liệu được sinh theo một mô hình xác suất có cấu trúc, trong đó mỗi khách hàng
+$i$ được gán một \textbf{biến tiềm ẩn} $z_i \sim \mathcal{N}(0, 1)$ biểu diễn
+mức độ tín nhiệm nội tại -- đại lượng không quan sát được trong thực tế. Từ
+$z_i$, chương trình sinh ra ba nhóm dữ liệu quan sát được:
+
+\begin{itemize}
+  \item \textbf{Thông tin nhân khẩu và tài chính}: thu nhập, nghề nghiệp, thâm
+  niên công việc phụ thuộc $z_i$ với nhiễu;
+  \item \textbf{Lịch sử tín dụng tại CIC}: điểm CIC, nhóm nợ, số ngày quá hạn là
+  các \textit{phép đo có nhiễu} của $z_i$;
+  \item \textbf{Hành vi giao dịch}: tính ổn định dòng tiền, tỷ trọng chi tiêu
+  nhóm rủi ro cũng phụ thuộc $z_i$ với nhiễu độc lập.
+\end{itemize}
+
+Nhãn vỡ nợ được sinh từ một hàm log-odds phi tuyến của $z_i$ và các đặc trưng đã
+tính đúng theo thời điểm:
+
+\begin{equation}
+\PD_i^{\text{thật}} = \sigma\big( \eta(z_i, \bm{x}_i) + \beta_0 \big),
+\qquad
+y_i \sim \text{Bernoulli}\big( \PD_i^{\text{thật}} \big),
+\label{eq:datagen}
+\end{equation}
+
+trong đó hệ số chặn $\beta_0$ được hiệu chỉnh bằng phương pháp số để đạt tỷ lệ vỡ
+nợ mục tiêu.
+
+Cấu trúc này tạo ra một đặc điểm quan trọng: vì CIC và hành vi giao dịch chỉ là
+các phép đo \textit{có nhiễu} của $z_i$, mô hình học máy chỉ có thể phục hồi một
+phần thông tin về $z_i$. Điều này tạo ra một giới hạn trên tự nhiên cho chất
+lượng dự báo -- chính là trần Bayes -- giống như tình huống thực tế, nơi không có
+mô hình nào đạt $\AUC = 1$.
+
+Quá trình sinh dữ liệu còn đưa vào ba hiện tượng đặc thù của dữ liệu tín dụng
+thực: nhóm khách hàng thiếu lịch sử tín dụng (chiếm \ThinFileRate), giá trị khuyết
+ở một số trường khai báo, và hiện tượng trôi dạt theo thời gian với mức độ xác
+định trước.
+
+\subsubsection{Quy mô và đặc điểm tập dữ liệu}
+
+Bảng~\ref{tab:dataset} trình bày quy mô các bảng dữ liệu thu được. Tập dữ liệu
+gồm \NCustomers{} khách hàng, \NAccounts{} tài khoản, \NTransactions{} giao dịch
+và \NTotal{} hồ sơ vay trải trên khoảng thời gian hai năm, với thời gian sinh
+\GenSeconds{} giây.
+
+\input{tables/tab_dataset}
+
+Hình~\ref{fig:data-overview} mô tả phân bố của một số biến chính trong tập dữ
+liệu.
+
+\begin{figure}[!htbp]
+\centering
+\cffig[0.94\textwidth]{data_overview}
+\caption{Phân bố các biến chính trong tập dữ liệu thực nghiệm}
+\label{fig:data-overview}
+\end{figure}
+
+\subsubsection{Kiểm tra chất lượng dữ liệu}
+\label{subsec:kq-chat-luong-du-lieu}
+
+Bộ \NConstraints{} ràng buộc nghiệp vụ được áp dụng cho ba bảng dữ liệu chính,
+phát hiện \NViolations{} bản ghi vi phạm. Kết quả này không đáng ngạc nhiên với
+dữ liệu mô phỏng, nhưng bản thân nó \textit{không chứng minh được} rằng cơ chế
+kiểm tra hoạt động đúng -- một bộ kiểm tra hỏng cũng cho kết quả tương tự.
+
+Để phân biệt hai khả năng, đề án thực hiện phép tiêm lỗi: tạo bản sao dữ liệu, cố
+ý đưa vào 1\% lỗi ứng với từng loại ràng buộc, rồi chạy lại cơ chế kiểm tra. Kết
+quả tại Bảng~\ref{tab:validity} cho thấy toàn bộ lỗi đã tiêm đều được phát hiện
+(tỷ lệ phát hiện \ValidityDetected).
+
+\input{tables/tab_validity}
+
+Về giá trị khuyết, \NMissingVars{} trên tổng số đặc trưng có dữ liệu trống, với
+tỷ lệ cao nhất là \MaxMissingPct{} -- tương ứng nhóm khách hàng thiếu lịch sử tín
+dụng (Bảng~\ref{tab:missing}). Về giá trị ngoại lệ, \NOutlierVars{} đặc trưng có
+quan sát nằm ngoài ngưỡng $3 \times$IQR (Bảng~\ref{tab:outliers}); các giá trị
+này được xử lý bằng phép cắt ngọn thay vì loại bỏ quan sát.
+
+\input{tables/tab_missing}
+
+\input{tables/tab_outliers}
+
+\subsubsection{Kết quả gán nhãn rủi ro}
+\label{subsec:kq-gan-nhan}
+
+Bảng~\ref{tab:label} trình bày phân bố ba trạng thái rủi ro sau khi gán nhãn theo
+tiêu chuẩn nợ nhóm 3--5 với cửa sổ quan sát 12 tháng.
+
+\input{tables/tab_label}
+
+Cơ sở định lượng cho lựa chọn cửa sổ 12 tháng được trình bày tại
+Bảng~\ref{tab:vintage}: đường cong tỷ lệ nợ xấu tích luỹ cho thấy cửa sổ 12 tháng
+ghi nhận được \VintageCoverage{} tổng số trường hợp vỡ nợ, trong khi cửa sổ 6
+tháng chỉ ghi nhận được khoảng 56\%. Rút ngắn cửa sổ xuống 6 tháng sẽ khiến gần
+một nửa số hồ sơ thực sự xấu bị gán nhãn tốt -- sai lệch đủ lớn để làm hỏng mô
+hình.
+
+\input{tables/tab_vintage}
+
+\subsection{Phương pháp phân chia tập dữ liệu thử nghiệm}
+\label{subsec:kq-chia-tap}
+
+Kết quả phân chia dữ liệu theo thời gian được trình bày tại
+Bảng~\ref{tab:split}.
+
+\input{tables/tab_split}
+
+Tỷ lệ nợ xấu tăng dần qua các giai đoạn, từ \DRTrain{}
+ở tập huấn luyện lên \DRTest{} ở tập kiểm thử. Đây chính là biểu hiện của hiện
+tượng trôi dạt đã được đưa vào quá trình sinh dữ liệu. Sự chênh lệch này khiến
+bài toán trở nên khó hơn so với chia ngẫu nhiên và làm cho kết quả đánh giá sát
+với điều kiện vận hành thực tế hơn.
+
+\section{Kết quả huấn luyện và tính toán mô hình}
+\label{sec:ket-qua-huan-luyen}
+
+\subsection{Kết quả xây dựng và lựa chọn đặc trưng}
+\label{subsec:kq-dac-trung}
+
+Tập đặc trưng ban đầu gồm \NFeaturesInitial{} biến, phân bố theo năm nhóm nguồn
+dữ liệu như trình bày tại Bảng~\ref{tab:feature-groups}.
+
+\input{tables/tab_feature_groups}
+
+\subsubsection{Phân tích Information Value}
+
+Bảng~\ref{tab:iv-top} liệt kê mười lăm đặc trưng có năng lực dự báo cao nhất.
+
+\input{tables/tab_iv_top}
+
+Kết quả cho thấy nhóm đặc trưng CIC chiếm ưu thế ở phần đầu bảng xếp hạng, với
+giá trị $\IV$ cao nhất đạt \MaxIV{}. Điều này phù hợp với trực giác nghiệp vụ:
+lịch sử trả nợ trong quá khứ là chỉ báo mạnh nhất về khả năng trả nợ trong tương
+lai. Giá trị $\IV$ vượt ngưỡng 0,5 thông thường là dấu hiệu cần kiểm tra rò rỉ
+nhãn; trong trường hợp này, việc kiểm tra ràng buộc thời gian
+(CIC\_QUERY\_BEFORE\_APPLY) xác nhận mọi bản tin CIC đều được truy vấn trước thời
+điểm nộp hồ sơ, nên $\IV$ cao phản ánh bản chất của dữ liệu chứ không phải lỗi
+phương pháp.
+
+Bảng~\ref{tab:iv-group} tổng hợp $\IV$ theo nhóm nguồn dữ liệu.
+
+\input{tables/tab_iv_group}
+
+Xét theo $\IV$ trung bình, nhóm CIC dẫn đầu rõ rệt: mỗi đặc trưng CIC mang nhiều
+thông tin hơn hẳn. Nhưng xét theo \textit{tổng} $\IV$, nhóm hành vi giao dịch lại
+chiếm vị trí cao nhất nhờ số lượng đặc trưng lớn. Hai cách nhìn này không mâu
+thuẫn mà bổ sung cho nhau: dữ liệu CIC là nguồn thông tin cô đọng nhất, còn dữ
+liệu giao dịch là nguồn thông tin dồi dào nhất. Với nhóm khách hàng thiếu lịch sử
+tín dụng, nơi dữ liệu CIC gần như trống, nhóm thứ hai trở thành nguồn thông tin
+chủ yếu.
+
+\begin{figure}[!htbp]
+\centering
+\cffig[0.95\textwidth]{iv_ranking}
+\caption{Xếp hạng đặc trưng theo Information Value}
+\label{fig:iv-ranking}
+\end{figure}
+
+\subsubsection{Kết quả lựa chọn tập đặc trưng}
+
+Quy trình lọc ba bước rút gọn tập đặc trưng từ \NFeaturesInitial{} xuống
+\NFeaturesSelected{} biến (Bảng~\ref{tab:selection}).
+
+\input{tables/tab_selection}
+
+\input{tables/tab_selection_group}
+
+Phân tích cơ cấu sau lựa chọn (Bảng~\ref{tab:selection-group}) cho thấy các bộ
+lọc hoạt động đúng như thiết kế: nhóm biến tổ hợp giữ lại tỷ lệ cao nhất -- hợp
+lý vì mỗi biến trong nhóm này được thiết kế để biểu diễn một chỉ tiêu nghiệp vụ
+riêng biệt nên ít trùng lặp. Ngược lại, nhóm tham số khoản vay bị loại nhiều
+nhất, chủ yếu do năng lực dự báo thấp.
+
+Bước lọc theo độ ổn định không loại bỏ đặc trưng nào: chỉ số $\PSI$
+lớn nhất trên toàn bộ tập đặc trưng chỉ đạt \MaxPSI{}, thấp hơn nhiều so với
+ngưỡng cảnh báo 0,10. Kết quả này cho thấy mức trôi dạt trong dữ liệu thực nghiệm
+tập trung ở \textit{quan hệ giữa đặc trưng và nhãn} chứ không ở phân phối biên
+của đặc trưng -- một dạng trôi dạt khó phát hiện hơn bằng giám sát $\PSI$ đơn
+thuần.
+
+\subsection{Kết quả trên các mô hình cơ sở}
+\label{subsec:kq-mo-hinh-co-so}
+
+Nhóm mô hình cơ sở gồm hồi quy logistic, thẻ điểm WOE và cây quyết định -- các mô
+hình có cấu trúc đơn giản và khả năng giải thích cao.
+
+Hồi quy logistic đạt $\AUC = \LRAUC{}$ trên tập kiểm thử, thẻ điểm WOE đạt
+\WOEAUC{}, còn cây quyết định đơn đạt \DTAUC{}. Khoảng cách giữa hai mô hình
+tuyến tính và cây quyết định là đáng kể -- gần 0,04 điểm $\AUC$ -- cho thấy hạn
+chế về phương sai cao của cây đơn đã được phân tích ở
+mục~\ref{subsec:decision-tree} thể hiện rõ trong thực nghiệm.
+
+Việc hồi quy logistic -- mô hình đơn giản nhất trong nhóm -- lại đạt kết quả gần
+sát với các mô hình phức tạp là một quan sát quan trọng, sẽ được bàn kỹ ở
+mục~\ref{subsec:so-sanh-thuat-toan}.
+
+\subsection{Kết quả trên các mô hình học máy nâng cao}
+\label{subsec:kq-mo-hinh-nang-cao}
+
+Nhóm mô hình nâng cao gồm các mô hình học tập hợp (rừng ngẫu nhiên, Extra Trees,
+bốn biến thể gradient boosting), máy vectơ hỗ trợ, mạng nơ-ron và mô hình kết hợp
+xếp tầng.
+
+Trong nhóm này, mô hình kết hợp xếp tầng đạt $\AUC$ danh nghĩa cao nhất
+(\TopAUC{}), ngay sau là ba biến thể gradient boosting: CatBoost \CatAUC{},
+XGBoost \XGBAUC{} và LightGBM \LGBAUC{}. Máy vectơ hỗ trợ đạt \SVMAUC{}, rừng
+ngẫu nhiên đạt \RFAUC{} và Hist Gradient Boosting đạt \GBAUC{}.
+
+Cần nhấn mạnh ngay rằng khoảng cách giữa các mô hình dẫn đầu là \textit{không
+đáng kể}: chênh lệch giữa mô hình đứng đầu và mô hình thứ hai chỉ \GapTopSecond{}
+điểm $\AUC$. Mục~\ref{subsec:kq-chon-mo-hinh} phân tích vì sao mức chênh lệch
+này không đủ cơ sở để kết luận một thuật toán vượt trội, và vì sao mô hình được
+chọn triển khai lại không phải mô hình có $\AUC$ cao nhất.
+
+Kết quả của SVM cần được bình luận riêng. Mặc dù sử dụng phép xấp xỉ Nystroem
+thay vì giải bài toán đối ngẫu đầy đủ, mô hình vẫn đạt mức chất lượng tương đương
+rừng ngẫu nhiên và chỉ kém mô hình tốt nhất \GapBestSVM{} điểm $\AUC$, với thời
+gian huấn luyện khoảng \SVMTrainSec{} giây. Kết quả này cho thấy phép xấp xỉ
+hạt nhân là giải pháp khả thi để áp dụng SVM ở quy mô dữ liệu mà SVM hạt nhân đầy đủ không huấn
+luyện được trong thời gian chấp nhận được.
+
+\subsection{Tối ưu hóa siêu tham số cho mô hình}
+\label{subsec:kq-tuning}
+
+Kết quả trình bày ở hai mục trên đã sử dụng siêu tham số được tinh chỉnh ở bước
+này; mục này trình bày chi tiết quá trình tinh chỉnh đó.
+
+Ba mô hình có nhiều siêu tham số nhất -- LightGBM, XGBoost và rừng ngẫu nhiên --
+được tinh chỉnh bằng tìm kiếm ngẫu nhiên kết hợp kiểm định chéo theo chuỗi thời
+gian trên tập huấn luyện. Kết quả trình bày tại Bảng~\ref{tab:tuning}.
+
+\input{tables/tab_tuning}
+
+Hai điểm cần lưu ý về phương pháp. Thứ nhất, việc tinh chỉnh được thực hiện trên
+\textit{đúng tập đặc trưng} mà mô hình cuối cùng sử dụng -- tập \NFeaturesSelected{}
+biến sau lựa chọn, không phải tập đầy đủ ban đầu. Nếu tinh chỉnh trên tập đầy đủ
+rồi áp dụng tham số cho tập đã rút gọn, siêu tham số tìm được không còn tối ưu.
+Thứ hai, toàn bộ quá trình tinh chỉnh chỉ sử dụng tập huấn luyện; tập kiểm định
+và tập kiểm thử không tham gia, nhờ đó không tạo ra rò rỉ thông tin.
+
+\section{Đánh giá hiệu năng và so sánh kết quả thực nghiệm}
+\label{sec:danh-gia-hieu-nang}
+
+\subsection{Đánh giá qua các chỉ số phân loại}
+\label{subsec:kq-chi-so-phan-loai}
+
+Bảng~\ref{tab:model-quality} trình bày đầy đủ kết quả của \NModels{} mô hình theo
+bảy chỉ tiêu chất lượng dự báo.
+
+\input{tables/tab_model_quality}
+
+Mô hình được chọn triển khai -- \BestModel{} -- đạt $\AUC = \BestAUC{}$,
+$\text{Gini} = \BestGini{}$, $\KS = \BestKS{}$ và $F_1 = \BestFOne{}$. Về chất
+lượng hiệu chuẩn, điểm Brier đạt \BestBrier{} và sai số hiệu chuẩn kỳ vọng chỉ
+\BestECE{}; mức sai số thấp này cho phép sử dụng trực tiếp xác suất đầu ra làm
+căn cứ phân vùng quyết định.
+
+Hình~\ref{fig:roc-curves} và Hình~\ref{fig:calibration} minh họa khả năng phân
+biệt và mức độ hiệu chuẩn của các mô hình.
+
+\begin{figure}[!htbp]
+\centering
+\cffig[0.95\textwidth]{roc_curves}
+\caption{Đường cong ROC của các mô hình trên tập kiểm thử}
+\label{fig:roc-curves}
+\end{figure}
+
+\begin{figure}[!htbp]
+\centering
+\cffig[0.95\textwidth]{calibration}
+\caption{Đường cong hiệu chuẩn xác suất sau khi hiệu chuẩn đẳng hướng}
+\label{fig:calibration}
+\end{figure}
+
+\subsubsection{So sánh với trần Bayes}
+
+Vì quá trình sinh dữ liệu xác định tường minh xác suất vỡ nợ thật của từng hồ sơ,
+có thể tính được trần Bayes -- giới hạn lý thuyết của mọi mô hình trên tập dữ
+liệu này. Trần Bayes trên tập kiểm thử là \BayesAUC{}.
+
+Mô hình tốt nhất đạt \BestAUC{}, tức còn cách trần Bayes \GapBayes{} điểm
+$\AUC$. Khoảng cách này có ý nghĩa quan trọng về mặt diễn giải: nó cho thấy mô
+hình đã khai thác được phần lớn thông tin có trong dữ liệu, và phần còn thiếu
+không phải do thuật toán yếu mà do bản thân dữ liệu quan sát được chỉ là phép đo
+có nhiễu của mức tín nhiệm thật. Nói cách khác, việc đầu tư thêm vào thuật toán
+phức tạp hơn sẽ cho lợi ích giảm dần; cải thiện đáng kể hơn chỉ đến từ việc bổ
+sung nguồn dữ liệu mới mang thông tin bổ sung.
+
+\subsection{Đánh giá khả năng phân tách rủi ro}
+\label{subsec:kq-phan-tach}
+
+Khả năng phân tách rủi ro được đánh giá qua ba công cụ bổ trợ nhau.
+
+\paragraph{Thống kê KS.} Mô hình được chọn đạt $\KS = \BestKS{}$, nghĩa là tại
+điểm cắt tối ưu, khoảng cách giữa phân phối tích lũy của nhóm tốt và nhóm xấu đạt
+\KSPoints{} điểm phần trăm. Theo thực hành ngành, giá trị $\KS$ trên 0,40 được
+coi là mô hình có khả năng phân tách tốt.
+
+\begin{figure}[!htbp]
+\centering
+\cffig[0.9\textwidth]{ks_curve}
+\caption{Đường cong Kolmogorov--Smirnov của mô hình được chọn triển khai}
+\label{fig:ks-curve}
+\end{figure}
+
+\paragraph{Phân tích theo thập phân vị.} Bảng~\ref{tab:gains} trình bày phân bố
+hồ sơ xấu theo mười nhóm điểm rủi ro.
+
+\input{tables/tab_gains}
+
+Kết quả cho thấy thập phân vị rủi ro cao nhất tập trung \TopDecileBad{} tổng số
+hồ sơ xấu -- gấp hơn bốn lần mức phân bố ngẫu nhiên. Ba thập phân vị rủi ro cao
+nhất chứa \TopThreeDecileBad{} tổng số hồ sơ xấu. Đây là thước đo trực tiếp giá trị vận hành của mô hình:
+nếu tổ chức tín dụng chỉ có nguồn lực để thẩm định kỹ 30\% số hồ sơ, việc ưu tiên
+theo điểm rủi ro của mô hình cho phép bao phủ hơn ba phần tư số hồ sơ có vấn đề.
+
+\begin{figure}[!htbp]
+\centering
+\cffig[0.95\textwidth]{gains_lift}
+\caption{Đường cong gains và lift theo thập phân vị điểm rủi ro}
+\label{fig:gains}
+\end{figure}
+
+\paragraph{Phân bố điểm rủi ro.} Hình~\ref{fig:score-distribution} cho thấy phân
+bố điểm rủi ro của hai nhóm hồ sơ và vị trí của các ngưỡng quyết định.
+
+\begin{figure}[!htbp]
+\centering
+\cffig[0.95\textwidth]{score_distribution}
+\caption{Phân bố xác suất vỡ nợ dự báo theo nhóm hồ sơ thực tế}
+\label{fig:score-distribution}
+\end{figure}
+
+\subsection{So sánh hiệu năng giữa các thuật toán}
+\label{subsec:so-sanh-thuat-toan}
+
+\subsubsection{Chênh lệch giữa các thuật toán là nhỏ}
+
+Quan sát nổi bật nhất từ Bảng~\ref{tab:model-quality} là \textbf{khoảng cách giữa
+các mô hình rất hẹp}. Chênh lệch $\AUC$ giữa mô hình được chọn triển khai
+(\BestModel{}) và hồi quy logistic chỉ là \GapBestLR{} -- chưa tới nửa điểm phần
+trăm. Trong khi đó, hồi quy logistic có ba ưu thế rõ rệt: thời gian huấn luyện
+ngắn hơn hàng chục lần, mỗi hệ số có thể diễn giải trực tiếp, và xác suất đầu ra
+vốn đã được hiệu chuẩn tốt mà không cần bước hiệu chuẩn bổ sung.
+
+Kết quả này phù hợp với phát hiện của Lessmann và cộng sự~\cite{lessmann2015}
+trên các bộ dữ liệu tín dụng thực: các mô hình học tập hợp cho kết quả tốt hơn
+nhưng mức chênh lệch so với hồi quy logistic không lớn.
+
+\subsubsection{Giới hạn độ phân giải của phép đo}
+\label{subsec:do-phan-giai}
+
+Khoảng cách hẹp giữa các mô hình đặt ra một câu hỏi phương pháp mà phần lớn
+nghiên cứu so sánh thuật toán không nêu: \textit{chênh lệch $\AUC$ nhỏ tới đâu
+thì còn mang thông tin?}
+
+Để trả lời, đề án chạy lại toàn bộ bước huấn luyện trên cùng tập dữ liệu, cùng
+siêu tham số và cùng hạt giống ngẫu nhiên. Kết quả tái lập chính xác tới bốn chữ
+số thập phân ở cả \NModels{} mô hình. Tuy nhiên khi chạy lại \textit{bước tinh
+chỉnh siêu tham số}, giá trị $\AUC$ kiểm định chéo đo được dao động khoảng
+$3 \times 10^{-4}$ giữa các lần chạy. Nguyên nhân mang tính kỹ thuật thuần túy:
+các thư viện boosting dựng biểu đồ tần suất song song nhiều luồng, nên thứ tự
+cộng dồn số thực dấu phẩy động thay đổi theo cách hệ điều hành cấp phát luồng.
+
+Mức dao động này nhỏ, nhưng không nhỏ hơn khoảng cách giữa các mô hình dẫn đầu.
+Hệ quả trực tiếp đã được quan sát trong quá trình thực nghiệm: hai bộ siêu tham
+số của XGBoost có $\AUC$ kiểm định chéo cách nhau $1{,}6 \times 10^{-4}$ đã đổi
+chỗ cho nhau giữa hai lần chạy, kéo theo thứ hạng của chính mô hình đó trên tập
+kiểm thử cũng thay đổi.
+
+Kết luận rút ra có ý nghĩa với mọi nghiên cứu so sánh thuật toán trên bài toán
+này: \textbf{thứ hạng ở chữ số thập phân thứ tư của $\AUC$ không phải là bằng
+chứng về sự vượt trội}. Các mô hình chênh nhau dưới ngưỡng đó cần được coi là
+tương đương, và việc lựa chọn phải dựa trên các tiêu chí khác -- chi phí tính
+toán, khả năng giải thích, độ ổn định -- chứ không dựa trên bảng xếp hạng.
+
+\subsubsection{Đánh đổi giữa chất lượng và chi phí tính toán}
+
+Bảng~\ref{tab:model-cost} trình bày chi phí huấn luyện và thời gian chấm điểm một
+hồ sơ của từng mô hình.
+
+\input{tables/tab_model_cost}
+
+Hình~\ref{fig:auc-vs-latency} biểu diễn quan hệ giữa chất lượng dự báo và thời
+gian chấm điểm.
+
+\begin{figure}[!htbp]
+\centering
+\cffig[0.92\textwidth]{auc_vs_latency}
+\caption{Đánh đổi giữa chất lượng dự báo và thời gian chấm điểm một hồ sơ}
+\label{fig:auc-vs-latency}
+\end{figure}
+
+Đồ thị cho thấy một số mô hình nằm rõ rệt phía dưới đường biên hiệu quả. Rõ nhất
+là mô hình kết hợp xếp tầng: nó đổi \GapTopDeploy{} điểm $\AUC$ lấy thời gian
+chấm điểm cao gấp \LatRatioTopDeploy{} lần (\TopAUCLatPFive{} ms so với
+\BestLatPFive{} ms ở phân vị 95). Extra Trees và rừng ngẫu nhiên vừa chậm hơn vừa
+kém chính xác hơn nhóm boosting. Với bài toán kiểm duyệt trực tuyến -- nơi kết
+quả phải trả về trong lúc cán bộ tín dụng đang làm việc với hồ sơ -- những mô
+hình này không phải lựa chọn hợp lý dù chỉ xét riêng góc độ kỹ thuật.
+
+\subsubsection{Tiêu chí chọn mô hình triển khai}
+\label{subsec:kq-chon-mo-hinh}
+
+Hai phân tích trên dẫn tới một quy tắc lựa chọn cụ thể, thay cho cách lấy thẳng
+mô hình đứng đầu bảng xếp hạng $\AUC$. Quy tắc gồm hai bước:
+
+\begin{enumerate}[label=(\arabic*)]
+  \item \textbf{Xác định nhóm tương đương về chất lượng:} mọi mô hình có $\AUC$
+  nằm trong khoảng \TieTolerance{} so với mô hình dẫn đầu. Ngưỡng này được chọn
+  lớn hơn một bậc so với dao động đo đạc đã xác định ở
+  mục~\ref{subsec:do-phan-giai}, đồng thời vẫn nhỏ hơn mức chênh lệch có ý nghĩa
+  nghiệp vụ.
+  \item \textbf{Trong nhóm đó, chọn mô hình có thời gian chấm điểm thấp nhất} --
+  tức mô hình nằm trên biên Pareto của Hình~\ref{fig:auc-vs-latency}.
+\end{enumerate}
+
+Áp dụng trên kết quả thực nghiệm, nhóm tương đương gồm \NTiedModels{} mô hình:
+kết hợp xếp tầng (\TopAUC{}), CatBoost (\CatAUC{}) và XGBoost (\XGBAUC{}). Thời
+gian chấm điểm ở phân vị 95 của ba mô hình lần lượt là \StackLat{} ms,
+\CatLat{} ms và \XGBLat{} ms. Mô hình được chọn triển khai là \BestModel{}.
+
+Lựa chọn này có hai căn cứ. Thứ nhất, nếu lấy mô hình kết hợp xếp tầng, thời gian
+xử lý một hồ sơ sẽ vượt mục tiêu 100 ms đặt ra tại
+mục~\ref{subsec:yeu-cau} -- nghĩa là đánh đổi một yêu cầu đã công bố lấy
+\GapTopDeploy{} điểm $\AUC$ nằm trong vùng nhiễu đo. Thứ hai, quy tắc này cho kết
+quả \textit{ổn định}: khi thứ hạng trong nhóm dẫn đầu đảo chiều giữa các lần chạy,
+mô hình được chọn không đổi, vì tiêu chí quyết định là thời gian chấm điểm --
+đại lượng chênh nhau hàng chục lần chứ không phải vài phần vạn.
+
+\subsubsection{Tác động nghiệp vụ}
+
+Bảng~\ref{tab:model-business} quy đổi chất lượng thống kê thành các chỉ tiêu
+nghiệp vụ tại ngưỡng tối ưu chi phí.
+
+\input{tables/tab_model_business}
+
+\subsubsection{Mức độ quá khớp và độ ổn định theo thời gian}
+\label{subsec:kq-on-dinh}
+
+\paragraph{Mức độ quá khớp.} Bảng~\ref{tab:overfit} đối chiếu $\AUC$ trên tập
+kiểm định với $\AUC$ trên tập kiểm thử. Chênh lệch trung bình giữa hai tập là
+\MeanOverfitGap{} và mức lớn nhất là \MaxOverfitGap{} -- đều rất nhỏ so với bản
+thân giá trị $\AUC$. Kết quả này cho thấy bốn cơ chế kiểm soát quá khớp trình bày
+ở mục~\ref{subsec:kiem-soat-qua-khop} đã phát huy tác dụng: không mô hình nào phụ
+thuộc quá mức vào đặc thù của giai đoạn huấn luyện.
+
+\input{tables/tab_overfit}
+
+\paragraph{Trôi dạt phân phối dữ liệu.} Bảng~\ref{tab:drift} trình bày mười đặc
+trưng có mức trôi dạt lớn nhất. Toàn bộ tập đặc trưng có $\PSI$ dưới ngưỡng cảnh
+báo, với giá trị lớn nhất là \MaxPSI{}; số đặc trưng ở mức cảnh báo là
+\NPSIWarn{} và ở mức báo động là \NPSIAlert{}.
+
+\input{tables/tab_drift}
+
+\paragraph{Chất lượng dự báo theo thời gian.} Bảng~\ref{tab:perf-time} theo dõi
+chất lượng dự báo theo từng tháng của giai đoạn kiểm thử. Giá trị $\AUC$ dao động
+trong khoảng hẹp quanh mức 0,86 mà không có xu hướng giảm rõ rệt, và chênh lệch
+giữa tỷ lệ nợ xấu thực tế với mức $\PD$ trung bình dự báo luôn dưới một điểm phần
+trăm. Trong phạm vi bốn tháng quan sát, mô hình giữ được cả khả năng phân biệt
+lẫn mức hiệu chuẩn. Tuy nhiên, bốn tháng là khoảng thời gian ngắn so với chu kỳ
+suy giảm điển hình của mô hình tín dụng trong thực tế, nên kết luận về độ ổn định
+chỉ có giá trị trong phạm vi dữ liệu thực nghiệm.
+
+\input{tables/tab_perf_time}
+
+\begin{figure}[!htbp]
+\centering
+\cffig[0.95\textwidth]{performance_over_time}
+\caption{Diễn biến chất lượng dự báo theo tháng trên giai đoạn kiểm thử}
+\label{fig:perf-time}
+\end{figure}
+
+\section{Mô phỏng và giải thích mô hình}
+\label{sec:mo-phong-he-thong}
+
+\subsection{Thử nghiệm giải thích quyết định mô hình}
+\label{subsec:kq-giai-thich}
+
+\subsubsection{Giải thích ở cấp độ toàn cục}
+
+Phân tích SHAP được thực hiện trên mẫu đại diện của tập kiểm thử.
+Bảng~\ref{tab:shap-group} tổng hợp đóng góp theo nhóm nguồn dữ liệu.
+
+\input{tables/tab_shap_group}
+
+Kết quả cho thấy nhóm đặc trưng hành vi giao dịch đóng góp
+\ShapBehaviourPct{}\% vào quyết định của mô hình -- cao hơn nhóm CIC
+(\ShapCICPct{}\%) vốn được coi là nguồn thông tin truyền thống quan trọng nhất.
+Nhóm biến tổ hợp đóng góp \ShapDerivedPct{}\%, còn hai nhóm thông tin cá nhân và
+tham số khoản vay chỉ đóng góp lần lượt \ShapStaticPct{}\% và \ShapLoanPct{}\%.
+
+Phát hiện này có ý nghĩa thực tiễn: dữ liệu giao dịch là nguồn mà tổ chức tín
+dụng tự sở hữu, không phát sinh chi phí truy vấn bên ngoài và luôn có sẵn kể cả
+với nhóm khách hàng thiếu lịch sử tín dụng. Việc nhóm này đóng góp phần lớn nhất
+vào quyết định của mô hình là căn cứ định lượng cho khuyến nghị khai thác dữ liệu
+giao dịch trong công tác kiểm duyệt tín dụng.
+
+Kết quả trên cần được đặt cạnh phân tích $\IV$ ở mục~\ref{subsec:kq-dac-trung} để
+tránh diễn giải sai. Xét từng đặc trưng riêng lẻ, biến CIC mạnh hơn hẳn biến giao
+dịch. Nhưng trong mô hình hoàn chỉnh, tổng đóng góp của nhóm giao dịch lại lớn
+hơn, vì nhóm này gồm nhiều đặc trưng bổ sung thông tin cho nhau ở những khía cạnh
+khác nhau của hành vi tài chính.
+
+\begin{figure}[!htbp]
+\centering
+\cffig[0.95\textwidth]{shap_summary}
+\caption{Biểu đồ tóm tắt SHAP của hai mươi đặc trưng quan trọng nhất}
+\label{fig:shap-summary}
+\end{figure}
+
+\begin{figure}[!htbp]
+\centering
+\cffig[0.9\textwidth]{shap_group_share}
+\caption{Tỷ trọng đóng góp vào quyết định theo nhóm nguồn dữ liệu}
+\label{fig:shap-group}
+\end{figure}
+
+\subsubsection{Kiểm chứng chéo bằng phép hoán vị}
+
+Kết quả SHAP được kiểm chứng độc lập bằng phép hoán vị: với mỗi đặc trưng, giá
+trị của nó được xáo trộn ngẫu nhiên và mức suy giảm $\AUC$ được ghi nhận. Thứ
+hạng các đặc trưng theo hai phương pháp về cơ bản trùng khớp ở nhóm đầu bảng, xác
+nhận rằng kết quả SHAP không phải là sản phẩm của một đặc thù kỹ thuật nào đó
+trong cách tính.
+
+\begin{figure}[!htbp]
+\centering
+\cffig[0.95\textwidth]{permutation_importance_bar}
+\caption{Tầm quan trọng đặc trưng theo phép hoán vị}
+\label{fig:permutation}
+\end{figure}
+
+\subsubsection{Giải thích ở cấp độ từng hồ sơ}
+
+Với mỗi hồ sơ, mô hình sinh danh sách lý do gồm ba thành phần: luật nghiệp vụ bị
+vi phạm, chỉ tiêu định lượng then chốt kèm giá trị thực tế, và các đặc trưng có
+đóng góp SHAP lớn nhất. Danh sách này được trả về cùng kết quả chấm điểm, cho
+phép cán bộ tín dụng đánh giá tính hợp lý của khuyến nghị thay vì phải chấp nhận
+một con số không có căn cứ.
+
+\subsection{Mô phỏng xác định ngưỡng phê duyệt tín dụng}
+\label{subsec:kq-nguong}
+
+\subsubsection{So sánh ba tiêu chí xác định điểm cắt}
+
+Bảng~\ref{tab:cutoff} trình bày kết quả của ba tiêu chí xác định điểm cắt, tính
+trên tập kiểm định.
+
+\input{tables/tab_cutoff}
+
+Ba tiêu chí cho ba điểm cắt khác nhau rõ rệt, phản ánh ba cách đặt bài toán khác
+nhau. Tiêu chí tối thiểu chi phí cho điểm cắt thấp nhất (\CostOptimalCut{}) và do
+đó thận trọng nhất, với tỷ lệ nợ xấu trong nhóm được duyệt chỉ
+\CutoffCostBadRate{}. Tiêu chí tỷ lệ duyệt mục tiêu 70\% cho điểm cắt cao nhất,
+đổi lại tỷ lệ nợ xấu nhóm duyệt tăng lên \CutoffRateBadRate{}. Tiêu chí trần nợ
+xấu 5\% nằm ở giữa, với tỷ lệ nợ xấu nhóm duyệt \CutoffCapBadRate{}.
+
+Việc trình bày song song ba tiêu chí -- thay vì áp đặt một ngưỡng duy nhất -- là
+có chủ đích: lựa chọn giữa chúng là \textit{quyết định chính sách} thuộc thẩm
+quyền của tổ chức tín dụng, không phải quyết định kỹ thuật của người xây dựng mô
+hình.
+
+\subsubsection{Độ nhạy của kết quả theo điểm cắt}
+
+Bảng~\ref{tab:cutoff-sens} và Hình~\ref{fig:cutoff-sens} định lượng đánh đổi giữa
+quy mô cấp tín dụng và chất lượng danh mục.
+
+\input{tables/tab_cutoff_sens}
+
+\begin{figure}[!htbp]
+\centering
+\cffig[0.9\textwidth]{cutoff_sensitivity}
+\caption{Đánh đổi giữa tỷ lệ duyệt và tỷ lệ nợ xấu theo điểm cắt}
+\label{fig:cutoff-sens}
+\end{figure}
+
+Đường cong này là công cụ đối thoại giữa bộ phận mô hình và bộ phận kinh doanh:
+thay vì tranh luận về một giá trị ngưỡng trừu tượng, mỗi lựa chọn được quy đổi
+thành hệ quả cụ thể về tỷ lệ duyệt và tỷ lệ nợ xấu.
+
+\subsubsection{Hai ngưỡng cho ba vùng quyết định}
+
+Từ điểm cắt tối ưu chi phí, hai ngưỡng phân vùng được xác định:
+$\tau_{\text{duyệt}} = \PDApproveMax{}$ và
+$\tau_{\text{từ chối}} = \PDRejectMin{}$. Kết quả áp dụng trên tập kiểm thử được
+trình bày tại Bảng~\ref{tab:decision-mix}.
+
+\input{tables/tab_decision_mix}
+
+Kết quả xác nhận mô hình hoạt động đúng thiết kế: tỷ lệ nợ xấu thực tế tăng đơn
+điệu theo ba nhóm khuyến nghị, lần lượt là \BadApprove{} ở nhóm khuyến nghị
+duyệt, \BadReview{} ở nhóm chuyển thẩm định và \BadReject{} ở nhóm khuyến nghị từ
+chối. Mức chênh lệch hơn mười lần giữa nhóm đầu và nhóm cuối cho thấy khả năng
+phân tách thực tế của mô hình.
+
+Tỷ lệ hồ sơ được xử lý tự động đạt \AutomationRate{}, nghĩa là khoảng một phần ba
+số hồ sơ (\ReviewRate{}) vẫn cần cán bộ tín dụng xem xét. Đây là kết quả phù hợp
+với định hướng \textit{hỗ trợ} của đề án: những hồ sơ mà mô hình không đủ chắc
+chắn được chuyển cho con người thay vì bị quyết định máy móc.
+
+\begin{figure}[!htbp]
+\centering
+\cffig[0.98\textwidth]{decision_mix}
+\caption{Cơ cấu khuyến nghị và tỷ lệ nợ xấu thực tế theo từng nhóm}
+\label{fig:decision-mix}
+\end{figure}
+
+\subsubsection{Tần suất vi phạm luật nghiệp vụ}
+
+Bảng~\ref{tab:rule-hits} trình bày tần suất vi phạm của \NRules{} luật nghiệp vụ
+trong quá trình mô phỏng.
+
+\input{tables/tab_rule_hits}
+
+\begin{figure}[!htbp]
+\centering
+\cffig[0.95\textwidth]{rule_hits}
+\caption{Tần suất vi phạm các luật nghiệp vụ}
+\label{fig:rule-hits}
+\end{figure}
+
+\subsection{Thử nghiệm tích hợp API và luồng xử lý hồ sơ}
+\label{subsec:kq-api}
+
+\subsubsection{Kết quả tích hợp dịch vụ REST}
+
+Hệ thống được đóng gói thành một dịch vụ REST với năm điểm cuối. Kết quả thử
+nghiệm tích hợp trình bày tại Bảng~\ref{tab:api}.
+
+\input{tables/tab_api}
+
+Toàn bộ điểm cuối hoạt động đúng. Điểm cuối kiểm duyệt theo lô cho thời gian xử
+lý bình quân mỗi hồ sơ thấp hơn so với gọi từng hồ sơ riêng lẻ, phản ánh phần chi
+phí cố định của mỗi lần gọi dịch vụ được phân bổ trên nhiều hồ sơ.
+
+\subsubsection{Thời gian xử lý một hồ sơ}
+
+Bảng~\ref{tab:processing-time} phân rã thời gian xử lý một hồ sơ theo từng chặng.
+
+\input{tables/tab_processing_time}
+
+Kết quả cho thấy \textbf{chấm điểm mô hình chiếm gần như toàn bộ} thời gian xử
+lý: trung bình \SysMean{} ms cho một hồ sơ, trong đó phần áp dụng luật nghiệp vụ
+và chính sách chỉ chiếm chưa tới 0,1 ms. Phân vị 95\% của tổng thời gian là
+\SysPNinetyFive{} ms và phân vị 99\% là \SysPNinetyNine{} ms, đều nằm dưới mục
+tiêu 100 ms đã đặt ra ở mục~\ref{subsec:yeu-cau}.
+
+Thời gian chấm điểm trong mô phỏng quy trình (\SysMean{} ms) cao hơn số đo ở bước
+huấn luyện (\BestLatPFive{} ms tại phân vị 95\%) do hai phép đo thực hiện trong
+điều kiện khác nhau: bước huấn luyện đo trên ma trận đặc trưng đã chuẩn bị sẵn,
+còn mô phỏng quy trình đo toàn bộ đường xử lý từ dữ liệu đầu vào thô, bao gồm cả
+việc dựng khung dữ liệu, ép kiểu và ánh xạ hạng mục. Phần chênh lệch chính là chi
+phí của lớp tích hợp. Đây là kết quả có giá trị thực tiễn: khi triển khai, chi
+phí chuẩn bị dữ liệu đầu vào có thể lớn hơn chi phí suy luận của bản thân mô
+hình, nên việc tối ưu hiệu năng cần bắt đầu từ khâu này.
+
+\section{Đánh giá chung}
+\label{sec:danh-gia-chung}
+
+\subsection{So sánh với quy trình thẩm định truyền thống}
+\label{subsec:so-sanh-truyen-thong}
+
+Để đánh giá giá trị thực tế của mô hình, đề án mô phỏng quy trình thẩm định
+truyền thống bằng chính bộ luật nghiệp vụ đang áp dụng, không sử dụng mô hình học
+máy: hồ sơ vi phạm luật loại trừ cứng bị từ chối, hồ sơ vi phạm luật cảnh báo
+được chuyển thẩm định, phần còn lại được duyệt. Hai phương pháp được chạy trên
+cùng một tập hồ sơ; kết quả trình bày tại Bảng~\ref{tab:traditional}.
+
+\input{tables/tab_traditional}
+
+\begin{figure}[!htbp]
+\centering
+\cffig[0.95\textwidth]{traditional_comparison}
+\caption{So sánh mô hình đề xuất với quy trình thẩm định truyền thống}
+\label{fig:traditional}
+\end{figure}
+
+Kết quả phản ánh một đánh đổi gồm bốn khía cạnh.
+
+\paragraph{Về chất lượng danh mục -- cải thiện rõ rệt.} Tỷ lệ nợ xấu trong nhóm
+hồ sơ được duyệt giảm từ \TradBadRate{} xuống \PropBadRate{}, tức giảm
+\BadRateReduction{} điểm phần trăm, tương đương mức giảm tương đối
+\BadRateReductionPct{}. Đây là chỉ tiêu có ý nghĩa kinh tế trực tiếp: với cùng
+quy mô dư nợ được cấp, tổn thất tín dụng kỳ vọng giảm gần một nửa.
+
+\paragraph{Về quy mô cấp tín dụng -- giảm.} Đổi lại, tỷ lệ hồ sơ được duyệt giảm
+từ \TradApproveRate{} xuống \ApproveRate{}. Hệ thống thận trọng hơn quy trình
+truyền thống: nó phát hiện và loại ra những hồ sơ mà bộ quy tắc cố định bỏ sót.
+
+\paragraph{Về khối lượng công việc thủ công -- tăng nhẹ.} Tỷ lệ hồ sơ chuyển thẩm
+định thủ công tăng từ \TradReviewRate{} lên \PropReviewRate{}. Đây là hệ quả trực
+tiếp của thiết kế ba vùng: mô hình chủ động thừa nhận vùng không chắc chắn của
+mình thay vì đưa ra khuyến nghị dứt khoát cho mọi hồ sơ.
+
+\paragraph{Về thời gian xử lý.} Quy trình chỉ dùng luật nhanh hơn nhiều về mặt
+tính toán (dưới 0,2 ms so với \SysMean{} ms). Tuy nhiên so sánh này không phản
+ánh thực tế vận hành: trong quy trình truyền thống, phần lớn thời gian nằm ở công
+đoạn cán bộ tín dụng thu thập, đối chiếu và đánh giá hồ sơ -- tính bằng phút hoặc
+giờ -- chứ không phải ở việc kiểm tra bộ quy tắc. Mức chênh lệch vài chục mili
+giây giữa hai phương pháp là không đáng kể trên thang thời gian đó.
+
+\paragraph{Diễn giải tổng hợp.} Đánh đổi mà mô hình mang lại là: chấp nhận giảm
+\ApproveRateDrop{} điểm phần trăm tỷ lệ duyệt và tăng \ReviewRateRise{} điểm phần
+trăm khối lượng thẩm định thủ công, để đổi lấy việc giảm gần một nửa tỷ lệ nợ xấu
+trong nhóm được duyệt. Mức đánh đổi này có phù hợp hay không phụ thuộc khẩu vị
+rủi ro và chiến lược kinh doanh của từng tổ chức. Khác biệt cơ bản so với bộ quy
+tắc cố định là mô hình \textit{cho phép điều chỉnh} đánh đổi thông qua hai ngưỡng
+phân vùng, trong khi bộ quy tắc không có cơ chế tương đương.
+
+\subsection{Đối chiếu kết quả với các công trình nghiên cứu liên quan}
+\label{subsec:doi-chieu-nghien-cuu}
+
+\paragraph{Về thứ hạng giữa các thuật toán.} Kết quả của đề án phù hợp với kết
+luận của Lessmann và cộng sự~\cite{lessmann2015}: nhóm học tập hợp đứng đầu nhưng
+khoảng cách với hồi quy logistic không lớn. Chênh lệch $\AUC$ đo được trong đề án
+là \GapBestLR{}, thậm chí còn hẹp hơn khoảng 0,01--0,03 mà công trình trên ghi
+nhận trên các bộ dữ liệu tín dụng thực. Chênh lệch hẹp hơn có thể giải thích bằng
+đặc điểm của dữ liệu mô phỏng: quan hệ giữa biến tiềm ẩn và nhãn được sinh theo
+một hàm log-odds có cấu trúc tương đối trơn, nên phần quan hệ phi tuyến mà các mô
+hình học tập hợp khai thác được so với mô hình tuyến tính là hạn chế. Trên dữ
+liệu thực, nơi quan hệ giữa các biến phức tạp hơn, khoảng cách này nhiều khả năng
+sẽ rộng hơn. Các tổng quan hệ thống gần đây~\cite{shi2022} cũng đi tới kết luận
+tương tự về thứ hạng giữa các nhóm thuật toán.
+
+\paragraph{Về vai trò của đặc trưng so với thuật toán.} Kết quả phân tích SHAP
+của đề án củng cố nhận định phổ biến trong các tổng quan: yếu tố quyết định chất
+lượng mô hình nằm ở chất lượng và độ phong phú của đặc trưng nhiều hơn ở việc lựa
+chọn thuật toán. Việc nhóm đặc trưng hành vi giao dịch đóng góp \ShapBehaviourPct{}\%
+-- vượt cả nhóm CIC truyền thống -- là minh chứng cụ thể cho nhận định này, đồng
+thời phù hợp với quan sát của Onay và Öztürk~\cite{onay2018} về vai trò ngày càng
+lớn của dữ liệu hành vi trong bối cảnh dữ liệu lớn.
+
+\paragraph{Về khoảng cách so với các nghiên cứu trong nước.} Các nghiên cứu ứng
+dụng học máy trong đánh giá rủi ro tín dụng tại Việt Nam~\cite{thu2025,thao2025}
+chủ yếu tập trung vào việc so sánh chất lượng dự báo giữa các thuật toán trên dữ
+liệu dạng bảng có sẵn. Đề án này bổ sung ba nội dung mà các công trình đó chưa đề
+cập đầy đủ: (i) tích hợp mô hình vào một quy trình hỗ trợ kiểm duyệt hoàn chỉnh có
+luật nghiệp vụ và cơ chế giải thích; (ii) đánh giá chất lượng hiệu chuẩn xác suất
+-- điều kiện cần để dùng $\PD$ trong phân vùng quyết định; và (iii) đối chiếu
+định lượng với quy trình thẩm định truyền thống.
+
+\paragraph{Về điểm khác biệt trong thiết kế thực nghiệm.} Phần lớn nghiên cứu về
+chấm điểm tín dụng đánh giá mô hình bằng cách chia dữ liệu ngẫu nhiên. Đề án sử
+dụng kiểm định ngoài thời gian, cho kết quả thấp hơn nhưng sát thực tế hơn. Ngoài
+ra, việc bổ sung hai chỉ tiêu thường bị bỏ qua -- độ hiệu chuẩn xác suất và thời
+gian chấm điểm -- cho phép đánh giá khả năng triển khai chứ không chỉ chất lượng
+thống kê.
+
+\subsection{Nhận diện hạn chế và định hướng phát triển}
+\label{subsec:han-che-dinh-huong}
+
+\subsubsection{Hạn chế của kết quả thực nghiệm}
+
+\paragraph{Hạn chế về dữ liệu.} Đây là hạn chế cơ bản nhất. Dữ liệu mô phỏng được
+sinh theo một mô hình xác suất do chính đề án thiết kế, nên cấu trúc phụ thuộc
+giữa các biến phản ánh giả định của người thiết kế chứ không phải quy luật thực
+tế. Ba hệ quả cụ thể: (i) giá trị tuyệt đối của các chỉ tiêu chất lượng không có
+ý nghĩa dự báo về hiệu quả trên dữ liệu thực; (ii) quan hệ giữa các đặc trưng
+thực tế có thể phức tạp hơn nhiều so với mô hình sinh; (iii) dữ liệu thực còn
+chứa các dạng nhiễu mà mô hình sinh không tái tạo được, như sai sót nhập liệu có
+hệ thống hay hành vi khai báo thiếu trung thực.
+
+\paragraph{Hạn chế về phạm vi đo lường.} Các số đo thời gian được thực hiện trên
+một máy đơn, một tiến trình, không bao gồm thời gian truyền qua mạng, truy vấn cơ
+sở dữ liệu nguồn hay ảnh hưởng của tải đồng thời. Chúng có giá trị so sánh tương
+đối giữa các mô hình nhưng không phải dự báo về thời gian phản hồi trong môi
+trường sản xuất.
+
+\paragraph{Hạn chế về phạm vi nghiệp vụ.} Đề án chỉ mô hình hóa thành phần $\PD$
+trong phân rã tổn thất kỳ vọng; $\LGD$ và $\EAD$ không thuộc phạm vi. Ngoài ra,
+đề án chưa xử lý bài toán \eng{reject inference}: mô hình được huấn luyện trên
+các hồ sơ đã được cấp tín dụng, trong khi trong thực tế còn một nhóm hồ sơ bị từ
+chối không có kết quả trả nợ. Bỏ qua nhóm này có thể dẫn tới sai lệch chọn mẫu.
+
+\paragraph{Hạn chế về thời gian quan sát.} Đánh giá độ ổn định chỉ dựa trên bốn
+tháng dữ liệu kiểm thử -- quá ngắn so với chu kỳ suy giảm điển hình của mô hình
+tín dụng. Kết luận về độ ổn định vì vậy mang tính tham khảo.
+
+\paragraph{Hạn chế về kiểm định công bằng.} Đề án chưa thực hiện kiểm định công
+bằng thuật toán (\eng{fairness testing}) -- đánh giá xem mô hình có tạo ra chênh
+lệch có hệ thống giữa các nhóm khách hàng hay không. Đây là yêu cầu ngày càng
+được chú trọng đối với mô hình sử dụng trong cấp tín dụng.
+
+\subsubsection{Định hướng phát triển}
+
+Từ các hạn chế trên, đề án xác định năm hướng phát triển tiếp theo:
+
+\begin{enumerate}[label=(\arabic*)]
+  \item \textbf{Kiểm chứng trên dữ liệu thực.} Áp dụng toàn bộ quy trình đã xây
+  dựng trên dữ liệu ẩn danh của một tổ chức tín dụng để đối chiếu kết quả. Đây là
+  hướng có giá trị cao nhất vì nó trực tiếp giải quyết hạn chế cơ bản nhất.
+
+  \item \textbf{Bổ sung xử lý reject inference.} Áp dụng các phương pháp suy luận
+  nhãn cho nhóm hồ sơ bị từ chối để khắc phục sai lệch chọn mẫu.
+
+  \item \textbf{Mở rộng sang mô hình $\LGD$ và $\EAD$.} Hoàn thiện khung tính tổn
+  thất kỳ vọng, cho phép định giá theo rủi ro một cách đầy đủ.
+
+  \item \textbf{Bổ sung kiểm định công bằng và giám sát liên tục.} Xây dựng bộ chỉ
+  tiêu đánh giá công bằng và cơ chế cảnh báo tự động khi phát hiện suy giảm chất
+  lượng hoặc chênh lệch giữa các nhóm khách hàng.
+
+  \item \textbf{Nghiên cứu cơ chế cập nhật mô hình.} Thiết kế quy trình huấn luyện
+  lại định kỳ có kiểm soát, bao gồm tiêu chí kích hoạt, quy trình kiểm định mô
+  hình mới trước khi thay thế và cơ chế quay lui khi phát hiện vấn đề.
+\end{enumerate}
+
+\section*{Kết luận chương 3}
+\addcontentsline{toc}{section}{Kết luận chương 3}
+
+Chương 3 đã trình bày toàn bộ kết quả thực nghiệm của đề án, với năm nhóm kết quả
+chính.
+
+\textit{Về dữ liệu và đặc trưng}: tập dữ liệu gồm \NTotal{} hồ sơ vay với
+\NFeaturesInitial{} đặc trưng ban đầu, rút gọn còn \NFeaturesSelected{} biến sau
+ba bộ lọc. Cơ chế kiểm tra chất lượng dữ liệu được kiểm chứng bằng phép tiêm lỗi
+với tỷ lệ phát hiện \ValidityDetected{}; phân tích vintage xác nhận cửa sổ quan
+sát 12 tháng ghi nhận được \VintageCoverage{} tổng số trường hợp vỡ nợ.
+
+\textit{Về chất lượng mô hình}: \NModels{} mô hình được huấn luyện và so sánh
+trên cùng điều kiện. Mô hình \BestModel{} đạt $\AUC = \BestAUC{}$,
+$\text{Gini} = \BestGini{}$ và $\KS = \BestKS{}$, còn cách trần Bayes \BayesAUC{}
+\GapBayes{} điểm. Sai số hiệu chuẩn kỳ vọng \BestECE{} cho phép sử dụng trực
+tiếp giá trị $\PD$ trong phân vùng quyết định.
+
+\textit{Về so sánh thuật toán}: chênh lệch giữa mô hình tốt nhất và hồi quy
+logistic chỉ \GapBestLR{} điểm $\AUC$, phù hợp với các công trình đối sánh quốc
+tế và đặt ra câu hỏi về việc đánh đổi giữa mức cải thiện nhỏ với chi phí mất khả
+năng giải thích.
+
+\textit{Về giải thích mô hình}: nhóm đặc trưng hành vi giao dịch đóng góp
+\ShapBehaviourPct{}\% vào quyết định của mô hình, vượt nhóm CIC truyền thống
+(\ShapCICPct{}\%).
+
+\textit{Về mô phỏng quy trình kiểm duyệt}: mô phỏng trên tập kiểm thử cho tỷ lệ
+xử lý tự động \AutomationRate{} với tỷ lệ nợ xấu thực tế tăng đơn điệu qua ba nhóm khuyến nghị
+(\BadApprove{} -- \BadReview{} -- \BadReject{}). So với quy trình thẩm định
+truyền thống, mô hình giảm tỷ lệ nợ xấu trong nhóm được duyệt từ \TradBadRate{}
+xuống \PropBadRate{} (giảm tương đối \BadRateReductionPct{}), đổi lại giảm
+\ApproveRateDrop{} điểm phần trăm tỷ lệ duyệt và tăng \ReviewRateRise{} điểm phần
+trăm khối lượng thẩm định thủ công. Thời gian xử lý một hồ sơ ở phân vị 95\% là
+\SysPNinetyFive{} ms, đạt mục tiêu đề ra.

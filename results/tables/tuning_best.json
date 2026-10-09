@@ -1,0 +1,42 @@
+{
+  "lightgbm": {
+    "best_params": {
+      "num_leaves": 47,
+      "learning_rate": 0.08,
+      "min_child_samples": 150,
+      "subsample": 0.806509649962515,
+      "colsample_bytree": 0.4759599293645078,
+      "reg_lambda": 5.0,
+      "reg_alpha": 2.0,
+      "max_depth": 7
+    },
+    "cv_auc": 0.84991,
+    "n_trials": 14,
+    "seconds": 87.2
+  },
+  "xgboost": {
+    "best_params": {
+      "max_depth": 3,
+      "learning_rate": 0.03,
+      "min_child_weight": 25.0,
+      "subsample": 0.9668494992898459,
+      "colsample_bytree": 0.5778203544660891,
+      "reg_lambda": 60.0,
+      "gamma": 2.0
+    },
+    "cv_auc": 0.86226,
+    "n_trials": 14,
+    "seconds": 176.4
+  },
+  "random_forest": {
+    "best_params": {
+      "n_estimators": 300,
+      "max_depth": 22,
+      "min_samples_leaf": 25,
+      "max_features": 0.2
+    },
+    "cv_auc": 0.8576,
+    "n_trials": 14,
+    "seconds": 569.9
+  }
+}

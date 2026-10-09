@@ -1,0 +1,108 @@
+\begingroup
+\small
+\setlength{\tabcolsep}{4.0pt}
+\begin{longtable}{@{}L{3.761cm}L{2.121cm}L{2.314cm}L{1.061cm}L{4.918cm}@{}}
+\caption{Danh mục đặc trưng đầu vào của mô hình}\label{tab:feature-catalogue}\\
+\toprule
+\textbf{Tên đặc trưng} & \textbf{Nhóm} & \textbf{Nguồn dữ liệu} & \textbf{Kiểu} & \textbf{Mô tả} \\
+\midrule
+\endfirsthead
+\multicolumn{5}{@{}l}{\small\textit{(tiếp theo trang trước)}}\\
+\toprule
+\textbf{Tên đặc trưng} & \textbf{Nhóm} & \textbf{Nguồn dữ liệu} & \textbf{Kiểu} & \textbf{Mô tả} \\
+\midrule
+\endhead
+\bottomrule
+\multicolumn{5}{r@{}}{\small\textit{(xem tiếp trang sau)}}\\
+\endfoot
+\bottomrule
+\endlastfoot
+age & Thông tin cá nhân & HỒ SƠ KH & num & Tuổi khách hàng \\
+gender & Thông tin cá nhân & HỒ SƠ KH & cat & Giới tính \\
+marital\_\allowbreak status & Thông tin cá nhân & HỒ SƠ KH & cat & Tình trạng hôn nhân \\
+num\_\allowbreak dependents & Thông tin cá nhân & HỒ SƠ KH & num & Số người phụ thuộc \\
+education\_\allowbreak code & Thông tin cá nhân & HỒ SƠ KH & num & Trình độ học vấn (1-5) \\
+occupation & Thông tin cá nhân & HỒ SƠ KH & cat & Nghề nghiệp \\
+employer\_\allowbreak type & Thông tin cá nhân & HỒ SƠ KH & cat & Loại hình tổ chức làm việc \\
+job\_\allowbreak tenure\_\allowbreak months & Thông tin cá nhân & HỒ SƠ KH & num & Thâm niên công việc (tháng) \\
+monthly\_\allowbreak income & Thông tin cá nhân & HỒ SƠ KH & num & Thu nhập khai báo hàng tháng \\
+province & Thông tin cá nhân & HỒ SƠ KH & cat & Tỉnh/thành cư trú \\
+residence\_\allowbreak type & Thông tin cá nhân & HỒ SƠ KH & cat & Hình thức nhà ở \\
+customer\_\allowbreak since\_\allowbreak months & Thông tin cá nhân & HỒ SƠ KH & num & Thời gian quan hệ với ngân hàng \\
+has\_\allowbreak salary\_\allowbreak account & Thông tin cá nhân & HỒ SƠ KH & bin & Có tài khoản nhận lương \\
+n\_accounts & Thông tin cá nhân & HỒ SƠ KH & num & Số tài khoản đang mở \\
+total\_\allowbreak avg\_\allowbreak balance & Thông tin cá nhân & HỒ SƠ KH & num & Tổng số dư bình quân 3 tháng \\
+product\_\allowbreak code & Tham số khoản vay & ĐƠN VAY & cat & Mã sản phẩm tín dụng \\
+requested\_\allowbreak amount & Tham số khoản vay & ĐƠN VAY & num & Số tiền đề nghị vay \\
+tenor\_\allowbreak months & Tham số khoản vay & ĐƠN VAY & num & Kỳ hạn vay (tháng) \\
+interest\_\allowbreak rate & Tham số khoản vay & ĐƠN VAY & num & Lãi suất áp dụng (năm) \\
+loan\_\allowbreak purpose & Tham số khoản vay & ĐƠN VAY & cat & Mục đích vay \\
+channel & Tham số khoản vay & ĐƠN VAY & cat & Kênh tiếp nhận hồ sơ \\
+has\_\allowbreak collateral & Tham số khoản vay & ĐƠN VAY & bin & Có tài sản bảo đảm \\
+monthly\_\allowbreak installment & Tham số khoản vay & ĐƠN VAY & num & Khoản trả góp hàng tháng \\
+ltv & Tham số khoản vay & ĐƠN VAY & num & Tỷ lệ vay trên giá trị TSBĐ \\
+apply\_hour & Tham số khoản vay & ĐƠN VAY & num & Giờ nộp hồ sơ \\
+apply\_\allowbreak dayofweek & Tham số khoản vay & ĐƠN VAY & num & Ngày trong tuần nộp hồ sơ \\
+cic\_score & Lịch sử tín dụng (CIC) & BẢN TIN CIC & num & Điểm tín dụng CIC (300-850) \\
+current\_\allowbreak group & Lịch sử tín dụng (CIC) & BẢN TIN CIC & num & Nhóm nợ hiện tại (1-5) \\
+worst\_\allowbreak group\_\allowbreak 12m & Lịch sử tín dụng (CIC) & BẢN TIN CIC & num & Nhóm nợ xấu nhất 12 tháng \\
+dpd\_\allowbreak max\_\allowbreak 12m & Lịch sử tín dụng (CIC) & BẢN TIN CIC & num & Số ngày quá hạn tối đa 12 tháng \\
+num\_\allowbreak institutions & Lịch sử tín dụng (CIC) & BẢN TIN CIC & num & Số TCTD đang có quan hệ \\
+num\_\allowbreak active\_\allowbreak contracts & Lịch sử tín dụng (CIC) & BẢN TIN CIC & num & Số hợp đồng còn hiệu lực \\
+num\_\allowbreak closed\_\allowbreak contracts & Lịch sử tín dụng (CIC) & BẢN TIN CIC & num & Số hợp đồng đã tất toán \\
+total\_\allowbreak outstanding & Lịch sử tín dụng (CIC) & BẢN TIN CIC & num & Tổng dư nợ tại các TCTD \\
+credit\_\allowbreak utilization & Lịch sử tín dụng (CIC) & BẢN TIN CIC & num & Tỷ lệ sử dụng hạn mức \\
+monthly\_\allowbreak debt\_\allowbreak payment & Lịch sử tín dụng (CIC) & BẢN TIN CIC & num & Nghĩa vụ trả nợ hàng tháng hiện hữu \\
+num\_\allowbreak inquiries\_\allowbreak 3m & Lịch sử tín dụng (CIC) & BẢN TIN CIC & num & Số lần truy vấn tín dụng 3 tháng \\
+has\_\allowbreak written\_\allowbreak off\_\allowbreak debt & Lịch sử tín dụng (CIC) & BẢN TIN CIC & bin & Có nợ đã xử lý rủi ro \\
+oldest\_\allowbreak account\_\allowbreak months & Lịch sử tín dụng (CIC) & BẢN TIN CIC & num & Độ dài lịch sử tín dụng (tháng) \\
+num\_\allowbreak bad\_\allowbreak debt\_\allowbreak institutions & Lịch sử tín dụng (CIC) & BẢN TIN CIC & num & Số TCTD từng phát sinh nợ xấu \\
+is\_\allowbreak thin\_\allowbreak file & Lịch sử tín dụng (CIC) & BẢN TIN CIC & bin & Khách hàng thiếu lịch sử tín dụng \\
+cic\_\allowbreak missing & Lịch sử tín dụng (CIC) & BẢN TIN CIC & bin & Không lấy được dữ liệu CIC \\
+txn\_\allowbreak cnt\_\allowbreak \{W\}d & Hành vi giao dịch & GIAO DỊCH & num & Số giao dịch trong cửa sổ W ngày \\
+inflow\_\allowbreak \{W\}d & Hành vi giao dịch & GIAO DỊCH & num & Tổng dòng tiền vào trong cửa sổ W ngày \\
+outflow\_\allowbreak \{W\}d & Hành vi giao dịch & GIAO DỊCH & num & Tổng dòng tiền ra trong cửa sổ W ngày \\
+net\_\allowbreak flow\_\allowbreak \{W\}d & Hành vi giao dịch & GIAO DỊCH & num & Dòng tiền thuần trong cửa sổ W ngày \\
+avg\_\allowbreak txn\_\allowbreak amt\_\allowbreak \{W\}d & Hành vi giao dịch & GIAO DỊCH & num & Giá trị giao dịch trung bình trong cửa sổ W ngày \\
+txn\_\allowbreak amt\_\allowbreak std\_\allowbreak \{W\}d & Hành vi giao dịch & GIAO DỊCH & num & Độ lệch chuẩn giá trị giao dịch trong cửa sổ W ngày \\
+salary\_\allowbreak cnt\_\allowbreak \{W\}d & Hành vi giao dịch & GIAO DỊCH & num & Số lần nhận lương trong cửa sổ W ngày \\
+salary\_\allowbreak amt\_\allowbreak \{W\}d & Hành vi giao dịch & GIAO DỊCH & num & Tổng lương nhận trong cửa sổ W ngày \\
+repay\_\allowbreak amt\_\allowbreak \{W\}d & Hành vi giao dịch & GIAO DỊCH & num & Tổng tiền trả nợ trong cửa sổ W ngày \\
+risky\_\allowbreak amt\_\allowbreak \{W\}d & Hành vi giao dịch & GIAO DỊCH & num & Chi tiêu nhóm rủi ro trong cửa sổ W ngày \\
+cash\_\allowbreak wd\_\allowbreak cnt\_\allowbreak \{W\}d & Hành vi giao dịch & GIAO DỊCH & num & Số lần rút tiền mặt trong cửa sổ W ngày \\
+cash\_\allowbreak wd\_\allowbreak amt\_\allowbreak \{W\}d & Hành vi giao dịch & GIAO DỊCH & num & Giá trị rút tiền mặt trong cửa sổ W ngày \\
+ecom\_\allowbreak amt\_\allowbreak \{W\}d & Hành vi giao dịch & GIAO DỊCH & num & Chi tiêu thương mại điện tử trong cửa sổ W ngày \\
+utility\_\allowbreak amt\_\allowbreak \{W\}d & Hành vi giao dịch & GIAO DỊCH & num & Chi tiêu hóa đơn tiện ích trong cửa sổ W ngày \\
+night\_\allowbreak txn\_\allowbreak cnt\_\allowbreak \{W\}d & Hành vi giao dịch & GIAO DỊCH & num & Số giao dịch ban đêm (0h-5h) trong cửa sổ W ngày \\
+large\_\allowbreak txn\_\allowbreak cnt\_\allowbreak \{W\}d & Hành vi giao dịch & GIAO DỊCH & num & Số giao dịch giá trị lớn (>50 triệu) trong cửa sổ W ngày \\
+mobile\_\allowbreak txn\_\allowbreak cnt\_\allowbreak \{W\}d & Hành vi giao dịch & GIAO DỊCH & num & Số giao dịch qua mobile banking trong cửa sổ W ngày \\
+outflow\_\allowbreak ratio\_\allowbreak \{W\}d & Hành vi giao dịch & GIAO DỊCH & num & Tỷ lệ dòng tiền ra trên dòng tiền vào trong cửa sổ W ngày \\
+risky\_\allowbreak ratio\_\allowbreak \{W\}d & Hành vi giao dịch & GIAO DỊCH & num & Tỷ trọng chi tiêu rủi ro trong cửa sổ W ngày \\
+cash\_\allowbreak ratio\_\allowbreak \{W\}d & Hành vi giao dịch & GIAO DỊCH & num & Tỷ trọng rút tiền mặt trong cửa sổ W ngày \\
+night\_\allowbreak ratio\_\allowbreak \{W\}d & Hành vi giao dịch & GIAO DỊCH & num & Tỷ trọng giao dịch ban đêm trong cửa sổ W ngày \\
+repay\_\allowbreak burden\_\allowbreak \{W\}d & Hành vi giao dịch & GIAO DỊCH & num & Gánh nặng trả nợ trên dòng tiền vào trong cửa sổ W ngày \\
+txn\_\allowbreak amt\_\allowbreak cv\_\allowbreak \{W\}d & Hành vi giao dịch & GIAO DỊCH & num & Hệ số biến thiên giá trị giao dịch trong cửa sổ W ngày \\
+days\_\allowbreak since\_\allowbreak last\_\allowbreak txn & Hành vi giao dịch & GIAO DỊCH & num & Số ngày từ giao dịch gần nhất \\
+txn\_\allowbreak cnt\_\allowbreak trend\_\allowbreak 30\_\allowbreak 90 & Hành vi giao dịch & GIAO DỊCH & num & Xu thế số giao dịch: 30 ngày so với mức trung bình 90 ngày \\
+inflow\_\allowbreak trend\_\allowbreak 30\_\allowbreak 90 & Hành vi giao dịch & GIAO DỊCH & num & Xu thế dòng tiền vào: 30 ngày so với mức trung bình 90 ngày \\
+inflow\_\allowbreak trend\_\allowbreak 90\_\allowbreak 180 & Hành vi giao dịch & GIAO DỊCH & num & Xu thế dòng tiền vào: 90 ngày so với mức trung bình 180 ngày \\
+income\_\allowbreak verification\_\allowbreak ratio & Hành vi giao dịch & GIAO DỊCH & num & Tỷ lệ dòng tiền vào thực tế so với thu nhập khai báo \\
+salary\_\allowbreak regularity & Hành vi giao dịch & GIAO DỊCH & num & Mức độ đều đặn của việc nhận lương trong 180 ngày \\
+income\_\allowbreak stability & Hành vi giao dịch & GIAO DỊCH & num & Độ ổn định thu nhập (1 - hệ số biến thiên dòng tiền vào theo tháng) \\
+dti & Biến tổ hợp & TÍNH TOÁN & num & Debt-\allowbreak to-\allowbreak Income: (trả góp mới + nghĩa vụ hiện hữu) / thu nhập \\
+pti & Biến tổ hợp & TÍNH TOÁN & num & Payment-\allowbreak to-\allowbreak Income: trả góp khoản vay mới / thu nhập \\
+amount\_\allowbreak to\_\allowbreak income & Biến tổ hợp & TÍNH TOÁN & num & Số tiền vay / thu nhập hàng tháng \\
+outstanding\_\allowbreak to\_\allowbreak income & Biến tổ hợp & TÍNH TOÁN & num & Tổng dư nợ hiện hữu / thu nhập hàng tháng \\
+disposable\_\allowbreak income & Biến tổ hợp & TÍNH TOÁN & num & Thu nhập còn lại sau trả nợ và chi phí sinh hoạt tối thiểu \\
+disposable\_\allowbreak ratio & Biến tổ hợp & TÍNH TOÁN & num & Tỷ lệ thu nhập còn lại trên thu nhập \\
+income\_\allowbreak per\_\allowbreak dependent & Biến tổ hợp & TÍNH TOÁN & num & Thu nhập bình quân đầu người trong hộ \\
+credit\_\allowbreak history\_\allowbreak ratio & Biến tổ hợp & TÍNH TOÁN & num & Độ dài lịch sử tín dụng so với tuổi trưởng thành \\
+debt\_\allowbreak per\_\allowbreak institution & Biến tổ hợp & TÍNH TOÁN & num & Dư nợ bình quân trên mỗi tổ chức tín dụng \\
+dpd\_\allowbreak x\_\allowbreak institutions & Biến tổ hợp & TÍNH TOÁN & num & Tương tác giữa số ngày quá hạn và số TCTD \\
+high\_\allowbreak dti\_\allowbreak short\_\allowbreak tenure & Biến tổ hợp & TÍNH TOÁN & bin & Cờ rủi ro: DTI > 0,5 và thâm niên công việc < 12 tháng \\
+balance\_\allowbreak to\_\allowbreak installment & Biến tổ hợp & TÍNH TOÁN & num & Số dư bình quân / khoản trả góp hàng tháng \\
+inflow\_\allowbreak to\_\allowbreak installment & Biến tổ hợp & TÍNH TOÁN & num & Dòng tiền vào 30 ngày / khoản trả góp hàng tháng \\
+\end{longtable}
+
+{\footnotesize\itshape Kiểu dữ liệu: num -- định lượng; cat -- định tính; bin -- nhị phân. Mỗi đặc trưng có hậu tố \code{\_\{W\}d} được tính trên 4 cửa sổ thời gian $W \in \{7, 30, 90, 180\}$ ngày; 23 dòng dạng này tương ứng 92 đặc trưng, đưa tổng số đặc trưng lên 154.}
+\endgroup

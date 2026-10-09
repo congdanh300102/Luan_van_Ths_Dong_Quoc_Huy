@@ -1,0 +1,26 @@
+\begin{table}[!htbp]
+\centering
+\caption{Các đặc trưng có tỷ lệ giá trị ngoại lệ cao nhất (quy tắc $3\times$IQR)}
+\label{tab:outliers}
+\small
+\setlength{\tabcolsep}{5.0pt}
+\begin{tabular}{@{}L{5.2cm}R{3.0cm}R{2.6cm}R{2.6cm}@{}}
+\toprule
+\textbf{Đặc trưng} & \textbf{Tỷ lệ ngoại lệ (\%)} & \textbf{Phân vị 1\%} & \textbf{Phân vị 99\%} \\
+\midrule
+utility\_\allowbreak amt\_\allowbreak 7d & 24,75 & 0 & 1,49 \\
+ecom\_\allowbreak amt\_\allowbreak 7d & 21,90 & 0 & 3,22 \\
+current\_\allowbreak group & 20,84 & 1 & 5 \\
+outflow\_\allowbreak ratio\_\allowbreak 30d & 18,67 & 0 & 14447060,00 \\
+dpd\_\allowbreak x\_\allowbreak institutions & 17,97 & 0 & 87,20 \\
+cash\_\allowbreak wd\_\allowbreak amt\_\allowbreak 7d & 14,86 & 0 & 4,91 \\
+cash\_\allowbreak ratio\_\allowbreak 7d & 14,86 & 0 & 1,00 \\
+cash\_\allowbreak wd\_\allowbreak cnt\_\allowbreak 7d & 14,85 & 0 & 2 \\
+repay\_\allowbreak amt\_\allowbreak 7d & 13,29 & 0 & 8,64 \\
+repay\_\allowbreak burden\_\allowbreak 7d & 13,29 & 0 & 6209040,00 \\
+\bottomrule
+\end{tabular}
+
+\vspace{2pt}
+{\footnotesize\itshape Giá trị ngoại lệ được xử lý bằng phép cắt ngọn tại phân vị 1\% và 99\% học từ tập huấn luyện, không loại bỏ quan sát.}
+\end{table}

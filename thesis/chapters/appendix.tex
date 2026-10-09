@@ -1,0 +1,169 @@
+% ===========================================================================
+% PHỤ LỤC
+% ===========================================================================
+
+\chapter{CẤU TRÚC MÃ NGUỒN VÀ HƯỚNG DẪN TÁI LẬP KẾT QUẢ}
+% Tiêu đề chạy rút gọn: tiêu đề chương đầy đủ dài hơn một dòng đầu trang,
+% khiến fancyhdr phải nới \headheight và làm lệch khung chữ của cả chương.
+\markboth{Phụ lục A. Cấu trúc mã nguồn và hướng dẫn tái lập kết quả}{}
+\label{app:source}
+
+\section{Tổ chức mã nguồn}
+
+Toàn bộ quy trình được hiện thực bằng Python và tổ chức thành một gói phần mềm có
+cấu trúc phản ánh đúng mạch nội dung nghiên cứu của đề án. Mỗi gói con tương ứng
+một mục của Chương~\ref{chap:xay-dung-he-thong}, nhờ đó người đọc có thể đối
+chiếu trực tiếp giữa phần trình bày phương pháp và phần hiện thực.
+
+\begin{verbatim}
+config/config.yaml           Cấu hình tập trung toàn bộ quy trình
+src/creditreview/
+  config.py                  Nạp và truy cập cấu hình
+  data/                      2.2 Thu thập và tổng hợp dữ liệu
+    generator.py           Sinh dữ liệu mô phỏng (biến tiềm ẩn)
+    reference.py           Bảng tham chiếu nghiệp vụ
+    profiling.py           Thống kê mô tả, kiểm tra hợp lệ, tiêm lỗi
+  preprocessing/             2.3 Tiền xử lý và làm sạch dữ liệu
+    cleaning.py              Xử lý giá trị khuyết thiếu và ngoại lệ
+    encoding.py              Chuẩn hóa và mã hóa biến
+    splitting.py             Phân chia tập dữ liệu
+  features/                  2.4 Trích xuất và lựa chọn đặc trưng
+    definitions.py           Đăng ký đặc trưng theo nhóm nguồn dữ liệu
+    extraction.py            Trích xuất đặc trưng đúng theo thời điểm
+    selection.py             Lựa chọn tập đặc trưng qua ba bộ lọc
+  labeling/                  2.5 Xây dựng nhãn và quy tắc phê duyệt
+    target.py                Gán nhãn rủi ro, phân tích vintage
+    cutoff.py                Xác định điểm cắt phê duyệt
+  models/                    2.6, 2.7 Thiết kế và huấn luyện mô hình
+    zoo.py                   Nhà máy mô hình (12 mô hình)
+    train.py                 Huấn luyện, hiệu chuẩn, đánh giá
+    tuning.py                Tinh chỉnh siêu tham số
+    metrics.py               Bộ chỉ tiêu đánh giá
+    woe.py                   Biến đổi WOE và thẻ điểm
+    explain.py               Giải thích mô hình (SHAP, phép hoán vị)
+    plots.py                 Sinh đồ thị
+  decision/                  Bộ máy hỗ trợ ra quyết định
+    rules.py                 Bộ luật nghiệp vụ
+    policy.py                Chính sách hạn mức và định giá
+    engine.py                Tổng hợp khuyến nghị theo thứ tự ưu tiên
+  serving/                   Dịch vụ REST
+    api.py                   Các điểm cuối nghiệp vụ và vận hành
+    repository.py            Kho đặc trưng phục vụ tra cứu
+  monitoring/
+    drift.py                 Giám sát PSI và chất lượng theo thời gian
+  dashboard/
+    app.py                   Giao diện trực quan hóa kết quả
+scripts/                     Bảy bước tái lập kết quả
+results/                     Mô hình, bảng và đồ thị kết quả
+thesis/                      Mã nguồn LaTeX của đề án
+\end{verbatim}
+
+\section{Hướng dẫn tái lập kết quả}
+
+\subsection{Cài đặt môi trường}
+
+\begin{verbatim}
+pip install -r requirements.txt
+\end{verbatim}
+
+Yêu cầu Python phiên bản 3.10 trở lên.
+
+\subsection{Chạy toàn bộ quy trình}
+
+Cách nhanh nhất là chạy toàn bộ bằng một lệnh:
+
+\begin{verbatim}
+python scripts/run_all.py
+\end{verbatim}
+
+Hoặc chạy tuần tự từng bước để theo dõi kết quả trung gian:
+
+\begin{verbatim}
+# Bước 1 - Chuẩn bị dữ liệu: sinh, kiểm tra chất lượng,
+#          gán nhãn, phân chia tập
+python scripts/01_prepare_data.py
+
+# Bước 2 - Phân tích Information Value và lựa chọn đặc trưng
+python scripts/02_build_features.py
+
+# Bước 3 - Tinh chỉnh siêu tham số (tùy chọn)
+python scripts/03_tune_hyperparams.py --trials 14
+
+# Bước 4 - Huấn luyện và so sánh 12 mô hình
+python scripts/04_train_models.py
+
+# Bước 5 - Mô phỏng quy trình kiểm duyệt và đánh giá chung
+python scripts/05_simulate_evaluate.py
+
+# Bước 6 - Xuất bảng LaTeX cho đề án
+python scripts/06_export_latex_tables.py
+
+# Bước 7 - Xuất từ điển dữ liệu các bảng đầu vào (Excel, tùy chọn)
+python scripts/07_export_data_dictionary.py
+\end{verbatim}
+
+Hạt giống ngẫu nhiên được cố định trong \code{config/config.yaml}
+(\code{project.seed}), bảo đảm kết quả lặp lại được giữa các lần chạy.
+
+\subsection{Chạy nhanh để kiểm tra}
+
+Để kiểm tra quy trình hoạt động mà không mất nhiều thời gian:
+
+\begin{verbatim}
+python scripts/01_prepare_data.py --n-customers 3000 \
+    --n-applications 4500
+python scripts/02_build_features.py
+python scripts/04_train_models.py --no-stacking --no-shap \
+    --models logistic_regression lightgbm
+python scripts/05_simulate_evaluate.py --n-applications 1000 --no-api
+\end{verbatim}
+
+\subsection{Khởi động dịch vụ và giao diện}
+
+\begin{verbatim}
+# Dịch vụ REST hỗ trợ kiểm duyệt
+uvicorn creditreview.serving.api:app --port 8000
+#   Tài liệu API tự sinh: http://localhost:8000/docs
+
+# Giao diện trực quan hóa kết quả
+streamlit run src/creditreview/dashboard/app.py
+\end{verbatim}
+
+\subsection{Biên dịch đề án}
+
+\begin{verbatim}
+cd thesis
+xelatex main.tex && xelatex main.tex
+\end{verbatim}
+
+Cần dùng XeLaTeX do tài liệu sử dụng tiếng Việt và phông Times New Roman. Chạy
+hai lần để cập nhật mục lục và tham chiếu chéo.
+
+Số liệu trong đề án được sinh tự động từ kết quả thực nghiệm qua
+\code{scripts/06\_export\_latex\_tables.py}: chạy lại thực nghiệm là toàn bộ bảng
+biểu và các con số trích dẫn trong phần diễn giải tự cập nhật, không phải sửa
+tay.
+
+\chapter{DANH MỤC LUẬT NGHIỆP VỤ}
+% Tiêu đề chạy rút gọn: tiêu đề chương đầy đủ dài hơn một dòng đầu trang,
+% khiến fancyhdr phải nới \headheight và làm lệch khung chữ của cả chương.
+\markboth{Phụ lục B. Danh mục luật nghiệp vụ}{}
+\label{app:rules}
+
+Bảng dưới đây liệt kê đầy đủ bộ luật nghiệp vụ được cài đặt trong mô hình. Ba
+mức hành động gồm: \code{HARD\_REJECT} -- từ chối, có quyền phủ quyết cao nhất;
+\code{REVIEW} -- buộc chuyển thẩm định thủ công; \code{WARNING} -- ghi nhận vào
+danh sách lý do nhưng không thay đổi khuyến nghị.
+
+\input{tables/tab_rule_catalogue}
+
+\chapter{DANH MỤC ĐẶC TRƯNG}
+% Tiêu đề chạy rút gọn: tiêu đề chương đầy đủ dài hơn một dòng đầu trang,
+% khiến fancyhdr phải nới \headheight và làm lệch khung chữ của cả chương.
+\markboth{Phụ lục C. Danh mục đặc trưng}{}
+\label{app:features}
+
+Danh mục đầy đủ các đặc trưng được sử dụng, phân theo nhóm nguồn dữ liệu. Cột
+``Nguồn dữ liệu'' cho biết đặc trưng được tính từ bảng dữ liệu nào.
+
+\input{tables/tab_feature_catalogue}

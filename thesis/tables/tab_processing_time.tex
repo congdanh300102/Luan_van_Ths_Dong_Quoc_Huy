@@ -1,0 +1,20 @@
+\begin{table}[!htbp]
+\centering
+\caption{Thời gian xử lý một hồ sơ theo từng chặng}
+\label{tab:processing-time}
+\small
+\setlength{\tabcolsep}{5.0pt}
+\begin{tabular}{@{}L{4.6cm}R{2.6cm}R{2.2cm}R{2.2cm}R{2.2cm}@{}}
+\toprule
+\textbf{Chặng xử lý} & \textbf{Trung bình (ms)} & \textbf{p50 (ms)} & \textbf{p95 (ms)} & \textbf{p99 (ms)} \\
+\midrule
+Chấm điểm mô hình & 40,174 & 34,773 & 74,507 & 98,067 \\
+Áp dụng luật nghiệp vụ & 0,048 & 0,046 & 0,086 & 0,126 \\
+Áp dụng chính sách & 0,053 & 0,051 & 0,088 & 0,154 \\
+Tổng cộng & 40,327 & 34,928 & 74,657 & 98,372 \\
+\bottomrule
+\end{tabular}
+
+\vspace{2pt}
+{\footnotesize\itshape Đo trên một tiến trình đơn, không tính thời gian truyền qua mạng và thời gian truy vấn dữ liệu từ hệ thống nguồn.}
+\end{table}

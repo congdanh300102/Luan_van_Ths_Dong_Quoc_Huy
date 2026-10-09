@@ -1,0 +1,22 @@
+﻿Mã luật,Tên luật,Nhóm,Hành động,Số hồ sơ vi phạm,Tỷ lệ vi phạm
+R501,Dòng tiền vào thực tế thấp hơn nhiều so với thu nhập khai báo,Dấu hiệu bất thường,REVIEW,1154,0.2308
+R202,Thu nhập còn lại sau trả nợ không đủ chi phí sinh hoạt,Khả năng trả nợ,HARD_REJECT,1055,0.211
+R104,Số ngày quá hạn tối đa 12 tháng vượt 30 ngày,Lịch sử tín dụng,REVIEW,649,0.1298
+R101,Nhóm nợ xấu nhất 12 tháng vượt nhóm 2,Lịch sử tín dụng,HARD_REJECT,587,0.1174
+R107,Tỷ lệ sử dụng hạn mức trên 95%,Lịch sử tín dụng,WARNING,555,0.111
+R103,Có nợ đã xử lý rủi ro / xóa nợ,Lịch sử tín dụng,HARD_REJECT,509,0.1018
+R401,Không lấy được dữ liệu CIC,Chất lượng dữ liệu,REVIEW,487,0.0974
+R402,Khách hàng thiếu lịch sử tín dụng (thin-file),Chất lượng dữ liệu,WARNING,487,0.0974
+R002,Thu nhập dưới mức tối thiểu 6 triệu VND,Điều kiện cơ bản,HARD_REJECT,464,0.0928
+R102,Đang có nợ nhóm 3 trở lên,Lịch sử tín dụng,HARD_REJECT,464,0.0928
+R201,Tỷ lệ nợ trên thu nhập (DTI) vượt 60%,Khả năng trả nợ,HARD_REJECT,373,0.0746
+R502,Tỷ trọng chi tiêu nhóm rủi ro cao bất thường,Dấu hiệu bất thường,REVIEW,302,0.0604
+R301,Tỷ lệ vay trên giá trị TSBĐ (LTV) vượt 85%,Tài sản bảo đảm,REVIEW,270,0.054
+R003,Thâm niên công việc dưới 6 tháng,Điều kiện cơ bản,REVIEW,215,0.043
+R001,Tuổi nằm ngoài khoảng cho phép [20; 62],Điều kiện cơ bản,HARD_REJECT,169,0.0338
+R203,Tỷ lệ trả góp trên thu nhập (PTI) vượt 45%,Khả năng trả nợ,REVIEW,115,0.023
+R105,Quan hệ tín dụng với hơn 6 tổ chức,Lịch sử tín dụng,REVIEW,21,0.0042
+R106,Truy vấn tín dụng 3 tháng vượt 5 lần,Lịch sử tín dụng,WARNING,8,0.0016
+R403,Thiếu dữ liệu hành vi giao dịch,Chất lượng dữ liệu,REVIEW,5,0.001
+R204,Số tiền vay vượt 60 lần thu nhập hàng tháng,Khả năng trả nợ,REVIEW,3,0.0006
+R503,Không phát sinh giao dịch trong 60 ngày gần nhất,Dấu hiệu bất thường,WARNING,0,0.0

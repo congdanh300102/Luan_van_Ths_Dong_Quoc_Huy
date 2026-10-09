@@ -1,0 +1,155 @@
+﻿Tên đặc trưng,Nhóm,Nguồn dữ liệu,Kiểu,Mô tả
+age,STATIC,HỒ SƠ KH,num,Tuổi khách hàng
+gender,STATIC,HỒ SƠ KH,cat,Giới tính
+marital_status,STATIC,HỒ SƠ KH,cat,Tình trạng hôn nhân
+num_dependents,STATIC,HỒ SƠ KH,num,Số người phụ thuộc
+education_code,STATIC,HỒ SƠ KH,num,Trình độ học vấn (1-5)
+occupation,STATIC,HỒ SƠ KH,cat,Nghề nghiệp
+employer_type,STATIC,HỒ SƠ KH,cat,Loại hình tổ chức làm việc
+job_tenure_months,STATIC,HỒ SƠ KH,num,Thâm niên công việc (tháng)
+monthly_income,STATIC,HỒ SƠ KH,num,Thu nhập khai báo hàng tháng
+province,STATIC,HỒ SƠ KH,cat,Tỉnh/thành cư trú
+residence_type,STATIC,HỒ SƠ KH,cat,Hình thức nhà ở
+customer_since_months,STATIC,HỒ SƠ KH,num,Thời gian quan hệ với ngân hàng
+has_salary_account,STATIC,HỒ SƠ KH,bin,Có tài khoản nhận lương
+n_accounts,STATIC,HỒ SƠ KH,num,Số tài khoản đang mở
+total_avg_balance,STATIC,HỒ SƠ KH,num,Tổng số dư bình quân 3 tháng
+product_code,LOAN,ĐƠN VAY,cat,Mã sản phẩm tín dụng
+requested_amount,LOAN,ĐƠN VAY,num,Số tiền đề nghị vay
+tenor_months,LOAN,ĐƠN VAY,num,Kỳ hạn vay (tháng)
+interest_rate,LOAN,ĐƠN VAY,num,Lãi suất áp dụng (năm)
+loan_purpose,LOAN,ĐƠN VAY,cat,Mục đích vay
+channel,LOAN,ĐƠN VAY,cat,Kênh tiếp nhận hồ sơ
+has_collateral,LOAN,ĐƠN VAY,bin,Có tài sản bảo đảm
+monthly_installment,LOAN,ĐƠN VAY,num,Khoản trả góp hàng tháng
+ltv,LOAN,ĐƠN VAY,num,Tỷ lệ vay trên giá trị TSBĐ
+apply_hour,LOAN,ĐƠN VAY,num,Giờ nộp hồ sơ
+apply_dayofweek,LOAN,ĐƠN VAY,num,Ngày trong tuần nộp hồ sơ
+cic_score,CIC,BẢN TIN CIC,num,Điểm tín dụng CIC (300-850)
+current_group,CIC,BẢN TIN CIC,num,Nhóm nợ hiện tại (1-5)
+worst_group_12m,CIC,BẢN TIN CIC,num,Nhóm nợ xấu nhất 12 tháng
+dpd_max_12m,CIC,BẢN TIN CIC,num,Số ngày quá hạn tối đa 12 tháng
+num_institutions,CIC,BẢN TIN CIC,num,Số TCTD đang có quan hệ
+num_active_contracts,CIC,BẢN TIN CIC,num,Số hợp đồng còn hiệu lực
+num_closed_contracts,CIC,BẢN TIN CIC,num,Số hợp đồng đã tất toán
+total_outstanding,CIC,BẢN TIN CIC,num,Tổng dư nợ tại các TCTD
+credit_utilization,CIC,BẢN TIN CIC,num,Tỷ lệ sử dụng hạn mức
+monthly_debt_payment,CIC,BẢN TIN CIC,num,Nghĩa vụ trả nợ hàng tháng hiện hữu
+num_inquiries_3m,CIC,BẢN TIN CIC,num,Số lần truy vấn tín dụng 3 tháng
+has_written_off_debt,CIC,BẢN TIN CIC,bin,Có nợ đã xử lý rủi ro
+oldest_account_months,CIC,BẢN TIN CIC,num,Độ dài lịch sử tín dụng (tháng)
+num_bad_debt_institutions,CIC,BẢN TIN CIC,num,Số TCTD từng phát sinh nợ xấu
+is_thin_file,CIC,BẢN TIN CIC,bin,Khách hàng thiếu lịch sử tín dụng
+cic_missing,CIC,BẢN TIN CIC,bin,Không lấy được dữ liệu CIC
+txn_cnt_7d,BEHAVIOUR,GIAO DỊCH,num,Số giao dịch trong 7 ngày
+inflow_7d,BEHAVIOUR,GIAO DỊCH,num,Tổng dòng tiền vào 7 ngày
+outflow_7d,BEHAVIOUR,GIAO DỊCH,num,Tổng dòng tiền ra 7 ngày
+net_flow_7d,BEHAVIOUR,GIAO DỊCH,num,Dòng tiền thuần 7 ngày
+avg_txn_amt_7d,BEHAVIOUR,GIAO DỊCH,num,Giá trị giao dịch trung bình 7 ngày
+txn_amt_std_7d,BEHAVIOUR,GIAO DỊCH,num,Độ lệch chuẩn giá trị giao dịch 7 ngày
+salary_cnt_7d,BEHAVIOUR,GIAO DỊCH,num,Số lần nhận lương 7 ngày
+salary_amt_7d,BEHAVIOUR,GIAO DỊCH,num,Tổng lương nhận 7 ngày
+repay_amt_7d,BEHAVIOUR,GIAO DỊCH,num,Tổng tiền trả nợ 7 ngày
+risky_amt_7d,BEHAVIOUR,GIAO DỊCH,num,Chi tiêu nhóm rủi ro 7 ngày
+cash_wd_cnt_7d,BEHAVIOUR,GIAO DỊCH,num,Số lần rút tiền mặt 7 ngày
+cash_wd_amt_7d,BEHAVIOUR,GIAO DỊCH,num,Giá trị rút tiền mặt 7 ngày
+ecom_amt_7d,BEHAVIOUR,GIAO DỊCH,num,Chi tiêu thương mại điện tử 7 ngày
+utility_amt_7d,BEHAVIOUR,GIAO DỊCH,num,Chi tiêu hóa đơn tiện ích 7 ngày
+night_txn_cnt_7d,BEHAVIOUR,GIAO DỊCH,num,Số giao dịch ban đêm (0h-5h) 7 ngày
+large_txn_cnt_7d,BEHAVIOUR,GIAO DỊCH,num,Số giao dịch giá trị lớn (>50 triệu) 7 ngày
+mobile_txn_cnt_7d,BEHAVIOUR,GIAO DỊCH,num,Số giao dịch qua mobile banking 7 ngày
+outflow_ratio_7d,BEHAVIOUR,GIAO DỊCH,num,Tỷ lệ dòng tiền ra trên dòng tiền vào 7 ngày
+risky_ratio_7d,BEHAVIOUR,GIAO DỊCH,num,Tỷ trọng chi tiêu rủi ro 7 ngày
+cash_ratio_7d,BEHAVIOUR,GIAO DỊCH,num,Tỷ trọng rút tiền mặt 7 ngày
+night_ratio_7d,BEHAVIOUR,GIAO DỊCH,num,Tỷ trọng giao dịch ban đêm 7 ngày
+repay_burden_7d,BEHAVIOUR,GIAO DỊCH,num,Gánh nặng trả nợ trên dòng tiền vào 7 ngày
+txn_amt_cv_7d,BEHAVIOUR,GIAO DỊCH,num,Hệ số biến thiên giá trị giao dịch 7 ngày
+txn_cnt_30d,BEHAVIOUR,GIAO DỊCH,num,Số giao dịch trong 30 ngày
+inflow_30d,BEHAVIOUR,GIAO DỊCH,num,Tổng dòng tiền vào 30 ngày
+outflow_30d,BEHAVIOUR,GIAO DỊCH,num,Tổng dòng tiền ra 30 ngày
+net_flow_30d,BEHAVIOUR,GIAO DỊCH,num,Dòng tiền thuần 30 ngày
+avg_txn_amt_30d,BEHAVIOUR,GIAO DỊCH,num,Giá trị giao dịch trung bình 30 ngày
+txn_amt_std_30d,BEHAVIOUR,GIAO DỊCH,num,Độ lệch chuẩn giá trị giao dịch 30 ngày
+salary_cnt_30d,BEHAVIOUR,GIAO DỊCH,num,Số lần nhận lương 30 ngày
+salary_amt_30d,BEHAVIOUR,GIAO DỊCH,num,Tổng lương nhận 30 ngày
+repay_amt_30d,BEHAVIOUR,GIAO DỊCH,num,Tổng tiền trả nợ 30 ngày
+risky_amt_30d,BEHAVIOUR,GIAO DỊCH,num,Chi tiêu nhóm rủi ro 30 ngày
+cash_wd_cnt_30d,BEHAVIOUR,GIAO DỊCH,num,Số lần rút tiền mặt 30 ngày
+cash_wd_amt_30d,BEHAVIOUR,GIAO DỊCH,num,Giá trị rút tiền mặt 30 ngày
+ecom_amt_30d,BEHAVIOUR,GIAO DỊCH,num,Chi tiêu thương mại điện tử 30 ngày
+utility_amt_30d,BEHAVIOUR,GIAO DỊCH,num,Chi tiêu hóa đơn tiện ích 30 ngày
+night_txn_cnt_30d,BEHAVIOUR,GIAO DỊCH,num,Số giao dịch ban đêm (0h-5h) 30 ngày
+large_txn_cnt_30d,BEHAVIOUR,GIAO DỊCH,num,Số giao dịch giá trị lớn (>50 triệu) 30 ngày
+mobile_txn_cnt_30d,BEHAVIOUR,GIAO DỊCH,num,Số giao dịch qua mobile banking 30 ngày
+outflow_ratio_30d,BEHAVIOUR,GIAO DỊCH,num,Tỷ lệ dòng tiền ra trên dòng tiền vào 30 ngày
+risky_ratio_30d,BEHAVIOUR,GIAO DỊCH,num,Tỷ trọng chi tiêu rủi ro 30 ngày
+cash_ratio_30d,BEHAVIOUR,GIAO DỊCH,num,Tỷ trọng rút tiền mặt 30 ngày
+night_ratio_30d,BEHAVIOUR,GIAO DỊCH,num,Tỷ trọng giao dịch ban đêm 30 ngày
+repay_burden_30d,BEHAVIOUR,GIAO DỊCH,num,Gánh nặng trả nợ trên dòng tiền vào 30 ngày
+txn_amt_cv_30d,BEHAVIOUR,GIAO DỊCH,num,Hệ số biến thiên giá trị giao dịch 30 ngày
+txn_cnt_90d,BEHAVIOUR,GIAO DỊCH,num,Số giao dịch trong 90 ngày
+inflow_90d,BEHAVIOUR,GIAO DỊCH,num,Tổng dòng tiền vào 90 ngày
+outflow_90d,BEHAVIOUR,GIAO DỊCH,num,Tổng dòng tiền ra 90 ngày
+net_flow_90d,BEHAVIOUR,GIAO DỊCH,num,Dòng tiền thuần 90 ngày
+avg_txn_amt_90d,BEHAVIOUR,GIAO DỊCH,num,Giá trị giao dịch trung bình 90 ngày
+txn_amt_std_90d,BEHAVIOUR,GIAO DỊCH,num,Độ lệch chuẩn giá trị giao dịch 90 ngày
+salary_cnt_90d,BEHAVIOUR,GIAO DỊCH,num,Số lần nhận lương 90 ngày
+salary_amt_90d,BEHAVIOUR,GIAO DỊCH,num,Tổng lương nhận 90 ngày
+repay_amt_90d,BEHAVIOUR,GIAO DỊCH,num,Tổng tiền trả nợ 90 ngày
+risky_amt_90d,BEHAVIOUR,GIAO DỊCH,num,Chi tiêu nhóm rủi ro 90 ngày
+cash_wd_cnt_90d,BEHAVIOUR,GIAO DỊCH,num,Số lần rút tiền mặt 90 ngày
+cash_wd_amt_90d,BEHAVIOUR,GIAO DỊCH,num,Giá trị rút tiền mặt 90 ngày
+ecom_amt_90d,BEHAVIOUR,GIAO DỊCH,num,Chi tiêu thương mại điện tử 90 ngày
+utility_amt_90d,BEHAVIOUR,GIAO DỊCH,num,Chi tiêu hóa đơn tiện ích 90 ngày
+night_txn_cnt_90d,BEHAVIOUR,GIAO DỊCH,num,Số giao dịch ban đêm (0h-5h) 90 ngày
+large_txn_cnt_90d,BEHAVIOUR,GIAO DỊCH,num,Số giao dịch giá trị lớn (>50 triệu) 90 ngày
+mobile_txn_cnt_90d,BEHAVIOUR,GIAO DỊCH,num,Số giao dịch qua mobile banking 90 ngày
+outflow_ratio_90d,BEHAVIOUR,GIAO DỊCH,num,Tỷ lệ dòng tiền ra trên dòng tiền vào 90 ngày
+risky_ratio_90d,BEHAVIOUR,GIAO DỊCH,num,Tỷ trọng chi tiêu rủi ro 90 ngày
+cash_ratio_90d,BEHAVIOUR,GIAO DỊCH,num,Tỷ trọng rút tiền mặt 90 ngày
+night_ratio_90d,BEHAVIOUR,GIAO DỊCH,num,Tỷ trọng giao dịch ban đêm 90 ngày
+repay_burden_90d,BEHAVIOUR,GIAO DỊCH,num,Gánh nặng trả nợ trên dòng tiền vào 90 ngày
+txn_amt_cv_90d,BEHAVIOUR,GIAO DỊCH,num,Hệ số biến thiên giá trị giao dịch 90 ngày
+txn_cnt_180d,BEHAVIOUR,GIAO DỊCH,num,Số giao dịch trong 180 ngày
+inflow_180d,BEHAVIOUR,GIAO DỊCH,num,Tổng dòng tiền vào 180 ngày
+outflow_180d,BEHAVIOUR,GIAO DỊCH,num,Tổng dòng tiền ra 180 ngày
+net_flow_180d,BEHAVIOUR,GIAO DỊCH,num,Dòng tiền thuần 180 ngày
+avg_txn_amt_180d,BEHAVIOUR,GIAO DỊCH,num,Giá trị giao dịch trung bình 180 ngày
+txn_amt_std_180d,BEHAVIOUR,GIAO DỊCH,num,Độ lệch chuẩn giá trị giao dịch 180 ngày
+salary_cnt_180d,BEHAVIOUR,GIAO DỊCH,num,Số lần nhận lương 180 ngày
+salary_amt_180d,BEHAVIOUR,GIAO DỊCH,num,Tổng lương nhận 180 ngày
+repay_amt_180d,BEHAVIOUR,GIAO DỊCH,num,Tổng tiền trả nợ 180 ngày
+risky_amt_180d,BEHAVIOUR,GIAO DỊCH,num,Chi tiêu nhóm rủi ro 180 ngày
+cash_wd_cnt_180d,BEHAVIOUR,GIAO DỊCH,num,Số lần rút tiền mặt 180 ngày
+cash_wd_amt_180d,BEHAVIOUR,GIAO DỊCH,num,Giá trị rút tiền mặt 180 ngày
+ecom_amt_180d,BEHAVIOUR,GIAO DỊCH,num,Chi tiêu thương mại điện tử 180 ngày
+utility_amt_180d,BEHAVIOUR,GIAO DỊCH,num,Chi tiêu hóa đơn tiện ích 180 ngày
+night_txn_cnt_180d,BEHAVIOUR,GIAO DỊCH,num,Số giao dịch ban đêm (0h-5h) 180 ngày
+large_txn_cnt_180d,BEHAVIOUR,GIAO DỊCH,num,Số giao dịch giá trị lớn (>50 triệu) 180 ngày
+mobile_txn_cnt_180d,BEHAVIOUR,GIAO DỊCH,num,Số giao dịch qua mobile banking 180 ngày
+outflow_ratio_180d,BEHAVIOUR,GIAO DỊCH,num,Tỷ lệ dòng tiền ra trên dòng tiền vào 180 ngày
+risky_ratio_180d,BEHAVIOUR,GIAO DỊCH,num,Tỷ trọng chi tiêu rủi ro 180 ngày
+cash_ratio_180d,BEHAVIOUR,GIAO DỊCH,num,Tỷ trọng rút tiền mặt 180 ngày
+night_ratio_180d,BEHAVIOUR,GIAO DỊCH,num,Tỷ trọng giao dịch ban đêm 180 ngày
+repay_burden_180d,BEHAVIOUR,GIAO DỊCH,num,Gánh nặng trả nợ trên dòng tiền vào 180 ngày
+txn_amt_cv_180d,BEHAVIOUR,GIAO DỊCH,num,Hệ số biến thiên giá trị giao dịch 180 ngày
+days_since_last_txn,BEHAVIOUR,GIAO DỊCH,num,Số ngày từ giao dịch gần nhất
+txn_cnt_trend_30_90,BEHAVIOUR,GIAO DỊCH,num,Xu thế số giao dịch: 30 ngày so với mức trung bình 90 ngày
+inflow_trend_30_90,BEHAVIOUR,GIAO DỊCH,num,Xu thế dòng tiền vào: 30 ngày so với mức trung bình 90 ngày
+inflow_trend_90_180,BEHAVIOUR,GIAO DỊCH,num,Xu thế dòng tiền vào: 90 ngày so với mức trung bình 180 ngày
+income_verification_ratio,BEHAVIOUR,GIAO DỊCH,num,Tỷ lệ dòng tiền vào thực tế so với thu nhập khai báo
+salary_regularity,BEHAVIOUR,GIAO DỊCH,num,Mức độ đều đặn của việc nhận lương trong 180 ngày
+income_stability,BEHAVIOUR,GIAO DỊCH,num,Độ ổn định thu nhập (1 - hệ số biến thiên dòng tiền vào theo tháng)
+dti,DERIVED,TÍNH TOÁN,num,Debt-to-Income: (trả góp mới + nghĩa vụ hiện hữu) / thu nhập
+pti,DERIVED,TÍNH TOÁN,num,Payment-to-Income: trả góp khoản vay mới / thu nhập
+amount_to_income,DERIVED,TÍNH TOÁN,num,Số tiền vay / thu nhập hàng tháng
+outstanding_to_income,DERIVED,TÍNH TOÁN,num,Tổng dư nợ hiện hữu / thu nhập hàng tháng
+disposable_income,DERIVED,TÍNH TOÁN,num,Thu nhập còn lại sau trả nợ và chi phí sinh hoạt tối thiểu
+disposable_ratio,DERIVED,TÍNH TOÁN,num,Tỷ lệ thu nhập còn lại trên thu nhập
+income_per_dependent,DERIVED,TÍNH TOÁN,num,Thu nhập bình quân đầu người trong hộ
+credit_history_ratio,DERIVED,TÍNH TOÁN,num,Độ dài lịch sử tín dụng so với tuổi trưởng thành
+debt_per_institution,DERIVED,TÍNH TOÁN,num,Dư nợ bình quân trên mỗi tổ chức tín dụng
+dpd_x_institutions,DERIVED,TÍNH TOÁN,num,Tương tác giữa số ngày quá hạn và số TCTD
+high_dti_short_tenure,DERIVED,TÍNH TOÁN,bin,"Cờ rủi ro: DTI > 0,5 và thâm niên công việc < 12 tháng"
+balance_to_installment,DERIVED,TÍNH TOÁN,num,Số dư bình quân / khoản trả góp hàng tháng
+inflow_to_installment,DERIVED,TÍNH TOÁN,num,Dòng tiền vào 30 ngày / khoản trả góp hàng tháng

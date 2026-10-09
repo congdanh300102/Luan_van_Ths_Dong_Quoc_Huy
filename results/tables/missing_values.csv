@@ -1,0 +1,158 @@
+﻿variable,group,n_missing,missing_pct,strategy
+oldest_account_months,CIC,6991,11.652,Quy ước nghiệp vụ + cờ chỉ báo khuyết
+credit_utilization,CIC,6555,10.925,Quy ước nghiệp vụ + cờ chỉ báo khuyết
+cic_score,CIC,5795,9.658,Quy ước nghiệp vụ + cờ chỉ báo khuyết
+current_group,CIC,5795,9.658,Quy ước nghiệp vụ + cờ chỉ báo khuyết
+total_outstanding,CIC,5795,9.658,Quy ước nghiệp vụ + cờ chỉ báo khuyết
+dpd_max_12m,CIC,5795,9.658,Quy ước nghiệp vụ + cờ chỉ báo khuyết
+worst_group_12m,CIC,5795,9.658,Quy ước nghiệp vụ + cờ chỉ báo khuyết
+num_bad_debt_institutions,CIC,5795,9.658,Quy ước nghiệp vụ + cờ chỉ báo khuyết
+monthly_debt_payment,CIC,5795,9.658,Quy ước nghiệp vụ + cờ chỉ báo khuyết
+customer_id,,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+apply_time,,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+age,STATIC,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+application_id,,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+residence_type,STATIC,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+customer_since_months,STATIC,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+has_salary_account,STATIC,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+n_accounts,STATIC,0,0.0,Điền 0 (không phát sinh)
+total_avg_balance,STATIC,0,0.0,Điền 0 (không phát sinh)
+product_code,LOAN,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+requested_amount,LOAN,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+gender,STATIC,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+marital_status,STATIC,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+num_dependents,STATIC,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+education_code,STATIC,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+occupation,STATIC,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+employer_type,STATIC,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+job_tenure_months,STATIC,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+monthly_income,STATIC,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+province,STATIC,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+apply_dayofweek,LOAN,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+apply_hour,LOAN,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+ltv,LOAN,0,0.0,Điền 0 (không phát sinh)
+monthly_installment,LOAN,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+has_collateral,LOAN,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+channel,LOAN,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+loan_purpose,LOAN,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+interest_rate,LOAN,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+tenor_months,LOAN,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+num_closed_contracts,CIC,0,0.0,Quy ước nghiệp vụ + cờ chỉ báo khuyết
+num_institutions,CIC,0,0.0,Quy ước nghiệp vụ + cờ chỉ báo khuyết
+num_active_contracts,CIC,0,0.0,Quy ước nghiệp vụ + cờ chỉ báo khuyết
+has_written_off_debt,CIC,0,0.0,Quy ước nghiệp vụ + cờ chỉ báo khuyết
+num_inquiries_3m,CIC,0,0.0,Quy ước nghiệp vụ + cờ chỉ báo khuyết
+is_thin_file,CIC,0,0.0,Quy ước nghiệp vụ + cờ chỉ báo khuyết
+cic_missing,CIC,0,0.0,Quy ước nghiệp vụ + cờ chỉ báo khuyết
+txn_cnt_7d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+inflow_7d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+outflow_7d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+net_flow_7d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+avg_txn_amt_7d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+txn_amt_std_7d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+txn_amt_cv_7d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+salary_cnt_7d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+salary_amt_7d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+repay_amt_7d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+risky_amt_7d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+cash_wd_cnt_7d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+cash_wd_amt_7d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+ecom_amt_7d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+utility_amt_7d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+night_txn_cnt_7d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+large_txn_cnt_7d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+mobile_txn_cnt_7d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+outflow_ratio_7d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+risky_ratio_7d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+cash_ratio_7d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+night_ratio_7d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+repay_burden_7d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+txn_cnt_30d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+inflow_30d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+outflow_30d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+net_flow_30d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+avg_txn_amt_30d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+txn_amt_std_30d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+txn_amt_cv_30d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+salary_cnt_30d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+salary_amt_30d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+repay_amt_30d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+risky_amt_30d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+cash_wd_cnt_30d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+cash_wd_amt_30d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+ecom_amt_30d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+utility_amt_30d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+night_txn_cnt_30d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+large_txn_cnt_30d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+mobile_txn_cnt_30d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+outflow_ratio_30d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+risky_ratio_30d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+cash_ratio_30d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+night_ratio_30d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+repay_burden_30d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+txn_cnt_90d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+inflow_90d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+outflow_90d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+net_flow_90d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+avg_txn_amt_90d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+txn_amt_std_90d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+txn_amt_cv_90d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+salary_cnt_90d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+salary_amt_90d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+repay_amt_90d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+risky_amt_90d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+cash_wd_cnt_90d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+cash_wd_amt_90d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+ecom_amt_90d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+utility_amt_90d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+night_txn_cnt_90d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+large_txn_cnt_90d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+mobile_txn_cnt_90d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+outflow_ratio_90d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+risky_ratio_90d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+cash_ratio_90d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+night_ratio_90d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+repay_burden_90d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+txn_cnt_180d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+inflow_180d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+outflow_180d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+net_flow_180d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+avg_txn_amt_180d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+txn_amt_std_180d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+txn_amt_cv_180d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+salary_cnt_180d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+salary_amt_180d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+repay_amt_180d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+risky_amt_180d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+cash_wd_cnt_180d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+cash_wd_amt_180d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+ecom_amt_180d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+utility_amt_180d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+night_txn_cnt_180d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+large_txn_cnt_180d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+mobile_txn_cnt_180d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+outflow_ratio_180d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+risky_ratio_180d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+cash_ratio_180d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+night_ratio_180d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+repay_burden_180d,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+days_since_last_txn,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+txn_cnt_trend_30_90,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+inflow_trend_30_90,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+inflow_trend_90_180,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+salary_regularity,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+income_stability,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+dti,DERIVED,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+pti,DERIVED,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+amount_to_income,DERIVED,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+outstanding_to_income,DERIVED,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+disposable_income,DERIVED,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+disposable_ratio,DERIVED,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+income_per_dependent,DERIVED,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+credit_history_ratio,DERIVED,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+debt_per_institution,DERIVED,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+dpd_x_institutions,DERIVED,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+high_dti_short_tenure,DERIVED,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+balance_to_installment,DERIVED,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+inflow_to_installment,DERIVED,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết
+income_verification_ratio,BEHAVIOUR,0,0.0,Trung vị tập huấn luyện + cờ chỉ báo khuyết

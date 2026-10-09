@@ -1,0 +1,7 @@
+﻿Mã ràng buộc,Số lỗi tiêm vào,Nội dung ràng buộc,Số lỗi phát hiện,Tỷ lệ phát hiện (%),Kết quả
+CUS_AGE_RANGE,400,Tuổi khách hàng phải nằm trong khoảng 18-75,400,100.0,Phát hiện đủ
+CUS_INCOME_POSITIVE,400,Thu nhập khai báo phải lớn hơn 0,400,100.0,Phát hiện đủ
+APP_AMOUNT_POSITIVE,600,Số tiền đề nghị vay phải lớn hơn 0,600,100.0,Phát hiện đủ
+APP_RATE_RANGE,600,Lãi suất phải nằm trong khoảng 0-40%/năm,600,100.0,Phát hiện đủ
+CIC_SCORE_RANGE,600,Điểm CIC phải nằm trong khoảng 300-850,600,100.0,Phát hiện đủ
+CIC_GROUP_ORDER,600,Nhóm nợ xấu nhất 12 tháng không thể tốt hơn nhóm nợ hiện tại,600,100.0,Phát hiện đủ

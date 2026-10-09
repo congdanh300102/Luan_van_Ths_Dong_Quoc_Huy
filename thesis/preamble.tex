@@ -1,0 +1,372 @@
+% ===========================================================================
+% Gói lệnh, định dạng và macro dùng chung cho toàn bộ đề án
+% Biên dịch bằng XeLaTeX (cần cho tiếng Việt và phông Times New Roman)
+% ===========================================================================
+
+% --- Cỡ chữ cơ sở ---------------------------------------------------------
+% Quy định trình bày luận văn yêu cầu cỡ chữ 13pt, nhưng lớp extreport không có
+% tùy chọn này (xem ghi chú trong main.tex). Gói ``fontsize'' cho phép đặt cỡ
+% chữ cơ sở tùy ý và tự tính lại toàn bộ các cỡ dẫn xuất (\large, \small,
+% \footnotesize...) cùng khoảng cách dòng tương ứng.
+\usepackage[fontsize=13pt]{fontsize}
+
+% --- Ngôn ngữ và phông chữ ------------------------------------------------
+\usepackage{fontspec}
+% Ngôn ngữ chính là tiếng Việt (khai báo sau cùng), nạp kèm tiếng Anh cho các
+% thuật ngữ và tài liệu tham khảo.
+%
+% Ghi chú: định dạng XeLaTeX trên máy biên dịch không nạp sẵn bộ quy tắc ngắt âm
+% tiết, nên toàn bộ tài liệu được dựng ở chế độ không ngắt âm tiết. Với tiếng
+% Việt đây là hành vi đúng (tiếng Việt không ngắt âm tiết trong từ). Để bù lại
+% khả năng xuống dòng bị hạn chế, tham số \emergencystretch được nới rộng ở phần
+% dưới, và danh mục tài liệu tham khảo được căn lề trái.
+\usepackage[english,vietnamese]{babel}
+\setmainfont{Times New Roman}[
+  Ligatures=TeX,
+  BoldFont={Times New Roman Bold},
+  ItalicFont={Times New Roman Italic},
+  BoldItalicFont={Times New Roman Bold Italic},
+]
+\setsansfont{Arial}[Ligatures=TeX]
+\setmonofont{Consolas}[Scale=0.86]
+
+
+% --- Trang và khổ giấy ----------------------------------------------------
+% Lề theo quy định trình bày luận văn: trái 3,5cm (đóng quyển), phải 2cm
+% headheight phải đủ chứa dòng đầu trang ở cỡ chữ 13pt; nếu thiếu, fancyhdr sẽ
+% cảnh báo và dòng đầu trang bị đẩy chồng lên vùng chữ.
+\usepackage[
+  a4paper, top=2.5cm, bottom=2.5cm, left=3.5cm, right=2.0cm,
+  headheight=18pt, headsep=0.6cm, footskip=1.2cm
+]{geometry}
+\usepackage{setspace}
+\onehalfspacing                       % giãn dòng 1,5
+\setlength{\parindent}{1cm}
+\setlength{\parskip}{0.2\baselineskip}
+
+% --- Toán học -------------------------------------------------------------
+% Thứ tự nạp gói ở đây là bắt buộc: amsmath và mathtools phải được nạp TRƯỚC
+% unicode-math, nếu không unicode-math sẽ báo lỗi định nghĩa lại ký hiệu.
+\usepackage{amsmath}
+\usepackage{mathtools}
+
+% Phông toán tương thích Times.
+% Mặc định LaTeX dựng công thức bằng Computer Modern, trong khi phần chữ dùng
+% Times New Roman. Hai phông khác nhau rõ về nét và tỷ lệ nên công thức trông
+% "lạc" giữa văn bản; ngoài ra Computer Modern chỉ có sẵn ở một số cỡ thiết kế
+% cố định nên ở cỡ chữ 13pt LaTeX phải thay bằng cỡ gần nhất.
+%
+% TeX Gyre Termes Math là bộ ký hiệu toán OpenType dựng theo Times, dùng trực
+% tiếp với XeLaTeX qua gói unicode-math. Gói này đã bao gồm toàn bộ ký hiệu của
+% amssymb/amsfonts nên KHÔNG nạp thêm hai gói đó (sẽ xung đột định nghĩa).
+% Tùy chọn ``math-style=ISO'' đặt chữ cái Latin và Hy Lạp trong công thức ở dạng
+% nghiêng theo chuẩn ISO 80000-2.
+\usepackage{unicode-math}
+\setmathfont{TeX Gyre Termes Math}
+\unimathsetup{math-style=ISO, bold-style=ISO}
+
+% unicode-math cung cấp \symbf thay cho gói bm; giữ lại tên \bm cho tương thích
+% với phần nội dung đã viết.
+\newcommand{\bm}[1]{\symbf{#1}}
+
+\numberwithin{equation}{chapter}
+
+% --- Bảng biểu ------------------------------------------------------------
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{makecell}
+\usepackage{colortbl}
+\renewcommand{\arraystretch}{1.22}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+
+% --- Hình ảnh và đồ họa ---------------------------------------------------
+\usepackage{graphicx}
+\graphicspath{{figures/}{../results/figures/}}
+\usepackage{float}
+\usepackage{subcaption}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{
+  shapes.geometric, shapes.misc, arrows.meta, positioning, calc,
+  fit, backgrounds, decorations.pathreplacing, patterns, chains, shadows.blur
+}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+% --------------------------------------------------------------------------
+% Tự động thu nhỏ hình/sơ đồ vượt khổ chữ.
+%
+% Môi trường ``fitfigure'' đo chiều rộng thực tế của nội dung rồi CHỈ thu nhỏ
+% khi nội dung rộng hơn khổ chữ. Đây là điểm khác biệt quan trọng so với
+% \resizebox{\textwidth}{!}{...}: lệnh đó ép MỌI nội dung về đúng chiều rộng khổ
+% chữ, khiến những sơ đồ vốn đã vừa bị phóng to quá mức và cỡ chữ trong hình trở
+% nên không đồng nhất giữa các hình.
+%
+% Hiện thực bằng hộp lưu (savebox) của LaTeX, không cần thêm gói phụ thuộc.
+% --------------------------------------------------------------------------
+\newsavebox{\cffitbox}
+\newenvironment{fitfigure}
+  {\begin{lrbox}{\cffitbox}}
+  {\end{lrbox}%
+   % Ghi chiều rộng tự nhiên của hình ra tệp nhật ký. Nhờ đó có thể rà soát
+   % những sơ đồ rộng hơn khổ chữ nhiều lần - đó là các sơ đồ sẽ bị thu nhỏ
+   % mạnh và chữ bên trong trở nên khó đọc, cần thiết kế lại cho gọn hơn.
+   \typeout{FITFIG \the\wd\cffitbox\space / \the\textwidth}%
+   \ifdim\wd\cffitbox>\textwidth
+     \resizebox{\textwidth}{!}{\usebox{\cffitbox}}%
+   \else
+     \usebox{\cffitbox}%
+   \fi}
+
+% --- Chú thích hình/bảng --------------------------------------------------
+\usepackage[font=small,labelfont=bf,justification=centering,skip=6pt]{caption}
+
+% --- Danh sách ------------------------------------------------------------
+\usepackage{enumitem}
+\setlist{itemsep=2pt, topsep=4pt, parsep=0pt}
+
+% --- Mã nguồn -------------------------------------------------------------
+\usepackage{listings}
+\definecolor{codebg}{HTML}{F7F8FA}
+\definecolor{codekw}{HTML}{1F4E79}
+\definecolor{codestr}{HTML}{548235}
+\definecolor{codecmt}{HTML}{8A8A8A}
+\definecolor{codenum}{HTML}{A0A0A0}
+\lstdefinestyle{cf}{
+  backgroundcolor=\color{codebg},
+  basicstyle=\ttfamily\scriptsize,
+  keywordstyle=\color{codekw}\bfseries,
+  stringstyle=\color{codestr},
+  commentstyle=\color{codecmt}\itshape,
+  numberstyle=\tiny\color{codenum},
+  numbers=left, numbersep=7pt,
+  breaklines=true, breakatwhitespace=false,
+  showstringspaces=false, captionpos=b,
+  frame=single, rulecolor=\color{gray!35},
+  xleftmargin=14pt, framexleftmargin=14pt,
+  tabsize=4, columns=fullflexible, keepspaces=true,
+  literate=%
+    {á}{{\'a}}1 {à}{{\`a}}1 {ả}{{\h a}}1 {ã}{{\~a}}1 {ạ}{{\d a}}1
+    {ă}{{\u a}}1 {â}{{\^a}}1 {đ}{{\dj}}1 {é}{{\'e}}1 {è}{{\`e}}1
+    {ê}{{\^e}}1 {í}{{\'i}}1 {ì}{{\`i}}1 {ó}{{\'o}}1 {ò}{{\`o}}1
+    {ô}{{\^o}}1 {ơ}{{\o'}}1 {ú}{{\'u}}1 {ù}{{\`u}}1 {ư}{{\u'}}1
+    {ý}{{\'y}}1
+}
+\lstset{style=cf}
+\renewcommand{\lstlistingname}{Đoạn mã}
+
+% --- Tham chiếu chéo và siêu liên kết -------------------------------------
+\usepackage[
+  colorlinks=true, linkcolor=black, citecolor=black,
+  urlcolor=blue!55!black, filecolor=black, bookmarksnumbered=true
+]{hyperref}
+\usepackage{bookmark}
+\usepackage{url}
+\urlstyle{same}
+
+% --- Tiêu đề chương/mục ---------------------------------------------------
+\usepackage{titlesec}
+\titleformat{\chapter}[display]
+  {\normalfont\LARGE\bfseries\centering}
+  {\chaptertitlename\ \thechapter}{14pt}{\LARGE}
+\titlespacing*{\chapter}{0pt}{-18pt}{26pt}
+\titleformat{\section}{\normalfont\large\bfseries}{\thesection}{0.8em}{}
+\titleformat{\subsection}{\normalfont\normalsize\bfseries}{\thesubsection}{0.8em}{}
+\titleformat{\subsubsection}{\normalfont\normalsize\itshape}{\thesubsubsection}{0.8em}{}
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{2}
+
+% --- Đầu trang / chân trang -----------------------------------------------
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[R]{\small\nouppercase{\leftmark}}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\thepage}%
+  \renewcommand{\headrulewidth}{0pt}}
+
+% --- Danh mục viết tắt ----------------------------------------------------
+\usepackage{longtable}
+
+% ===========================================================================
+% MÀU VÀ KIỂU TIKZ DÙNG CHUNG CHO CÁC SƠ ĐỒ KIẾN TRÚC
+% ===========================================================================
+\definecolor{cfBlue}{HTML}{1F4E79}
+\definecolor{cfBlueL}{HTML}{DCE9F5}
+\definecolor{cfOrange}{HTML}{C55A11}
+\definecolor{cfOrangeL}{HTML}{FDF0E0}
+\definecolor{cfGreen}{HTML}{548235}
+\definecolor{cfGreenL}{HTML}{E8F0E0}
+\definecolor{cfRed}{HTML}{C0504D}
+\definecolor{cfRedL}{HTML}{F7E4E3}
+\definecolor{cfGray}{HTML}{5A5A5A}
+\definecolor{cfGrayL}{HTML}{F0F0F0}
+\definecolor{cfPurple}{HTML}{7030A0}
+\definecolor{cfPurpleL}{HTML}{EDE3F5}
+
+\tikzset{
+  cfnode/.style={
+    draw, rounded corners=3pt, align=center, font=\small,
+    minimum height=9mm, minimum width=24mm, inner sep=4pt, line width=0.7pt
+  },
+  source/.style={cfnode, fill=cfBlueL, draw=cfBlue},
+  stream/.style={cfnode, fill=cfOrangeL, draw=cfOrange},
+  compute/.style={cfnode, fill=cfGreenL, draw=cfGreen},
+  storage/.style={cfnode, fill=cfRedL, draw=cfRed},
+  external/.style={cfnode, fill=cfPurpleL, draw=cfPurple},
+  ui/.style={cfnode, fill=cfGrayL, draw=cfGray},
+  decision/.style={
+    draw=cfBlue, fill=cfBlueL, diamond, aspect=2.2, align=center,
+    font=\scriptsize, inner sep=2pt, line width=0.7pt
+  },
+  flowarrow/.style={-{Stealth[length=2.4mm]}, line width=0.75pt, draw=cfGray},
+  dataflow/.style={
+    -{Stealth[length=2.4mm]}, line width=0.75pt, draw=cfBlue,
+    font=\scriptsize
+  },
+  faultflow/.style={
+    -{Stealth[length=2.4mm]}, line width=0.75pt, draw=cfRed, dashed,
+    font=\scriptsize
+  },
+  grouplabel/.style={font=\scriptsize\bfseries, text=cfGray},
+  zone/.style={
+    draw=gray!45, dashed, rounded corners=5pt, inner sep=7pt, line width=0.6pt
+  },
+}
+
+% ===========================================================================
+% MACRO TIỆN ÍCH
+% ===========================================================================
+% Định dạng số theo chuẩn Việt Nam (dấu phẩy thập phân)
+\usepackage{siunitx}
+\sisetup{
+  output-decimal-marker={,},
+  group-separator={.},
+  group-minimum-digits=4,
+  detect-all
+}
+
+% --------------------------------------------------------------------------
+% Chèn hình an toàn: nếu hình chưa được sinh (chưa chạy hết thực nghiệm),
+% thay bằng một khung báo thiếu thay vì làm hỏng toàn bộ quá trình biên dịch.
+% --------------------------------------------------------------------------
+% Tên file chứa dấu gạch dưới nên phải dùng \detokenize để in nguyên văn,
+% tránh việc LaTeX hiểu "_" là ký hiệu chỉ số dưới trong chế độ toán.
+% Hình được đặt trong \makebox rộng đúng bằng khổ chữ và bắt đầu bằng \noindent:
+% nếu không, phần thụt đầu dòng 1cm sẽ cộng vào chiều rộng hình và làm tràn lề
+% ngay cả khi hình được khai báo hẹp hơn khổ chữ.
+\newcommand{\cffig}[2][\textwidth]{%
+  \par\noindent
+  \makebox[\linewidth][c]{%
+    \IfFileExists{../results/figures/#2.pdf}
+      {\includegraphics[width=#1]{#2}}
+      {\fbox{\parbox[c][2.8cm][c]{0.8\textwidth}{\centering\small\itshape
+        Hình \texttt{\detokenize{#2}} chưa được sinh --
+        chạy lại các script thực nghiệm để tạo hình này.}}}%
+  }\par
+}
+% Tên gọi ngắn dùng trong các chương
+\providecommand{\fig}{}
+\renewcommand{\fig}[2][\textwidth]{\cffig[#1]{#2}}
+
+% Thuật ngữ tiếng Anh in nghiêng khi xuất hiện lần đầu
+\newcommand{\eng}[1]{\textit{#1}}
+% Tên thành phần hệ thống
+\newcommand{\comp}[1]{\textsf{#1}}
+
+% --------------------------------------------------------------------------
+% Tên biến / đường dẫn mã nguồn.
+%
+% Chuỗi kiểu ``scripts/06_verify_consistency.py'' là một khối liền không có
+% khoảng trắng nên TeX không thể ngắt dòng, gây tràn lề khi chuỗi rơi vào cuối
+% dòng. Định nghĩa dưới đây tạo điểm ngắt hợp lệ ngay sau mỗi dấu gạch dưới
+% bằng cách định nghĩa lại ``\_'' trong phạm vi cục bộ của lệnh.
+% --------------------------------------------------------------------------
+\newcommand{\code}[1]{{%
+  \ttfamily\small
+  \def\_{\char`\_\allowbreak}%
+  #1}}
+
+% --------------------------------------------------------------------------
+% Cho phép TeX co giãn khoảng trắng nhiều hơn trước khi chấp nhận tràn lề.
+% Cần thiết với văn bản tiếng Việt xen lẫn thuật ngữ tiếng Anh và tên riêng
+% nước ngoài: những từ này không có quy tắc ngắt âm tiết tiếng Việt nên trình
+% bày dễ bị tràn ở các dòng có từ dài.
+% --------------------------------------------------------------------------
+\emergencystretch=3em
+\hbadness=2500        % bỏ qua cảnh báo dòng thưa ở mức chấp nhận được
+\tolerance=1200
+
+% --------------------------------------------------------------------------
+% Tham số đặt hình/bảng. Mặc định của LaTeX quá dè dặt: một hình cỡ trung bình
+% bị đẩy sang "trang chỉ có hình", để lại hơn nửa trang trắng. Nới rộng tỷ lệ
+% hình được phép chiếm ở đầu/cuối trang và siết \floatpagefraction để hình chỉ
+% chiếm trọn một trang khi thực sự đủ lớn.
+% --------------------------------------------------------------------------
+\renewcommand{\topfraction}{0.90}
+\renewcommand{\bottomfraction}{0.70}
+\renewcommand{\textfraction}{0.08}
+\renewcommand{\floatpagefraction}{0.80}
+\setcounter{topnumber}{3}
+\setcounter{bottomnumber}{2}
+\setcounter{totalnumber}{4}
+
+% Ô nhấn mạnh kết quả chính
+\usepackage[most]{tcolorbox}
+\newtcolorbox{keyresult}[1][]{
+  enhanced, breakable,
+  colback=cfBlueL!45, colframe=cfBlue, boxrule=0.7pt, arc=3pt,
+  left=8pt, right=8pt, top=6pt, bottom=6pt,
+  fonttitle=\bfseries\small, title={Kết quả chính}, #1
+}
+\newtcolorbox{notebox}[1][]{
+  enhanced, breakable,
+  colback=cfOrangeL!60, colframe=cfOrange, boxrule=0.7pt, arc=3pt,
+  left=8pt, right=8pt, top=6pt, bottom=6pt,
+  fonttitle=\bfseries\small, title={Lưu ý}, #1
+}
+
+% --------------------------------------------------------------------------
+% Trích dẫn tài liệu tham khảo
+% Danh mục tài liệu được đánh số thủ công bằng môi trường enumerate (phù hợp
+% quy định trình bày của cơ sở đào tạo). Lệnh \cite được định nghĩa lại để tham
+% chiếu tới nhãn tương ứng, nhờ đó số thứ tự trích dẫn luôn khớp với danh mục
+% ngay cả khi bổ sung hoặc sắp xếp lại tài liệu.
+% --------------------------------------------------------------------------
+% Hỗ trợ trích dẫn nhiều tài liệu cùng lúc: \cite{a,b,c} -> [8, 9, 10]
+\makeatletter
+\newcommand{\cf@citeone}[1]{\ref{ref:#1}}
+\newcommand{\cf@citelist}[1]{%
+  \def\cf@sep{}%
+  \@for\cf@key:=#1\do{\cf@sep\cf@citeone{\cf@key}\def\cf@sep{, }}%
+}
+\renewcommand{\cite}[1]{[\cf@citelist{#1}]}
+\makeatother
+
+% Ký hiệu toán học hay dùng
+\newcommand{\PD}{\mathrm{PD}}
+\newcommand{\LGD}{\mathrm{LGD}}
+\newcommand{\EAD}{\mathrm{EAD}}
+\newcommand{\EL}{\mathrm{EL}}
+\newcommand{\WOE}{\mathrm{WOE}}
+\newcommand{\IV}{\mathrm{IV}}
+\newcommand{\PSI}{\mathrm{PSI}}
+\newcommand{\AUC}{\mathrm{AUC}}
+\newcommand{\KS}{\mathrm{KS}}
+\newcommand{\DTI}{\mathrm{DTI}}
+\newcommand{\LTV}{\mathrm{LTV}}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator{\sigmoid}{\sigma}
+\DeclareMathOperator{\Ex}{\mathbb{E}}
+
+% Tránh chữ mồ côi
+\widowpenalty=10000
+\clubpenalty=10000
+\raggedbottom

@@ -1,0 +1,110 @@
+% ===========================================================================
+% ĐỀ ÁN TỐT NGHIỆP THẠC SĨ KỸ THUẬT
+%
+% ỨNG DỤNG MÔ HÌNH HỌC MÁY
+% TRONG HỖ TRỢ KIỂM DUYỆT TÍN DỤNG
+%
+% Học viên   : Đồng Quốc Huy - B25CHHT028
+% Chuyên ngành: Hệ thống thông tin - Mã số: 8.48.01.04
+% Hướng dẫn  : TS. Đỗ Tiến Dũng
+% Cơ sở đào tạo: Học viện Công nghệ Bưu chính Viễn thông
+%
+% BIÊN DỊCH (bắt buộc dùng XeLaTeX do có tiếng Việt và phông Times New Roman):
+%     xelatex main.tex
+%     xelatex main.tex      (chạy lần 2 để cập nhật mục lục và tham chiếu)
+% hoặc:
+%     latexmk -xelatex main.tex
+% ===========================================================================
+
+% Lưu ý về cỡ chữ: lớp ``extreport'' chỉ nhận các cỡ 8, 9, 10, 11, 12, 14, 17,
+% 20pt -- không có 13pt. Nếu khai báo [13pt] ở đây, LaTeX sẽ bỏ qua tùy chọn
+% (chỉ ghi một cảnh báo nhỏ trong log) và dựng toàn bộ tài liệu ở cỡ mặc định
+% 10pt. Vì vậy lớp được khai báo ở 12pt, sau đó gói ``fontsize'' trong preamble
+% đặt lại cỡ chữ cơ sở đúng 13pt theo quy định trình bày luận văn.
+\documentclass[a4paper,12pt,oneside]{extreport}
+
+\input{preamble}
+
+% Số liệu thực nghiệm (sinh tự động bởi scripts/05_export_latex_tables.py)
+\input{tables/macros_results}
+
+% --- Thông tin đề án -------------------------------------------------------
+\newcommand{\thesisTitle}{ỨNG DỤNG MÔ HÌNH HỌC MÁY TRONG HỖ TRỢ KIỂM DUYỆT TÍN DỤNG}
+\newcommand{\thesisAuthor}{Đồng Quốc Huy}
+\newcommand{\thesisStudentId}{B25CHHT028}
+\newcommand{\thesisMajor}{Hệ thống thông tin}
+\newcommand{\thesisMajorCode}{8.48.01.04}
+\newcommand{\thesisSupervisor}{TS. Đỗ Tiến Dũng}
+\newcommand{\thesisInstitution}{HỌC VIỆN CÔNG NGHỆ BƯU CHÍNH VIỄN THÔNG}
+\newcommand{\thesisYear}{2026}
+\newcommand{\thesisCity}{HÀ NỘI}
+
+\hypersetup{
+  pdftitle={\thesisTitle},
+  pdfauthor={\thesisAuthor},
+  pdfsubject={Đề án tốt nghiệp Thạc sĩ Kỹ thuật - Hệ thống thông tin},
+  pdfkeywords={kiểm duyệt tín dụng, học máy, chấm điểm tín dụng, rủi ro tín dụng,
+               hồi quy logistic, rừng ngẫu nhiên, máy vectơ hỗ trợ,
+               gradient boosting, mô hình hỗ trợ ra quyết định},
+}
+
+\begin{document}
+
+% ===========================================================================
+% PHẦN ĐẦU
+% ===========================================================================
+\pagenumbering{roman}
+
+\input{frontmatter/titlepage}
+\input{frontmatter/declaration}
+\input{frontmatter/acknowledgement}
+
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{MỤC LỤC}
+\renewcommand{\contentsname}{MỤC LỤC}
+\tableofcontents
+
+\cleardoublepage
+\input{frontmatter/abbreviations}
+
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{DANH MỤC BẢNG}
+\renewcommand{\listtablename}{DANH MỤC BẢNG}
+\listoftables
+
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{DANH MỤC HÌNH VẼ}
+\renewcommand{\listfigurename}{DANH MỤC HÌNH VẼ}
+\listoffigures
+
+% ===========================================================================
+% PHẦN NỘI DUNG
+% ===========================================================================
+\cleardoublepage
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+\input{chapters/introduction}
+\input{chapters/chapter1}
+\input{chapters/chapter2}
+\input{chapters/chapter3}
+\input{chapters/conclusion}
+
+% ===========================================================================
+% TÀI LIỆU THAM KHẢO
+% ===========================================================================
+\cleardoublepage
+\input{chapters/references}
+
+% ===========================================================================
+% PHỤ LỤC
+% ===========================================================================
+\cleardoublepage
+\appendix
+\renewcommand{\appendixname}{PHỤ LỤC}
+\input{chapters/appendix}
+
+\end{document}

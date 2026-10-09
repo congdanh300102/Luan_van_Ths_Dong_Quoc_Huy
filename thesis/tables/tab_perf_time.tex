@@ -1,0 +1,20 @@
+\begin{table}[!htbp]
+\centering
+\caption{Chất lượng dự báo của mô hình theo từng tháng của giai đoạn kiểm thử}
+\label{tab:perf-time}
+\small
+\setlength{\tabcolsep}{3.0pt}
+\begin{tabular}{@{}L{1.671cm}R{1.495cm}R{2.023cm}R{2.287cm}R{1.847cm}R{1.500cm}R{1.500cm}R{1.500cm}@{}}
+\toprule
+\textbf{Tháng} & \textbf{Số hồ sơ} & \textbf{Nợ xấu thực tế (\%)} & \textbf{PD dự báo trung bình (\%)} & \textbf{Chênh lệch (đpt)} & \textbf{AUC} & \textbf{KS} & \textbf{Gini} \\
+\midrule
+2026-03 & 1.652 & 17,86 & 17,76 & -0,09 & 0,8665 & 0,5953 & 0,7330 \\
+2026-04 & 2.485 & 17,46 & 17,13 & -0,33 & 0,8584 & 0,5730 & 0,7168 \\
+2026-05 & 2.429 & 18,53 & 17,74 & -0,79 & 0,8551 & 0,5673 & 0,7102 \\
+2026-06 & 2.434 & 16,93 & 17,26 & 0,33 & 0,8679 & 0,5782 & 0,7358 \\
+\bottomrule
+\end{tabular}
+
+\vspace{2pt}
+{\footnotesize\itshape Chênh lệch tính bằng điểm phần trăm giữa mức PD dự báo trung bình và tỷ lệ nợ xấu thực tế của tháng.}
+\end{table}

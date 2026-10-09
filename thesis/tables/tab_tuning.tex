@@ -1,0 +1,19 @@
+\begin{table}[!htbp]
+\centering
+\caption{Kết quả tinh chỉnh siêu tham số bằng tìm kiếm ngẫu nhiên}
+\label{tab:tuning}
+\small
+\setlength{\tabcolsep}{5.0pt}
+\begin{tabular}{@{}L{4.6cm}R{2.6cm}R{2.6cm}R{3.4cm}@{}}
+\toprule
+\textbf{Mô hình} & \textbf{Số lần thử} & \textbf{AUC (CV)} & \textbf{Thời gian (phút)} \\
+\midrule
+lightgbm & 14 & 0,8499 & 1,5 \\
+xgboost & 14 & 0,8623 & 2,9 \\
+random\_\allowbreak forest & 14 & 0,8576 & 9,5 \\
+\bottomrule
+\end{tabular}
+
+\vspace{2pt}
+{\footnotesize\itshape Kiểm định chéo theo chuỗi thời gian (TimeSeriesSplit) ba lần khớp trên tập huấn luyện.}
+\end{table}

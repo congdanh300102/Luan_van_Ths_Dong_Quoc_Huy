@@ -1,0 +1,14 @@
+{
+  "n_customers": 40000,
+  "n_accounts": 73023,
+  "n_transactions": 4538127,
+  "n_applications": 60000,
+  "n_cic_reports": 60000,
+  "default_rate": 0.15221666666666667,
+  "observation_start": "2024-07-01",
+  "observation_end": "2026-06-30",
+  "seed": 20260101,
+  "thin_file_rate": 0.09658333333333333,
+  "n_features": 154,
+  "generation_seconds": 39.47
+}

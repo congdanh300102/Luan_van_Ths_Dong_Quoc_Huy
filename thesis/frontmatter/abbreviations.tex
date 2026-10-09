@@ -1,0 +1,128 @@
+% ===========================================================================
+% Danh mục thuật ngữ và chữ viết tắt
+% ===========================================================================
+\phantomsection
+\addcontentsline{toc}{chapter}{DANH MỤC THUẬT NGỮ VÀ CHỮ VIẾT TẮT}
+\chapter*{DANH MỤC THUẬT NGỮ VÀ CHỮ VIẾT TẮT}
+\markboth{DANH MỤC THUẬT NGỮ VÀ CHỮ VIẾT TẮT}{}
+
+\begingroup
+\small
+\setlength{\extrarowheight}{1.5pt}
+\begin{longtable}{@{}L{2.2cm}L{5.0cm}L{6.6cm}@{}}
+\toprule
+\textbf{Viết tắt} & \textbf{Thuật ngữ tiếng Anh} & \textbf{Giải nghĩa tiếng Việt} \\
+\midrule
+\endfirsthead
+\multicolumn{3}{@{}l}{\small\textit{(tiếp theo trang trước)}}\\
+\toprule
+\textbf{Viết tắt} & \textbf{Thuật ngữ tiếng Anh} & \textbf{Giải nghĩa tiếng Việt} \\
+\midrule
+\endhead
+\bottomrule
+\multicolumn{3}{r@{}}{\small\textit{(xem tiếp trang sau)}}\\
+\endfoot
+\bottomrule
+\endlastfoot
+
+API   & Application Programming Interface & Giao diện lập trình ứng dụng \\
+AUC   & Area Under the ROC Curve & Diện tích dưới đường cong ROC \\
+CART  & Classification and Regression Tree & Cây phân loại và hồi quy \\
+CIC   & Credit Information Center & Trung tâm Thông tin tín dụng Quốc gia Việt Nam \\
+DPD   & Days Past Due & Số ngày quá hạn \\
+DTI   & Debt-to-Income ratio & Tỷ lệ nghĩa vụ trả nợ trên thu nhập \\
+EAD   & Exposure at Default & Dư nợ tại thời điểm vỡ nợ \\
+ECE   & Expected Calibration Error & Sai số hiệu chuẩn kỳ vọng \\
+EL    & Expected Loss & Tổn thất kỳ vọng \\
+FN    & False Negative & Âm tính giả (bỏ sót hồ sơ xấu) \\
+FP    & False Positive & Dương tính giả (từ chối nhầm hồ sơ tốt) \\
+GBM   & Gradient Boosting Machine & Máy tăng cường độ dốc \\
+IV    & Information Value & Giá trị thông tin của biến \\
+JSON  & JavaScript Object Notation & Định dạng trao đổi dữ liệu JSON \\
+KS    & Kolmogorov--Smirnov statistic & Thống kê Kolmogorov--Smirnov \\
+LGD   & Loss Given Default & Tỷ lệ tổn thất khi vỡ nợ \\
+LR    & Logistic Regression & Hồi quy logistic \\
+LTV   & Loan-to-Value ratio & Tỷ lệ vay trên giá trị tài sản bảo đảm \\
+MLP   & Multi-Layer Perceptron & Mạng nơ-ron truyền thẳng nhiều lớp \\
+NHNN  & --- & Ngân hàng Nhà nước Việt Nam \\
+NPL   & Non-Performing Loan & Nợ xấu (nợ nhóm 3--5) \\
+PAVA  & Pool Adjacent Violators Algorithm & Thuật toán gộp vi phạm liền kề \\
+PD    & Probability of Default & Xác suất vỡ nợ \\
+PR-AUC & Area Under Precision--Recall Curve & Diện tích dưới đường Precision--Recall \\
+PSI   & Population Stability Index & Chỉ số ổn định phân phối \\
+PTI   & Payment-to-Income ratio & Tỷ lệ khoản trả góp trên thu nhập \\
+RBF   & Radial Basis Function & Hàm cơ sở bán kính (hạt nhân Gauss) \\
+REST  & Representational State Transfer & Kiến trúc dịch vụ web REST \\
+RF    & Random Forest & Rừng ngẫu nhiên \\
+ROC   & Receiver Operating Characteristic & Đường đặc trưng hoạt động của bộ thu nhận \\
+SHAP  & SHapley Additive exPlanations & Phương pháp giải thích mô hình dựa trên giá trị Shapley \\
+SQL   & Structured Query Language & Ngôn ngữ truy vấn có cấu trúc \\
+SVM   & Support Vector Machine & Máy vectơ hỗ trợ \\
+TCTD  & --- & Tổ chức tín dụng \\
+WOE   & Weight of Evidence & Trọng số bằng chứng \\
+XGBoost & eXtreme Gradient Boosting & Thư viện tăng cường độ dốc cực hạn \\
+\end{longtable}
+\endgroup
+
+\vspace{0.5cm}
+\noindent\textbf{Một số thuật ngữ được sử dụng thống nhất trong đề án:}
+
+\begingroup
+\small
+\begin{longtable}{@{}L{4.4cm}L{9.6cm}@{}}
+\toprule
+\textbf{Thuật ngữ} & \textbf{Cách hiểu trong đề án} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Thuật ngữ} & \textbf{Cách hiểu trong đề án} \\
+\midrule
+\endhead
+\bottomrule
+\endlastfoot
+
+Kiểm duyệt tín dụng &
+Quá trình đánh giá, sàng lọc hồ sơ vay để hình thành đề xuất có căn cứ. Phân biệt
+với \textit{phê duyệt} -- hành vi ra quyết định của cấp có thẩm quyền. \\
+
+Mô hình hỗ trợ kiểm duyệt &
+Mô hình cung cấp đánh giá rủi ro định lượng kèm lý giải làm đầu vào cho quyết
+định của con người, không thay thế thẩm quyền phê duyệt. \\
+
+Tính đúng đắn theo thời điểm \newline (\eng{point-in-time correctness}) &
+Nguyên tắc bảo đảm mọi đặc trưng của một hồ sơ chỉ được tính từ dữ liệu đã tồn
+tại trước hoặc tại thời điểm nộp hồ sơ. \\
+
+Rò rỉ nhãn \newline (\eng{label leakage}) &
+Hiện tượng đặc trưng chứa thông tin phát sinh sau thời điểm nộp hồ sơ, khiến mô
+hình cho kết quả cao giả tạo khi đánh giá và sụp đổ khi triển khai. \\
+
+Cửa sổ quan sát \newline (\eng{performance window}) &
+Khoảng thời gian kể từ khi cấp tín dụng dùng để xác định hồ sơ có phát sinh nợ
+xấu hay không. Đề án sử dụng cửa sổ 12 tháng. \\
+
+Kiểm định ngoài thời gian \newline (\eng{out-of-time validation}) &
+Cách đánh giá mô hình trên dữ liệu thuộc giai đoạn sau giai đoạn huấn luyện, phản
+ánh đúng điều kiện vận hành thực tế. \\
+
+Trần Bayes &
+Giới hạn lý thuyết về chất lượng dự báo mà không mô hình nào vượt qua được, tính
+từ xác suất vỡ nợ thật của quá trình sinh dữ liệu. \\
+
+Hiệu chuẩn xác suất \newline (\eng{calibration}) &
+Quá trình điều chỉnh để giá trị xác suất mô hình đưa ra trùng khớp với tần suất
+xảy ra thực tế -- điều kiện cần để dùng PD trong phân vùng quyết định. \\
+
+Khách hàng thin-file &
+Khách hàng có rất ít hoặc không có lịch sử tín dụng tại CIC, khiến việc đánh giá
+phải dựa chủ yếu vào dữ liệu hành vi giao dịch. \\
+
+Cắt ngọn \newline (\eng{winsorize}) &
+Kỹ thuật giới hạn giá trị cực trị về mức phân vị biên thay vì loại bỏ quan sát,
+nhằm giữ nguyên cỡ mẫu. \\
+
+Trôi dạt dữ liệu \newline (\eng{data drift}) &
+Hiện tượng phân phối dữ liệu hoặc quan hệ giữa đặc trưng và nhãn thay đổi theo
+thời gian, làm mô hình suy giảm chất lượng. \\
+\end{longtable}
+\endgroup

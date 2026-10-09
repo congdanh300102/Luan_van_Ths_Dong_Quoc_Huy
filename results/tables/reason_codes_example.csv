@@ -1,0 +1,9 @@
+﻿feature,value,shap,direction
+worst_group_12m,5.0,0.4694800293282395,Tăng rủi ro
+cic_score,300.0,0.465087170144642,Tăng rủi ro
+dpd_max_12m,288.0,0.43252211655112,Tăng rủi ro
+dti,0.5372368421052631,0.4149366823286952,Tăng rủi ro
+dpd_x_institutions,86.4,0.3466680836387321,Tăng rủi ro
+disposable_income,-3483000.0,0.33321615745424055,Tăng rủi ro
+disposable_ratio,-0.4582894736842105,0.3329284607309126,Tăng rủi ro
+has_written_off_debt,1,0.28949131206953405,Tăng rủi ro

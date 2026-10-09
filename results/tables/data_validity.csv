@@ -1,0 +1,16 @@
+﻿table,code,description,n_violations,violation_pct
+customers,CUS_AGE_RANGE,Tuổi khách hàng phải nằm trong khoảng 18-75,0,0.0
+customers,CUS_INCOME_POSITIVE,Thu nhập khai báo phải lớn hơn 0,0,0.0
+customers,CUS_TENURE_NONNEG,Thâm niên công việc không được âm,0,0.0
+customers,CUS_DEPENDENTS_RANGE,Số người phụ thuộc phải nằm trong khoảng 0-10,0,0.0
+applications,APP_AMOUNT_POSITIVE,Số tiền đề nghị vay phải lớn hơn 0,0,0.0
+applications,APP_TENOR_RANGE,Kỳ hạn vay phải nằm trong khoảng 3-360 tháng,0,0.0
+applications,APP_RATE_RANGE,Lãi suất phải nằm trong khoảng 0-40%/năm,0,0.0
+applications,APP_INSTALLMENT_POSITIVE,Khoản trả góp hàng tháng phải lớn hơn 0,0,0.0
+applications,APP_LTV_RANGE,"Tỷ lệ vay trên giá trị TSBĐ không được vượt 1,2",0,0.0
+cic_reports,CIC_SCORE_RANGE,Điểm CIC phải nằm trong khoảng 300-850,0,0.0
+cic_reports,CIC_GROUP_RANGE,Nhóm nợ phải nằm trong khoảng 1-5,0,0.0
+cic_reports,CIC_GROUP_ORDER,Nhóm nợ xấu nhất 12 tháng không thể tốt hơn nhóm nợ hiện tại,0,0.0
+cic_reports,CIC_DPD_NONNEG,Số ngày quá hạn không được âm,0,0.0
+cic_reports,CIC_UTILIZATION_RANGE,Tỷ lệ sử dụng hạn mức phải nằm trong khoảng 0-2,0,0.0
+cic_reports,CIC_QUERY_BEFORE_APPLY,Bản tin CIC phải được truy vấn không muộn hơn thời điểm nộp hồ sơ,0,0.0

@@ -1,0 +1,21 @@
+\begin{table}[!htbp]
+\centering
+\caption{Tỷ trọng đóng góp vào quyết định của mô hình theo nhóm đặc trưng}
+\label{tab:shap-group}
+\small
+\setlength{\tabcolsep}{3.0pt}
+\begin{tabular}{@{}L{3.648cm}R{1.911cm}R{1.911cm}R{2.258cm}R{2.085cm}R{2.432cm}@{}}
+\toprule
+\textbf{Nhóm đặc trưng} & \textbf{Số đặc trưng} & \textbf{Tổng |SHAP|} & \textbf{|SHAP| trung bình} & \textbf{|SHAP| lớn nhất} & \textbf{Tỷ trọng đóng góp (\%)} \\
+\midrule
+Hành vi giao dịch & 76 & 1,2895 & 0,0170 & 0,1623 & 34,00 \\
+Lịch sử tín dụng (CIC) & 14 & 1,1692 & 0,0835 & 0,4217 & 30,83 \\
+Biến tổ hợp & 12 & 0,9091 & 0,0758 & 0,1899 & 23,97 \\
+Thông tin cá nhân & 8 & 0,2662 & 0,0333 & 0,0909 & 7,02 \\
+Tham số khoản vay & 6 & 0,1587 & 0,0264 & 0,0432 & 4,18 \\
+\bottomrule
+\end{tabular}
+
+\vspace{2pt}
+{\footnotesize\itshape Tính bằng tổng giá trị SHAP tuyệt đối trung bình của các đặc trưng trong từng nhóm, chuẩn hóa về tổng bằng 100\%.}
+\end{table}
